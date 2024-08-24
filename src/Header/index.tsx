@@ -5,6 +5,7 @@ const Header = styled.header`
   display: flex;
   justify-content: space-between;
   margin-bottom: 40px;
+  padding: 1.25rem;
 `;
 
 const PageTitle = styled.div`

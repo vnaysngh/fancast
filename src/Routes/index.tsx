@@ -5,7 +5,7 @@ import HeaderComponent from "../Header";
 import styled from "styled-components";
 
 const Homepage = lazy(() => import("../pages/Collections"));
-const Chat = lazy(() => import("../pages/Chat"));
+const Chat = lazy(() => import("../pages/Community"));
 // const Profile = lazy(() => import("./pages/Profile"));
 
 const RoutesContainer = styled.div`

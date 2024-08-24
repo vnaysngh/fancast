@@ -6,15 +6,15 @@ import {
 } from "@web3auth/modal-react-hooks";
 import { web3AuthContextConfig } from "./Web3Auth/web3AuthProviderProps";
 import { WalletServicesProvider } from "@web3auth/wallet-services-plugin-react-hooks";
-import { HashRouter } from "react-router-dom";
+import { BrowserRouter, HashRouter } from "react-router-dom";
 
 const Home: React.FC = () => {
   return (
     <Web3AuthProvider config={web3AuthContextConfig}>
       <WalletServicesProvider context={Web3AuthInnerContext}>
-        <HashRouter>
+        <BrowserRouter>
           <App />
-        </HashRouter>
+        </BrowserRouter>
       </WalletServicesProvider>
     </Web3AuthProvider>
   );

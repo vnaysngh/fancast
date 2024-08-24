@@ -14,7 +14,7 @@ const LoaderContainer = styled.div`
   justify-content: center;
   align-items: center;
   height: 80vh;
-  background-color: #1a1b1e; // Match your theme color
+  // background-color: #1a1b1e; // Match your theme color
 `;
 
 const Logo = styled.img`
@@ -26,7 +26,8 @@ const Logo = styled.img`
 const Loader = () => {
   return (
     <LoaderContainer>
-      <Logo src={"/favicon.png"} alt="Loading..." />
+      {/* <Logo src={"/favicon.png"} alt="Loading..." /> */}
+      Loading...
     </LoaderContainer>
   );
 };
