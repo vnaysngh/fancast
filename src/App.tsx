@@ -1,14 +1,7 @@
-import HeaderComponent from "./Header";
-import NFTMarketplace from "./Pages/Homepage";
-import Web3Auth from "./Web3Auth";
+import { Router } from "./Routes";
 
 function App() {
-  return (
-    <>
-      <HeaderComponent />
-      <NFTMarketplace />
-    </>
-  );
+  return <Router />;
 }
 
 export default App;

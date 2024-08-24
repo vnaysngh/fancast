@@ -1,11 +1,8 @@
-import React from "react";
 import styled from "styled-components";
 import { nftsJson } from "../constants/nftconstants";
+import { useNavigate } from "react-router-dom";
 
 const PageContainer = styled.div`
-  max-width: 80%;
-  margin: 0 auto;
-  padding: 20px;
   background-color: #fff;
 `;
 
@@ -63,14 +60,23 @@ const SectionTitle = styled.h2`
   color: #333;
 `;
 
-const Homepage = () => {
+const Collections = () => {
+  const navigate = useNavigate();
+
+  const handleNavigate = (id: string) => {
+    navigate(`/community/${id}`);
+  };
+
   return (
     <PageContainer>
       <Section>
-        <SectionTitle>Trending NFTs across multiple chains</SectionTitle>
+        <SectionTitle>Trending NFTs</SectionTitle>
         <Grid>
           {nftsJson.map((nft) => (
-            <Card key={nft.symbol}>
+            <Card
+              key={nft.symbol}
+              onClick={() => handleNavigate(nft.openSeaMetadata.collectionSlug)}
+            >
               <CardImage src={nft.openSeaMetadata.imageUrl} alt={nft.name} />
               <CardContent>
                 <CardTitle>{nft.name}</CardTitle>
@@ -84,4 +90,4 @@ const Homepage = () => {
   );
 };
 
-export default Homepage;
+export default Collections;
