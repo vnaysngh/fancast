@@ -5,8 +5,7 @@ import HeaderComponent from "../Header";
 import styled from "styled-components";
 
 const Homepage = lazy(() => import("../pages/Collections"));
-const Chat = lazy(() => import("../pages/Community"));
-// const Profile = lazy(() => import("./pages/Profile"));
+const Community = lazy(() => import("../pages/Community"));
 
 const RoutesContainer = styled.div`
   max-width: 80%;
@@ -21,7 +20,7 @@ export const Router = () => {
         <Suspense fallback={<Loader />}>
           <Routes>
             <Route path="/" element={<Homepage />} />
-            <Route path="/community/:communitySlug" element={<Chat />} />
+            <Route path="/community/:communitySlug" element={<Community />} />
           </Routes>
         </Suspense>
       </RoutesContainer>

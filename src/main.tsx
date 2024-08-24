@@ -7,14 +7,17 @@ import {
 import { web3AuthContextConfig } from "./Web3Auth/web3AuthProviderProps";
 import { WalletServicesProvider } from "@web3auth/wallet-services-plugin-react-hooks";
 import { BrowserRouter, HashRouter } from "react-router-dom";
+import { XMTPProvider } from "@xmtp/react-sdk";
 
 const Home: React.FC = () => {
   return (
     <Web3AuthProvider config={web3AuthContextConfig}>
       <WalletServicesProvider context={Web3AuthInnerContext}>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
+        <XMTPProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </XMTPProvider>
       </WalletServicesProvider>
     </Web3AuthProvider>
   );
