@@ -3,11 +3,12 @@ import { useWeb3Auth } from "@web3auth/modal-react-hooks";
 import { WALLET_ADAPTERS } from "@web3auth/base";
 import { getDefaultExternalAdapters } from "@web3auth/default-evm-adapter";
 import { web3AuthOptions } from "./web3AuthProviderProps";
-import "./App.css";
 
 function Web3Auth() {
   const { initModal, provider, web3Auth, isConnected, connect, logout } =
     useWeb3Auth();
+
+  const handleLogout = () => logout();
 
   useEffect(() => {
     const init = async () => {
@@ -92,7 +93,15 @@ function Web3Auth() {
     init();
   }, [initModal, web3Auth]);
 
-  return <div>{!isConnected && <button onClick={connect}>Login</button>}</div>;
+  return (
+    <>
+      {!isConnected ? (
+        <button onClick={connect}>Login</button>
+      ) : (
+        <div onClick={handleLogout}>Logout</div>
+      )}
+    </>
+  );
 }
 
 export default Web3Auth;
