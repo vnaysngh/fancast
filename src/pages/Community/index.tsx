@@ -7,14 +7,36 @@ import axios from "axios";
 import Feed from "./Feed";
 import { NeynarAuthButton, useNeynarContext } from "@neynar/react";
 import { useWeb3Auth } from "@web3auth/modal-react-hooks";
+import Profile from "./Profile";
 
 // Styled components
-const Community = styled.div`
-  max-width: 800px;
+const Container = styled.div`
+  display: flex;
+  flex-direction: row;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
-  display: flex;
-  flex-direction: column;
+  gap: 20px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+`;
+
+const LeftColumn = styled.div`
+  flex: 1;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 10px;
+  position: sticky;
+  top: 20px; /* Adjust this to your desired top offset */
+  align-self: flex-start; /* Ensures the sticky element aligns with the top */
+  max-height: 90vh; /* Limits the height to avoid overly long sticky sections */
+`;
+
+const RightColumn = styled.div`
+  flex: 2;
+  border-radius: 10px;
 `;
 
 const CommunityChat: React.FC = () => {
@@ -79,13 +101,17 @@ const CommunityChat: React.FC = () => {
 
   //   init();
   // }, []);
-  const { user } = useNeynarContext();
-  const { userInfo } = useWeb3Auth();
+
   return (
-    <Community>
-      {!user && <NeynarAuthButton label="Sign in" />}
-      <Feed />
-    </Community>
+    <Container>
+      <LeftColumn>
+        <Profile />
+      </LeftColumn>
+
+      <RightColumn>
+        <Feed />
+      </RightColumn>
+    </Container>
   );
 };
 

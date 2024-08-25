@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import sampleFeed from "../../constants/sampleFeed";
 
 const FeedContainer = styled.div`
   margin: 0 auto;
-  padding: 20px;
   background-color: #f5f5f5;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
