@@ -4,7 +4,13 @@ import Web3Auth from "../Web3Auth";
 const Header = styled.header`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 0 1.25rem;
+  background-color: #fff; /* Ensure the background color is set */
+  position: sticky;
+  top: 0;
+  z-index: 1000; /* Adjust z-index as needed */
+  // box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional shadow for better separation */
 `;
 
 const PageTitle = styled.div`
