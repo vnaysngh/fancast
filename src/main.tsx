@@ -4,7 +4,7 @@ import {
   Web3AuthProvider,
   Web3AuthInnerContext
 } from "@web3auth/modal-react-hooks";
-import { web3AuthContextConfig } from "./Web3Auth/web3AuthProviderProps";
+import { web3AuthContextConfig } from "./components/Web3Auth/web3AuthProviderProps";
 import { WalletServicesProvider } from "@web3auth/wallet-services-plugin-react-hooks";
 import { BrowserRouter, HashRouter } from "react-router-dom";
 import { XMTPProvider } from "@xmtp/react-sdk";

@@ -1,11 +1,11 @@
 import React, { lazy, Suspense } from "react";
-import Loader from "../Components/Loader";
+import Loader from "../Loader";
 import { Link, Navigate, Route, Routes, useLocation } from "react-router-dom";
 import HeaderComponent from "../Header";
 import styled from "styled-components";
 
-const Homepage = lazy(() => import("../pages/Collections"));
-const Community = lazy(() => import("../pages/Community"));
+const Homepage = lazy(() => import("../../pages/Collections"));
+const Community = lazy(() => import("../../pages/Community"));
 
 const RoutesContainer = styled.div`
   max-width: 80%;

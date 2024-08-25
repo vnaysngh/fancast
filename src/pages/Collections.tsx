@@ -1,53 +1,9 @@
 import styled from "styled-components";
-import { nftsJson } from "../constants/nftconstants";
+import { myNFTs, nftsJson } from "../constants/nftconstants";
 import { useNavigate } from "react-router-dom";
 
 const PageContainer = styled.div`
   background-color: #fff;
-`;
-
-const Grid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(
-    3,
-    1fr
-  ); // Adjusts the grid to have exactly 3 columns
-  gap: 20px;
-  margin-bottom: 40px;
-`;
-
-const Card = styled.div`
-  background-color: #fff;
-  border-radius: 15px;
-  overflow: hidden;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
-  cursor: pointer;
-
-  &:hover {
-    transform: translateY(-5px);
-  }
-`;
-
-const CardImage = styled.img`
-  width: 100%;
-  object-fit: cover;
-`;
-
-const CardContent = styled.div`
-  padding: 15px;
-`;
-
-const CardTitle = styled.h3`
-  margin: 0;
-  font-size: 18px;
-  color: #333;
-`;
-
-const CardAuthor = styled.p`
-  margin: 5px 0;
-  color: #666;
-  font-size: 14px;
 `;
 
 const Section = styled.section`
@@ -60,6 +16,39 @@ const SectionTitle = styled.h2`
   color: #333;
 `;
 
+const NewItemsGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+`;
+
+const NewItemCard = styled.div`
+  background-color: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+`;
+
+const ItemImage = styled.img`
+  width: 100%;
+  object-fit: cover;
+  background-color: #ddd;
+  border-radius: 10px;
+  margin-bottom: 10px;
+`;
+
+const ItemInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+`;
+
+const ItemTitle = styled.div`
+  font-weight: bold;
+  font-size: 1.1rem;
+`;
+
 const Collections = () => {
   const navigate = useNavigate();
 
@@ -69,8 +58,8 @@ const Collections = () => {
 
   return (
     <PageContainer>
-      <Section>
-        <SectionTitle>Trending NFTs</SectionTitle>
+      {/* <Section>
+        <SectionTitle>Trending Communities</SectionTitle>
         <Grid>
           {nftsJson.map((nft) => (
             <Card
@@ -80,11 +69,31 @@ const Collections = () => {
               <CardImage src={nft.openSeaMetadata.imageUrl} alt={nft.name} />
               <CardContent>
                 <CardTitle>{nft.name}</CardTitle>
-                {/* <CardAuthor>{}</CardAuthor> */}
               </CardContent>
             </Card>
           ))}
         </Grid>
+      </Section> */}
+
+      <Section>
+        <SectionTitle>Trending Communities</SectionTitle>
+        <NewItemsGrid>
+          {myNFTs.map((nft) => (
+            <NewItemCard
+              key={nft.contract.symbol}
+              onClick={() => handleNavigate(nft.contract.address)}
+            >
+              <ItemImage
+                src={nft.image.cachedUrl}
+                alt={nft.contract.name ?? ""}
+              />
+              <ItemInfo>
+                <ItemTitle>{nft.contract.name}</ItemTitle>
+                {/* <ItemPrice>0.08 ETH</ItemPrice> */}
+              </ItemInfo>
+            </NewItemCard>
+          ))}
+        </NewItemsGrid>
       </Section>
     </PageContainer>
   );

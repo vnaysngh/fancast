@@ -3,6 +3,19 @@ import { useWeb3Auth } from "@web3auth/modal-react-hooks";
 import { WALLET_ADAPTERS } from "@web3auth/base";
 import { getDefaultExternalAdapters } from "@web3auth/default-evm-adapter";
 import { web3AuthOptions } from "./web3AuthProviderProps";
+import styled from "styled-components";
+
+const LoginButton = styled.button`
+  display: flex;
+  align-items: center;
+  font-size: 1.25rem;
+  font-weight: 700;
+  padding: 10px 20px;
+  outline: none;
+  cursor: pointer;
+  border: 0;
+  border-radius: 8px;
+`;
 
 function Web3Auth() {
   const { initModal, provider, web3Auth, isConnected, connect, logout } =
@@ -96,9 +109,9 @@ function Web3Auth() {
   return (
     <>
       {!isConnected ? (
-        <button onClick={connect}>Login</button>
+        <LoginButton onClick={connect}>Login</LoginButton>
       ) : (
-        <div onClick={handleLogout}>Logout</div>
+        <LoginButton onClick={handleLogout}>Logout</LoginButton>
       )}
     </>
   );
