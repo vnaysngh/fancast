@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
-import { myNFTs } from "../../constants/nftconstants";
+import { myNFTs } from "../../../constants/nftconstants";
 
 // Sample Data (replace with actual data)
 const members = [

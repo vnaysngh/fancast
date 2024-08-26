@@ -2,9 +2,8 @@ import { useWeb3Auth } from "@web3auth/modal-react-hooks";
 import { Client, useClient } from "@xmtp/react-sdk";
 import { ethers } from "ethers";
 import { useCallback, useEffect, useState } from "react";
-import { loadKeys, storeKeys } from "../../utils/xmtpUtils";
-import styled from "styled-components";
-import CreateConversation from "./CreateConversation";
+import { loadKeys, storeKeys } from "../../../utils/xmtpUtils";
+import InboxPage from "./Inbox";
 
 const windowObj: any = window;
 
@@ -57,12 +56,16 @@ const XMPTConnect = () => {
     await initialize({ keys, options, signer });
   }, [initialize, isConnected, signer]);
 
+  if (!isConnected) {
+    return "Connect Wallet";
+  }
+
   if (error) {
     return "An error occurred while initializing the client";
   }
 
   if (isLoading) {
-    return "Awaiting signatures...";
+    return "Loading...";
   }
 
   if (!client) {
@@ -73,7 +76,7 @@ const XMPTConnect = () => {
     );
   }
 
-  return <CreateConversation />;
+  return <InboxPage />;
 };
 
 export default XMPTConnect;
