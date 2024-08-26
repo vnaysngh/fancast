@@ -112,9 +112,7 @@ const Profile = () => {
           src={myNFTs[1].image.cachedUrl}
           alt={userProfile.username}
         />
-        <DisplayName>{userProfile.displayName}</DisplayName>
-        <Username>@{userProfile.username}</Username>
-        <Bio>{userProfile.bio}</Bio>
+        <DisplayName>{myNFTs[1].contract.name}</DisplayName>
       </ProfileContainer>
 
       {/* NFTs Section */}

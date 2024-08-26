@@ -1,118 +1,310 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import XMPTConnect from "./XMPTConnect";
-import { client } from "../../neynarClient";
-import { FeedType, FilterType } from "@neynar/nodejs-sdk";
-import axios from "axios";
-import Feed from "./Feed";
-import { NeynarAuthButton, useNeynarContext } from "@neynar/react";
-import { useWeb3Auth } from "@web3auth/modal-react-hooks";
-import Profile from "./Profile";
+import { myNFTs } from "../../constants/nftconstants";
 
-// Styled components
-const Container = styled.div`
+// Styled Components
+const PageContainer = styled.div`
   display: flex;
-  flex-direction: row;
-  max-width: 1200px;
-  margin: 0 auto;
   padding: 20px;
-  gap: 20px;
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-  }
 `;
 
-const LeftColumn = styled.div`
+const Sidebar = styled.div`
+  width: 25%;
+  padding: 0 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+`;
+
+const ContentContainer = styled.div`
+  width: 75%;
+  padding-left: 20px;
+`;
+
+const Tabs = styled.div`
+  display: flex;
+  margin-bottom: 20px;
+`;
+
+const Tab = styled.button<{ isActive: boolean }>`
+  font-family: "DM Sans", sans-serif;
   flex: 1;
-  background-color: #f9f9f9;
+  padding: 15px 20px;
+  background-color: ${(props) => (props.isActive ? "#8364e2" : "#f0f0f0")};
+  color: ${(props) => (props.isActive ? "#fff" : "#333")};
+  border: none;
+  border-radius: 10px;
+  margin-right: 10px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+`;
+
+const Section = styled.section`
+  background-color: #fff;
   padding: 20px;
   border-radius: 10px;
-  position: sticky;
-  top: 20px; /* Adjust this to your desired top offset */
-  align-self: flex-start; /* Ensures the sticky element aligns with the top */
-  max-height: 90vh; /* Limits the height to avoid overly long sticky sections */
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
 `;
 
-const RightColumn = styled.div`
-  flex: 2;
+const CommunityOverview = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 20px;
+`;
+
+const CommunityImage = styled.img`
+  width: 100px;
+  height: 100px;
   border-radius: 10px;
 `;
 
-const CommunityChat: React.FC = () => {
-  // useEffect(() => {
-  //   const getAddr = async (nftAddr: string): Promise<string[]> => {
-  //     const apiKey = import.meta.env.VITE_ALCHEMY_API_KEY;
-  //     const baseUrl = `https://eth-mainnet.g.alchemy.com/nft/v3/${apiKey}/getOwnersForContract?`;
-  //     const url = `${baseUrl}contractAddress=${nftAddr}&withTokenBalances=false`;
+const CommunityInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 
-  //     const result = await fetch(url, {
-  //       headers: { accept: "application/json" }
-  //     });
-  //     const data = await result.json();
-  //     return data.owners;
-  //   };
+const CommunityName = styled.h3`
+  font-size: 2rem;
+  margin: 0;
+`;
 
-  //   const init = async () => {
-  // milady maker contract address
-  // const nftAddr = "0x5af0d9827e0c53e4799bb226655a1de152a425a5";
-  // const addrs = await getAddr(nftAddr);
-  // // const addrs = ["0x7a8c68e8D99EA00Ca6E33B8C9FE0c4586070825F"];
+const CommunityDescription = styled.p`
+  font-size: 1rem;
+  color: #666;
+  margin-top: 10px;
+`;
 
-  // const addresses = addrs.splice(0, 50);
+const MetricsGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 20px;
+`;
 
-  // const fidLookup = async () => {
-  //   try {
-  //     const options = {
-  //       method: "GET",
-  //       headers: {
-  //         accept: "application/json",
-  //         api_key: import.meta.env.VITE_NEYNAR_API_KEY
-  //       }
-  //     };
-  //     const fids = await axios.get(
-  //       `https://api.neynar.com/v2/farcaster/user/bulk-by-address?addresses=${addresses}`,
-  //       options
-  //     );
-  //     return fids.data;
-  //   } catch (error) {
-  //     return undefined;
-  //   }
-  // };
+const MetricCard = styled.div`
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+`;
 
-  //   const fidsByAddresses: any = await fidLookup();
-  //   console.log(fidsByAddresses, "fidsByAddresses");
-  //   const fids =
-  //     fidsByAddresses && Object.keys(fidsByAddresses).length
-  //       ? Object.keys(fidsByAddresses).map(
-  //           (fid) => fidsByAddresses[fid][0].fid
-  //         )
-  //       : [];
-  //   console.log(fids);
-  //   if (!fids || !fids.length) return;
+const MetricValue = styled.div`
+  font-size: 1.75rem;
+  font-weight: bold;
+  color: #333;
+`;
 
-  //   const feed = await client.fetchFeed(FeedType.Filter, {
-  //     filterType: FilterType.Fids,
-  //     fids
-  //   });
+const MetricLabel = styled.div`
+  font-size: 1rem;
+  color: #666;
+  margin-top: 10px;
+`;
 
-  //   console.log(feed);
-  //   };
+const ButtonGroup = styled.div`
+  display: flex;
+  gap: 15px;
+`;
 
-  //   init();
-  // }, []);
+const LinkButton = styled.a`
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+`;
+
+const QuickLinks = styled.div`
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+`;
+
+const QuickLink = styled.a`
+  color: #8363e2;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+`;
+
+// Mock Data
+const communityData = {
+  name: "Hungry Dogs",
+  description: "A community of NFT enthusiasts focused on P2P projects.",
+  image: myNFTs[1].image.cachedUrl,
+  metrics: {
+    tradingVolume: 1500,
+    uniqueHolders: 200,
+    totalValue: "0.08 ETH",
+    floorPrice: "120 ETH",
+    activeProposals: 4
+  },
+  members: [
+    { name: "jboX", role: "Steward", contributions: 50 },
+    { name: "exalt0x", role: "CEO", contributions: 120 }
+  ],
+  recentCast: [
+    {
+      user: "jboX",
+      message: "Offering x50 cheeborgers @carrotifson",
+      time: "5 mins ago"
+    },
+    { user: "exalt0x", message: "gm", time: "1 hour ago" }
+  ]
+};
+
+const CommunityPage: React.FC = () => {
+  const [activeTab, setActiveTab] = useState("overview");
+
+  const renderTabContent = () => {
+    switch (activeTab) {
+      case "overview":
+        return (
+          <Section>
+            <CommunityOverview>
+              <CommunityImage
+                src={communityData.image}
+                alt={communityData.name}
+              />
+              <CommunityInfo>
+                <CommunityName>{communityData.name}</CommunityName>
+                <CommunityDescription>
+                  {communityData.description}
+                </CommunityDescription>
+              </CommunityInfo>
+            </CommunityOverview>
+
+            {/* Metrics */}
+            <MetricsGrid>
+              <MetricCard>
+                <MetricValue>{communityData.metrics.floorPrice}</MetricValue>
+                <MetricLabel>NFT Floor Price</MetricLabel>
+              </MetricCard>
+              <MetricCard>
+                <MetricValue>{communityData.metrics.tradingVolume}</MetricValue>
+                <MetricLabel>24h Trading Volume</MetricLabel>
+              </MetricCard>
+              <MetricCard>
+                <MetricValue>{communityData.metrics.totalValue}</MetricValue>
+                <MetricLabel>Total Collection Value</MetricLabel>
+              </MetricCard>
+              <MetricCard>
+                <MetricValue>{communityData.metrics.uniqueHolders}</MetricValue>
+                <MetricLabel>Unique Holders</MetricLabel>
+              </MetricCard>
+              <MetricCard>
+                <MetricValue>
+                  {communityData.metrics.activeProposals}
+                </MetricValue>
+                <MetricLabel>Active Proposals</MetricLabel>
+              </MetricCard>
+            </MetricsGrid>
+
+            {/* Quick Links */}
+            <QuickLinks>
+              <QuickLink href="https://discord.gg/community" target="_blank">
+                Join Discord
+              </QuickLink>
+              <QuickLink href="https://governance-portal.com" target="_blank">
+                Governance Portal
+              </QuickLink>
+              <QuickLink href="https://community-events.com" target="_blank">
+                Upcoming Events
+              </QuickLink>
+            </QuickLinks>
+          </Section>
+        );
+      case "cast":
+        return (
+          <Section>
+            <h3>Recent Casts</h3>
+            {communityData.recentCast.map((cast, index) => (
+              <div
+                key={index}
+                style={{
+                  marginBottom: "15px",
+                  padding: "10px",
+                  backgroundColor: "#f0f0f0",
+                  borderRadius: "10px"
+                }}
+              >
+                <strong>{cast.user}</strong>: {cast.message}{" "}
+                <span style={{ fontSize: "0.875rem", color: "#999" }}>
+                  ({cast.time})
+                </span>
+              </div>
+            ))}
+          </Section>
+        );
+      case "members":
+        return (
+          <Section>
+            <h3>Members</h3>
+            {communityData.members.map((member, index) => (
+              <div
+                key={index}
+                style={{
+                  marginBottom: "15px",
+                  padding: "10px",
+                  backgroundColor: "#f0f0f0",
+                  borderRadius: "10px"
+                }}
+              >
+                <strong>{member.name}</strong> - {member.role} (Contributions:{" "}
+                {member.contributions})
+              </div>
+            ))}
+          </Section>
+        );
+      default:
+        return null;
+    }
+  };
 
   return (
-    <Container>
-      <LeftColumn>
-        <Profile />
-      </LeftColumn>
-
-      <RightColumn>
-        <Feed />
-      </RightColumn>
-    </Container>
+    <PageContainer>
+      <Sidebar>
+        <h3>Owned NFTs</h3>
+        <div
+          style={{
+            borderRadius: "10px",
+            marginBottom: "20px"
+          }}
+        >
+          <img
+            src={myNFTs[1].image.cachedUrl}
+            alt={myNFTs[1].contract.name}
+            style={{ width: "100%", borderRadius: "10px" }}
+          />
+          <p style={{ marginTop: "10px", fontWeight: "bold" }}>Kamigotchi</p>
+          <p style={{ fontSize: "0.875rem", color: "#666" }}>
+            An NFT from the Kamigotchi collection.
+          </p>
+        </div>
+      </Sidebar>
+      <ContentContainer>
+        <Tabs>
+          <Tab
+            isActive={activeTab === "overview"}
+            onClick={() => setActiveTab("overview")}
+          >
+            Community Overview
+          </Tab>
+          <Tab
+            isActive={activeTab === "cast"}
+            onClick={() => setActiveTab("cast")}
+          >
+            Cast
+          </Tab>
+          <Tab
+            isActive={activeTab === "members"}
+            onClick={() => setActiveTab("members")}
+          >
+            Members
+          </Tab>
+        </Tabs>
+        {renderTabContent()}
+      </ContentContainer>
+    </PageContainer>
   );
 };
 
-export default CommunityChat;
+export default CommunityPage;
