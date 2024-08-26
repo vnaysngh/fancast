@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { myNFTs } from "../../constants/nftconstants";
+import { useNavigate, useParams } from "react-router-dom";
 
 // Styled Components
 const PageContainer = styled.div`
@@ -152,7 +153,14 @@ const communityData = {
 };
 
 const CommunityPage: React.FC = () => {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("overview");
+  const { communityId } = useParams<{
+    communityId: string;
+  }>();
+  const goToInbox = () => {
+    navigate(`/community/${communityId}/inbox`);
+  };
 
   const renderTabContent = () => {
     switch (activeTab) {
@@ -195,6 +203,12 @@ const CommunityPage: React.FC = () => {
                   {communityData.metrics.activeProposals}
                 </MetricValue>
                 <MetricLabel>Active Proposals</MetricLabel>
+              </MetricCard>
+              <MetricCard onClick={goToInbox}>
+                <MetricValue>
+                  {communityData.metrics.activeProposals}
+                </MetricValue>
+                <MetricLabel>Inbox</MetricLabel>
               </MetricCard>
             </MetricsGrid>
 

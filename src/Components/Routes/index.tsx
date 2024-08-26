@@ -6,6 +6,7 @@ import styled from "styled-components";
 
 const Homepage = lazy(() => import("../../pages/Collections"));
 const Community = lazy(() => import("../../pages/Community"));
+const Inbox = lazy(() => import("../../pages/Community/Inbox"));
 
 const RoutesContainer = styled.div`
   max-width: 80%;
@@ -20,7 +21,13 @@ export const Router = () => {
         <Suspense fallback={<Loader />}>
           <Routes>
             <Route path="/" element={<Homepage />} />
-            <Route path="/community/:communitySlug" element={<Community />} />
+            <Route path="/community/:communityId" element={<Community />} />
+            <Route path="/community/:communityId" element={<Community />} />
+            <Route path="/community/:communityId/inbox" element={<Inbox />} />
+            <Route
+              path="/community/:communityId/inbox/:memberId"
+              element={<Inbox />}
+            />
           </Routes>
         </Suspense>
       </RoutesContainer>

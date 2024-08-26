@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Web3Auth from "../Web3Auth";
+import { useNavigate } from "react-router-dom";
 
 const Header = styled.header`
   display: flex;
@@ -29,9 +30,10 @@ const UserInfo = styled.div`
 `;
 
 const HeaderComponent = () => {
+  const navigate = useNavigate();
   return (
     <Header>
-      <PageTitle>Fancast</PageTitle>
+      <PageTitle onClick={() => navigate("/")}>Fancast</PageTitle>
       <UserInfo>
         <Web3Auth />
       </UserInfo>
