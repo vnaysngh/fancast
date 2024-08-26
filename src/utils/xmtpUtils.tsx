@@ -23,3 +23,7 @@ export const wipeKeys = (walletAddress: string) => {
   // This will clear the conversation cache + the private keys
   localStorage.removeItem(buildLocalStorageKey(walletAddress));
 };
+
+export const isValidEthereumAddress = (address: string) => {
+  return /^0x[a-fA-F0-9]{40}$/.test(address);
+};

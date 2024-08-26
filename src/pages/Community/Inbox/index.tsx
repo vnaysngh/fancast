@@ -3,7 +3,7 @@ import { Client, useClient } from "@xmtp/react-sdk";
 import { ethers } from "ethers";
 import { useCallback, useEffect, useState } from "react";
 import { loadKeys, storeKeys } from "../../../utils/xmtpUtils";
-import InboxPage from "./Inbox";
+import InboxPage from "./CreateConversation";
 
 const windowObj: any = window;
 

@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { myNFTs } from "../../../constants/nftconstants";
+import { isValidEthereumAddress } from "../../../utils/xmtpUtils";
+import { useCanMessage, useClient } from "@xmtp/react-sdk";
 
 // Sample Data (replace with actual data)
 const members = [
@@ -163,6 +165,10 @@ const InboxPage: React.FC = () => {
   const [selectedMember, setSelectedMember] = useState<string>(memberId || "1");
   const [messages, setMessages] = useState<any>(initialMessages);
   const [newMessage, setNewMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [isOnNetwork, setIsOnNetwork] = useState(false);
+  const { client } = useClient();
+  const { canMessage } = useCanMessage();
 
   const handleSelectMember = (id: string) => {
     setSelectedMember(id);
@@ -182,9 +188,23 @@ const InboxPage: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    const handleVerifyPeerAddress = async () => {
+      if (memberId && isValidEthereumAddress(memberId)) {
+        setIsLoading(true);
+        const isUserOnNetwork = await canMessage(memberId);
+        setIsOnNetwork(isUserOnNetwork);
+        setIsLoading(false);
+      } else {
+        setIsOnNetwork(false);
+      }
+    };
+
+    if (memberId && client) handleVerifyPeerAddress();
+  }, [memberId]);
+
   return (
     <PageContainer>
-      {/* Sidebar with members */}
       <Sidebar>
         {members.map((member) => (
           <MemberCard
@@ -198,32 +218,34 @@ const InboxPage: React.FC = () => {
         ))}
       </Sidebar>
 
-      {/* Chat Window */}
-      <ChatWindow>
-        <ChatHeader>
-          {members.find((m) => m.id === selectedMember)?.name}
-        </ChatHeader>
-        <MessagesContainer>
-          {messages[selectedMember]?.map((msg: any, index: number) => (
-            <Message key={index} fromMe={msg.from === "me"}>
-              <MessageBubble fromMe={msg.from === "me"}>
-                {msg.text}
-              </MessageBubble>
-              <Timestamp>{msg.timestamp}</Timestamp>
-            </Message>
-          ))}
-        </MessagesContainer>
-        {/* Input for sending messages */}
-        <InputContainer>
-          <ChatInput
-            type="text"
-            value={newMessage}
-            onChange={(e) => setNewMessage(e.target.value)}
-            placeholder="Type your message..."
-          />
-          <SendButton onClick={handleSendMessage}>Send</SendButton>
-        </InputContainer>
-      </ChatWindow>
+      {isLoading ? (
+        "Loading"
+      ) : memberId && isOnNetwork ? (
+        <ChatWindow>
+          <ChatHeader>
+            {members.find((m) => m.id === selectedMember)?.name}
+          </ChatHeader>
+          <MessagesContainer>
+            {messages[selectedMember]?.map((msg: any, index: number) => (
+              <Message key={index} fromMe={msg.from === "me"}>
+                <MessageBubble fromMe={msg.from === "me"}>
+                  {msg.text}
+                </MessageBubble>
+                <Timestamp>{msg.timestamp}</Timestamp>
+              </Message>
+            ))}
+          </MessagesContainer>
+          <InputContainer>
+            <ChatInput
+              type="text"
+              value={newMessage}
+              onChange={(e) => setNewMessage(e.target.value)}
+              placeholder="Type your message..."
+            />
+            <SendButton onClick={handleSendMessage}>Send</SendButton>
+          </InputContainer>
+        </ChatWindow>
+      ) : null}
     </PageContainer>
   );
 };
