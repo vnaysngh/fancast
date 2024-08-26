@@ -6,6 +6,7 @@ import { web3AuthOptions } from "./web3AuthProviderProps";
 import styled from "styled-components";
 
 const LoginButton = styled.button`
+  font-family: "DM Sans", sans-serif;
   display: flex;
   align-items: center;
   font-size: 1.25rem;
@@ -14,7 +15,7 @@ const LoginButton = styled.button`
   outline: none;
   cursor: pointer;
   border: 0;
-  border-radius: 8px;
+  background: transparent;
 `;
 
 function Web3Auth() {

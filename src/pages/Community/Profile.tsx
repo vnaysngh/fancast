@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { myNFTs } from "../../constants/nftconstants";
 
 // Sample data
 const userProfile = {
@@ -23,10 +24,9 @@ const ProfileContainer = styled.div`
 `;
 
 const ProfileImage = styled.img`
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
+  width: 100%;
   margin-bottom: 10px;
+  border-radius: 8px;
 `;
 
 const DisplayName = styled.h2`
@@ -108,7 +108,10 @@ const Profile = () => {
   return (
     <>
       <ProfileContainer>
-        <ProfileImage src={userProfile.pfpUrl} alt={userProfile.username} />
+        <ProfileImage
+          src={myNFTs[1].image.cachedUrl}
+          alt={userProfile.username}
+        />
         <DisplayName>{userProfile.displayName}</DisplayName>
         <Username>@{userProfile.username}</Username>
         <Bio>{userProfile.bio}</Bio>
