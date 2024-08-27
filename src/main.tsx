@@ -9,6 +9,7 @@ import { WalletServicesProvider } from "@web3auth/wallet-services-plugin-react-h
 import { BrowserRouter, HashRouter } from "react-router-dom";
 import { XMTPProvider } from "@xmtp/react-sdk";
 import { NeynarContextProvider, Theme } from "@neynar/react";
+import { StateContextProvider } from "./context";
 
 const Home: React.FC = () => {
   return (
@@ -21,9 +22,11 @@ const Home: React.FC = () => {
           }}
         >
           <XMTPProvider>
-            <BrowserRouter>
-              <App />
-            </BrowserRouter>
+            <StateContextProvider>
+              <BrowserRouter>
+                <App />
+              </BrowserRouter>
+            </StateContextProvider>
           </XMTPProvider>
         </NeynarContextProvider>
       </WalletServicesProvider>
