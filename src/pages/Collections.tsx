@@ -2,6 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import { myNFTs, nftsJson } from "../constants/nftconstants";
 import { useNavigate } from "react-router-dom";
+import CreateCommunityModal from "../components/CreateCommunity";
 
 // Styled Components
 const PageContainer = styled.div`
@@ -167,6 +168,7 @@ const Collections = () => {
 
   return (
     <PageContainer>
+      {/* <CreateCommunityModal onClose={() => {}} onSubmit={() => {}} /> */}
       <Section>
         <SectionTitle>
           Unlock the Power of Community with Your Token
