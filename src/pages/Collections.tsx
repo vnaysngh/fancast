@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { myNFTs, nftsJson } from "../constants/nftconstants";
 import { useNavigate } from "react-router-dom";
 import CreateCommunityModal from "../components/CreateCommunity";
+import { fanTokens } from "../constants/fanTokens";
 
 // Styled Components
 const PageContainer = styled.div`
@@ -18,6 +19,11 @@ const SectionTitle = styled.h2`
   font-size: 2rem;
   margin-bottom: 20px;
   color: #333;
+`;
+
+const TabsContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
 `;
 
 const Tabs = styled.div`
@@ -45,7 +51,7 @@ const TabButton = styled.button<{ active: boolean; firstTab?: boolean }>`
 
 const NewItemsGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 20px;
 `;
 
@@ -80,6 +86,7 @@ const ItemStats = styled.div`
   color: #666;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 `;
 
 const TagsContainer = styled.div`
@@ -97,6 +104,7 @@ const Tag = styled.span`
 `;
 
 const JoinButton = styled.button`
+  font-family: "DM Sans";
   background-color: #8364e2;
   color: white;
   padding: 10px 15px;
@@ -112,12 +120,45 @@ const JoinButton = styled.button`
   }
 `;
 
+const BalanceContainer = styled.div`
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+`;
+
+const BalanceIcon = styled.span`
+  font-size: 1rem;
+  margin-right: 5px;
+  color: #8364e2;
+`;
+
+const BalanceText = styled.span`
+  font-weight: bold;
+  color: #333;
+`;
+
+const CreateButton = styled(JoinButton)`
+  margin-top: 0;
+  height: fit-content;
+  font-size: 1rem;
+`;
+
 const Collections = () => {
   const [activeTab, setActiveTab] = useState("explore");
   const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleNavigate = (id: string) => {
     navigate(`/community/${id}`);
+  };
+
+  const handleCloseModal = () => {
+    setIsOpen(false);
+  };
+
+  const handleSubmit = () => {
+    setIsOpen(false);
   };
 
   const renderContent = () => {
@@ -159,7 +200,32 @@ const Collections = () => {
         return <div>Your joined communities will appear here.</div>;
       case "fanTokens":
         return (
-          <div>Your fan tokens and related communities will appear here.</div>
+          <NewItemsGrid>
+            {fanTokens.map((fan) => (
+              <NewItemCard
+                key={fan.symbol}
+                onClick={() => handleNavigate(fan.token_address)}
+              >
+                <ItemImage
+                  src={fan.tokenDetails.logoURI}
+                  alt={fan.name ?? ""}
+                />
+                <ItemInfo>
+                  <ItemTitle>{fan.name}</ItemTitle>
+                  <BalanceContainer>
+                    <span>Balance:</span>
+                    <img width={16} src={fan.tokenDetails.logoURI} />
+                    <span> {fan.balance}</span>
+                  </BalanceContainer>
+                  <TagsContainer>
+                    <Tag>#Gaming</Tag>
+                    <Tag>#SportsFi</Tag>
+                  </TagsContainer>
+                  <JoinButton>Join Now</JoinButton>
+                </ItemInfo>
+              </NewItemCard>
+            ))}
+          </NewItemsGrid>
         );
       default:
         return null;
@@ -168,32 +234,40 @@ const Collections = () => {
 
   return (
     <PageContainer>
-      {/* <CreateCommunityModal onClose={() => {}} onSubmit={() => {}} /> */}
+      {isOpen && (
+        <CreateCommunityModal
+          onClose={handleCloseModal}
+          onSubmit={handleSubmit}
+        />
+      )}
       <Section>
         <SectionTitle>
           Unlock the Power of Community with Your Token
         </SectionTitle>
-        <Tabs>
-          <TabButton
-            firstTab
-            active={activeTab === "explore"}
-            onClick={() => setActiveTab("explore")}
-          >
-            Explore
-          </TabButton>
-          <TabButton
-            active={activeTab === "fanTokens"}
-            onClick={() => setActiveTab("fanTokens")}
-          >
-            Fan Tokens
-          </TabButton>
-          <TabButton
-            active={activeTab === "myCommunities"}
-            onClick={() => setActiveTab("myCommunities")}
-          >
-            My Communities
-          </TabButton>
-        </Tabs>
+        <TabsContainer>
+          <Tabs>
+            <TabButton
+              firstTab
+              active={activeTab === "explore"}
+              onClick={() => setActiveTab("explore")}
+            >
+              Explore
+            </TabButton>
+            <TabButton
+              active={activeTab === "fanTokens"}
+              onClick={() => setActiveTab("fanTokens")}
+            >
+              Fan Tokens
+            </TabButton>
+            <TabButton
+              active={activeTab === "myCommunities"}
+              onClick={() => setActiveTab("myCommunities")}
+            >
+              My Communities
+            </TabButton>
+          </Tabs>
+          <CreateButton onClick={() => setIsOpen(true)}>Create</CreateButton>
+        </TabsContainer>
         {renderContent()}
       </Section>
     </PageContainer>
