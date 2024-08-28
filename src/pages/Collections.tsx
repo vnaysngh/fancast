@@ -4,6 +4,7 @@ import { myNFTs, nftsJson } from "../constants/nftconstants";
 import { useNavigate } from "react-router-dom";
 import CreateCommunityModal from "../components/CreateCommunity";
 import { fanTokens } from "../constants/fanTokens";
+import { useAccount } from "wagmi";
 
 // Styled Components
 const PageContainer = styled.div`
@@ -55,6 +56,12 @@ const NewItemsGrid = styled.div`
   gap: 20px;
 `;
 
+const FanTokensGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+`;
+
 const NewItemCard = styled.div`
   border-radius: 10px;
   cursor: pointer;
@@ -79,6 +86,10 @@ const ItemTitle = styled.div`
   font-weight: bold;
   font-size: 1.25rem;
   color: #333;
+`;
+
+const FanItemTitle = styled(ItemTitle)`
+  font-size: 1rem;
 `;
 
 const ItemStats = styled.div`
@@ -200,7 +211,7 @@ const Collections = () => {
         return <div>Your joined communities will appear here.</div>;
       case "fanTokens":
         return (
-          <NewItemsGrid>
+          <FanTokensGrid>
             {fanTokens.map((fan) => (
               <NewItemCard
                 key={fan.symbol}
@@ -211,21 +222,21 @@ const Collections = () => {
                   alt={fan.name ?? ""}
                 />
                 <ItemInfo>
-                  <ItemTitle>{fan.name}</ItemTitle>
+                  <FanItemTitle>{fan.name}</FanItemTitle>
                   <BalanceContainer>
                     <span>Balance:</span>
                     <img width={16} src={fan.tokenDetails.logoURI} />
                     <span> {fan.balance}</span>
                   </BalanceContainer>
-                  <TagsContainer>
+                  {/*  <TagsContainer>
                     <Tag>#Gaming</Tag>
                     <Tag>#SportsFi</Tag>
-                  </TagsContainer>
-                  <JoinButton>Join Now</JoinButton>
+                  </TagsContainer> */}
+                  {/* <JoinButton>Join Now</JoinButton> */}
                 </ItemInfo>
               </NewItemCard>
             ))}
-          </NewItemsGrid>
+          </FanTokensGrid>
         );
       default:
         return null;

@@ -1,20 +1,43 @@
 import React from "react";
 import App from "./App";
+import { WagmiProvider, createConfig, http } from "wagmi";
+import { coinbaseWallet, walletConnect } from "wagmi/connectors";
 import {
-  Web3AuthProvider,
-  Web3AuthInnerContext
-} from "@web3auth/modal-react-hooks";
-import { web3AuthContextConfig } from "./components/Web3Auth/web3AuthProviderProps";
-import { WalletServicesProvider } from "@web3auth/wallet-services-plugin-react-hooks";
-import { BrowserRouter, HashRouter } from "react-router-dom";
+  sepolia,
+  mainnet,
+  polygon,
+  optimism,
+  arbitrum,
+  optimismSepolia,
+  polygonMumbai
+} from "wagmi/chains";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { BrowserRouter } from "react-router-dom";
 import { XMTPProvider } from "@xmtp/react-sdk";
 import { NeynarContextProvider, Theme } from "@neynar/react";
 import { StateContextProvider } from "./context";
+import Web3AuthConnectorInstance from "./components/Web3Auth/Web3AuthConnectorInstance";
+
+const queryClient = new QueryClient();
+
+// Set up client
+const config = createConfig({
+  chains: [mainnet, sepolia, polygon, polygonMumbai, optimism, optimismSepolia],
+  transports: {
+    [mainnet.id]: http(),
+    [sepolia.id]: http(),
+    [polygon.id]: http(),
+    [optimism.id]: http(),
+    [polygonMumbai.id]: http(),
+    [optimismSepolia.id]: http()
+  },
+  connectors: [Web3AuthConnectorInstance([mainnet, sepolia, polygon])]
+});
 
 const Home: React.FC = () => {
   return (
-    <Web3AuthProvider config={web3AuthContextConfig}>
-      <WalletServicesProvider context={Web3AuthInnerContext}>
+    <WagmiProvider config={config}>
+      <QueryClientProvider client={queryClient}>
         <NeynarContextProvider
           settings={{
             clientId: import.meta.env.VITE_NEYNAR_CLIENT_ID || "",
@@ -29,8 +52,8 @@ const Home: React.FC = () => {
             </StateContextProvider>
           </XMTPProvider>
         </NeynarContextProvider>
-      </WalletServicesProvider>
-    </Web3AuthProvider>
+      </QueryClientProvider>
+    </WagmiProvider>
   );
 };
 
