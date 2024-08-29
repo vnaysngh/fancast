@@ -1,18 +1,16 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { myNFTs, nftsJson } from "../constants/nftconstants";
 import { useNavigate } from "react-router-dom";
 import CreateCommunityModal from "../components/CreateCommunity";
 import { fanTokens } from "../constants/fanTokens";
-import { useAccount, useReadContract } from "wagmi";
 import { http, createConfig, getBalance } from "@wagmi/core";
 import { chiliz, mainnet, sepolia, spicy } from "@wagmi/core/chains";
 import TransactionConfirmationPopup from "../components/TransactionPopup";
 import axios from "axios";
-import { SubgraphService } from "@unlock-protocol/unlock-js";
 import { useStateContext } from "../context";
-import { client, locksOwnedByLockManager } from "../graphql/query";
-import { gql, useQuery } from "@apollo/client";
+import { locksOwnedByLockManager } from "../graphql/query";
+import { useQuery } from "@apollo/client";
 
 export const config = createConfig({
   chains: [mainnet, sepolia, chiliz, spicy],
