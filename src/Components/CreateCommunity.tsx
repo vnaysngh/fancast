@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useStateContext } from "../context";
 import { Unlock, PublicLock } from "@unlock-protocol/contracts";
+import { unlockAddresses } from "../constants/unlock";
+import LoadingSpinner from "./Spinner";
 const UnlockABI = Unlock.abi;
 const PublicLockABI = PublicLock.abi;
 const ModalOverlay = styled.div`
@@ -90,10 +92,12 @@ interface CommunityData {
 }
 
 const CreateCommunityModal: React.FC<CreateCommunityModalProps> = ({
-  onClose,
-  onSubmit
+  onClose
 }) => {
   const { signer, address } = useStateContext();
+  const [isLoading, setIsLoading] = useState(false);
+  const [txHash, setTxHash] = useState(null);
+  const [error, setError] = useState<any>(null);
   const [formData, setFormData] = useState<CommunityData>({
     name: "",
     membershipDuration: 30,
@@ -112,113 +116,137 @@ const CreateCommunityModal: React.FC<CreateCommunityModalProps> = ({
         name === "membershipDuration" ||
         name === "numberOfMemberships" ||
         name === "membershipPrice"
-          ? parseFloat(value)
+          ? Number(value)
           : value
     }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit(formData);
+    deployLock();
   };
 
-  console.log(formData, "formData");
-
-  useEffect(() => {
-    // Version must match the PublicLock import above!
+  const deployLock = async () => {
+    if (!signer || !address) return;
+    setIsLoading(true);
+    const {
+      name,
+      membershipDuration,
+      membershipPrice,
+      numberOfMemberships,
+      network
+    } = formData;
     const version = 13;
-    const unlockAddress = "0x36b34e10295cCE69B652eEB5a8046041074515Da";
-    const deployLock = async () => {
-      // Create an instance of the Unlock factory contract.
-      const unlock = new ethers.Contract(unlockAddress, UnlockABI, signer);
+    const unlockAddress = unlockAddresses[network];
+    const unlock = new ethers.Contract(unlockAddress, UnlockABI, signer);
 
-      // To create a lock, depending on the version, we need to create calldata
-      // For this, we use the PublicLock's ABI to encode the right function call
-      const lockInterface = new ethers.Interface(PublicLockABI);
-      const calldata = lockInterface.encodeFunctionData(
-        "initialize(address,uint256,address,uint256,uint256,string)",
-        [
-          address,
-          60 * 60 * 24 * 30,
-          "0x0000000000000000000000000000000000000000",
-          12000000000000000n,
-          999,
-          "My demo membership contract"
-        ]
+    const lockInterface = new ethers.Interface(PublicLockABI);
+    const calldata = lockInterface.encodeFunctionData(
+      "initialize(address,uint256,address,uint256,uint256,string)",
+      [
+        address,
+        60 * 60 * 24 * membershipDuration,
+        "0x0000000000000000000000000000000000000000",
+        ethers.parseUnits(membershipPrice.toString(), 18),
+        numberOfMemberships,
+        name
+      ]
+    );
+    try {
+      const response = await unlock.createUpgradeableLockAtVersion(
+        calldata,
+        version
       );
-      await unlock.createUpgradeableLockAtVersion(calldata, version);
-    };
 
-    if (signer && address) deployLock();
-  }, [signer, address]);
+      if (response.hash) {
+        setTxHash(response.hash);
+      }
+      setIsLoading(false);
+    } catch (e) {
+      console.log(e);
+      setError(e);
+      setIsLoading(false);
+    }
+  };
 
   return (
     <ModalOverlay>
       <Modal>
-        <Title>Create a Community</Title>
-        <Form onSubmit={handleSubmit}>
-          <Label htmlFor="name">Name</Label>
-          <Input
-            type="text"
-            id="name"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            required
-          />
+        {isLoading ? (
+          <LoadingSpinner />
+        ) : txHash ? (
+          <Title>
+            The transaction you submitted has been completed. Kindly revisit the
+            'My communities' section at a later time.
+          </Title>
+        ) : error ? (
+          <Title>Something went wrong</Title>
+        ) : (
+          <>
+            <Title>Create a Community</Title>
+            <Form onSubmit={handleSubmit}>
+              <Label htmlFor="name">Name</Label>
+              <Input
+                type="text"
+                id="name"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                required
+              />
 
-          <Label htmlFor="membershipDuration">Membership Duration (days)</Label>
-          <Input
-            type="number"
-            id="membershipDuration"
-            name="membershipDuration"
-            value={formData.membershipDuration}
-            onChange={handleChange}
-            min="1"
-            required
-          />
+              <Label htmlFor="membershipDuration">
+                Membership Duration (days)
+              </Label>
+              <Input
+                type="number"
+                id="membershipDuration"
+                name="membershipDuration"
+                value={formData.membershipDuration}
+                onChange={handleChange}
+                min="1"
+                required
+              />
 
-          <Label htmlFor="network">Network</Label>
-          <Select
-            id="network"
-            name="network"
-            value={formData.network}
-            onChange={handleChange}
-            required
-          >
-            <option value="sepolia">Sepolia</option>
-            <option value="op-sepolia">Optimism Sepolia</option>
-            <option value="arb-sepolia">Arbitrum Sepolia</option>
-            <option value="base-sepolia">Base Sepolia</option>
-          </Select>
+              <Label htmlFor="network">Network</Label>
+              <Select
+                id="network"
+                name="network"
+                value={formData.network}
+                onChange={handleChange}
+                required
+              >
+                <option value="sepolia">Sepolia</option>
+                <option value="baseSepolia">Base Sepolia</option>
+              </Select>
 
-          <Label htmlFor="numberOfMemberships">
-            Number of Memberships for Sale
-          </Label>
-          <Input
-            type="number"
-            id="numberOfMemberships"
-            name="numberOfMemberships"
-            value={formData.numberOfMemberships}
-            onChange={handleChange}
-            min="1"
-            required
-          />
+              <Label htmlFor="numberOfMemberships">
+                Number of Memberships for Sale
+              </Label>
+              <Input
+                type="number"
+                id="numberOfMemberships"
+                name="numberOfMemberships"
+                value={formData.numberOfMemberships}
+                onChange={handleChange}
+                min="1"
+                required
+              />
 
-          <Label htmlFor="membershipPrice">Membership Price (ETH)</Label>
-          <Input
-            type="number"
-            id="membershipPrice"
-            name="membershipPrice"
-            value={formData.membershipPrice}
-            onChange={handleChange}
-            min="0"
-            step="0.01"
-            required
-          />
+              <Label htmlFor="membershipPrice">Membership Price (ETH)</Label>
+              <Input
+                type="number"
+                id="membershipPrice"
+                name="membershipPrice"
+                value={formData.membershipPrice}
+                onChange={handleChange}
+                required
+              />
 
-          <Button type="submit">Create</Button>
-        </Form>
+              <Button type="submit">Create</Button>
+            </Form>
+          </>
+        )}
       </Modal>
     </ModalOverlay>
   );

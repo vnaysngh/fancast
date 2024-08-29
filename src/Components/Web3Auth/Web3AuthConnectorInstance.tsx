@@ -20,8 +20,8 @@ const metamaskAdapter = new MetamaskAdapter({
   web3AuthNetwork: "sapphire_mainnet",
   chainConfig: {
     chainNamespace: CHAIN_NAMESPACES.EIP155,
-    chainId: "0x1",
-    rpcTarget: "https://rpc.ankr.com/eth" // This is the public RPC we have added, please pass on your own endpoint while creating an app
+    chainId: "0xaa36a7",
+    rpcTarget: "https://rpc.ankr.com/eth_sepolia" // This is the public RPC we have added, please pass on your own endpoint while creating an app
   }
 });
 
@@ -31,23 +31,23 @@ const coinbaseAdapter = new CoinbaseAdapter({
   sessionTime: 3600, // 1 hour in seconds
   chainConfig: {
     chainNamespace: CHAIN_NAMESPACES.EIP155,
-    chainId: "0x1",
-    rpcTarget: "https://rpc.ankr.com/eth" // This is the public RPC we have added, please pass on your own endpoint while creating an app
+    chainId: "0xaa36a7",
+    rpcTarget: "https://rpc.ankr.com/eth_sepolia" // This is the public RPC we have added, please pass on your own endpoint while creating an app
   },
-  web3AuthNetwork: "sapphire_mainnet"
+  web3AuthNetwork: WEB3AUTH_NETWORK.SAPPHIRE_MAINNET
 });
 
 export default function Web3AuthConnectorInstance(chains: Chain[]) {
   // Create Web3Auth Instance
   const name = "Fancast";
   const chainConfig = {
-    chainId: "0x1",
-    displayName: "Ethereum",
+    chainId: "0xaa36a7", // for wallet connect make sure to pass in this chain in the loginSettings of the adapter.
+    displayName: "Ethereum Sepolia",
     chainNamespace: CHAIN_NAMESPACES.EIP155,
-    tickerName: "Ethereum Mainnet",
+    tickerName: "Ethereum Sepolia",
     ticker: "ETH",
-    rpcTarget: "https://rpc.ankr.com/eth",
-    blockExplorerUrl: "https://etherscan.io",
+    rpcTarget: "https://rpc.ankr.com/eth_sepolia",
+    blockExplorerUrl: "https://sepolia.etherscan.io",
     logo: "https://cryptologos.cc/logos/ethereum-eth-logo.png"
   };
 
@@ -71,7 +71,7 @@ export default function Web3AuthConnectorInstance(chains: Chain[]) {
       primaryButton: "socialLogin",
       loginMethodsOrder: ["farcaster"]
     },
-    web3AuthNetwork: WEB3AUTH_NETWORK.SAPPHIRE_MAINNET,
+    web3AuthNetwork: WEB3AUTH_NETWORK.SAPPHIRE_DEVNET,
     enableLogging: true
   });
 
@@ -82,8 +82,8 @@ export default function Web3AuthConnectorInstance(chains: Chain[]) {
     sessionTime: 86400, // 1 day in seconds
     chainConfig: {
       chainNamespace: CHAIN_NAMESPACES.EIP155,
-      chainId: "0x1",
-      rpcTarget: "https://rpc.ankr.com/eth" // This is the public RPC we have added, please pass on your own endpoint while creating an app
+      chainId: "0xaa36a7",
+      rpcTarget: "https://rpc.ankr.com/eth_sepolia" // This is the public RPC we have added, please pass on your own endpoint while creating an app
     },
     web3AuthNetwork: "sapphire_mainnet"
   });
@@ -92,8 +92,8 @@ export default function Web3AuthConnectorInstance(chains: Chain[]) {
     sessionTime: 86400, // 1 day in seconds
     chainConfig: {
       chainNamespace: CHAIN_NAMESPACES.EIP155,
-      chainId: "0x1",
-      rpcTarget: "https://rpc.ankr.com/eth" // This is the public RPC we have added, please pass on your own endpoint while creating an app
+      chainId: "0xaa36a7",
+      rpcTarget: "https://rpc.ankr.com/eth_sepolia" // This is the public RPC we have added, please pass on your own endpoint while creating an app
     },
     web3AuthNetwork: "sapphire_mainnet"
   });

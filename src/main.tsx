@@ -17,6 +17,8 @@ import { XMTPProvider } from "@xmtp/react-sdk";
 import { NeynarContextProvider, Theme } from "@neynar/react";
 import { StateContextProvider } from "./context";
 import Web3AuthConnectorInstance from "./components/Web3Auth/Web3AuthConnectorInstance";
+import { client } from "./graphql/query";
+import { ApolloProvider } from "@apollo/client";
 
 const queryClient = new QueryClient();
 
@@ -36,24 +38,26 @@ const config = createConfig({
 
 const Home: React.FC = () => {
   return (
-    <WagmiProvider config={config}>
-      <QueryClientProvider client={queryClient}>
-        <NeynarContextProvider
-          settings={{
-            clientId: import.meta.env.VITE_NEYNAR_CLIENT_ID || "",
-            defaultTheme: Theme.Light
-          }}
-        >
-          <XMTPProvider>
-            <StateContextProvider>
-              <BrowserRouter>
-                <App />
-              </BrowserRouter>
-            </StateContextProvider>
-          </XMTPProvider>
-        </NeynarContextProvider>
-      </QueryClientProvider>
-    </WagmiProvider>
+    <ApolloProvider client={client}>
+      <WagmiProvider config={config}>
+        <QueryClientProvider client={queryClient}>
+          <NeynarContextProvider
+            settings={{
+              clientId: import.meta.env.VITE_NEYNAR_CLIENT_ID || "",
+              defaultTheme: Theme.Light
+            }}
+          >
+            <XMTPProvider>
+              <StateContextProvider>
+                <BrowserRouter>
+                  <App />
+                </BrowserRouter>
+              </StateContextProvider>
+            </XMTPProvider>
+          </NeynarContextProvider>
+        </QueryClientProvider>
+      </WagmiProvider>
+    </ApolloProvider>
   );
 };
 

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { myNFTs, nftsJson } from "../constants/nftconstants";
 import { useNavigate } from "react-router-dom";
@@ -9,6 +9,10 @@ import { http, createConfig, getBalance } from "@wagmi/core";
 import { chiliz, mainnet, sepolia, spicy } from "@wagmi/core/chains";
 import TransactionConfirmationPopup from "../components/TransactionPopup";
 import axios from "axios";
+import { SubgraphService } from "@unlock-protocol/unlock-js";
+import { useStateContext } from "../context";
+import { client, locksOwnedByLockManager } from "../graphql/query";
+import { gql, useQuery } from "@apollo/client";
 
 export const config = createConfig({
   chains: [mainnet, sepolia, chiliz, spicy],
@@ -152,21 +156,38 @@ const BalanceContainer = styled.div`
   gap: 5px;
 `;
 
-const BalanceIcon = styled.span`
-  font-size: 1rem;
-  margin-right: 5px;
-  color: #8364e2;
-`;
-
-const BalanceText = styled.span`
-  font-weight: bold;
-  color: #333;
-`;
-
 const CreateButton = styled(JoinButton)`
   margin-top: 0;
   height: fit-content;
   font-size: 1rem;
+`;
+
+const LockItem = styled.div`
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  background: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+`;
+
+const Title = styled.h3`
+  margin: 0;
+  font-size: 1rem;
+`;
+
+const Details = styled.p`
+  margin: 8px 0;
+  font-size: 1rem;
+`;
+
+const EtherscanLink = styled.a`
+  color: #1e90ff;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
 `;
 
 const Collections = () => {
@@ -176,14 +197,22 @@ const Collections = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [error, setError] = useState<any>(false);
   const navigate = useNavigate();
-  const account = useAccount();
+  const { address } = useStateContext();
 
-  const handleAccess = async (contractAddress: string) => {
+  const {
+    loading,
+    error: apolloError,
+    data
+  } = useQuery(locksOwnedByLockManager, {
+    variables: { deployer: address }
+  });
+
+  const handleAccess = async (contractAddress: any) => {
     if (!contractAddress) return;
     setIsLoading(true);
     try {
       const balance = await getBalance(config, {
-        address: account.address!,
+        address: address!,
         token: contractAddress,
         chainId: spicy.id,
         blockTag: "latest"
@@ -212,7 +241,7 @@ const Collections = () => {
       const alchemyKey = import.meta.env.VITE_ALCHEMY_API_KEY;
       axios
         .get(
-          `https://${network}.g.alchemy.com/nft/v3/${alchemyKey}/isHolderOfContract?wallet=${account.address}&contractAddress=${contractAddress}`,
+          `https://${network}.g.alchemy.com/nft/v3/${alchemyKey}/isHolderOfContract?wallet=${address}&contractAddress=${contractAddress}`,
           options
         )
         .then((response) => {
@@ -290,7 +319,38 @@ const Collections = () => {
           </NewItemsGrid>
         );
       case "myCommunities":
-        return <div>Your joined communities will appear here.</div>;
+        return (
+          <FanTokensGrid>
+            {data?.locks.map((lock: any) => {
+              // Convert expiration duration from seconds to days
+              const expirationDurationDays = Math.floor(
+                Number(lock.expirationDuration) / (60 * 60 * 24)
+              );
+
+              return (
+                <LockItem key={lock.address}>
+                  <ItemImage
+                    src="https://via.placeholder.com/100"
+                    alt={lock.name ?? ""}
+                  />
+                  <Title>{lock.name}</Title>
+                  <Details>
+                    Expiration Duration: {expirationDurationDays} days
+                  </Details>
+                  <Details>Price: {parseFloat(lock.price) / 1e18} ETH</Details>
+                  <Details>Number of Keys: {lock.totalKeys}</Details>
+                  <EtherscanLink
+                    href={`https://etherscan.io/address/${lock.address}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    View on Etherscan
+                  </EtherscanLink>
+                </LockItem>
+              );
+            })}
+          </FanTokensGrid>
+        );
       case "fanTokens":
         return (
           <FanTokensGrid>
