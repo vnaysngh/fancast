@@ -225,7 +225,7 @@ const Collections = () => {
         })
         .catch((err) => {
           console.error(err);
-          setError(e);
+          setError(err);
         });
     } catch (e) {
       console.log(e);
