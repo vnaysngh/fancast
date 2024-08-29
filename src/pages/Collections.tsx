@@ -4,7 +4,21 @@ import { myNFTs, nftsJson } from "../constants/nftconstants";
 import { useNavigate } from "react-router-dom";
 import CreateCommunityModal from "../components/CreateCommunity";
 import { fanTokens } from "../constants/fanTokens";
-import { useAccount } from "wagmi";
+import { useAccount, useReadContract } from "wagmi";
+import { http, createConfig, getBalance } from "@wagmi/core";
+import { chiliz, mainnet, sepolia, spicy } from "@wagmi/core/chains";
+import TransactionConfirmationPopup from "../components/TransactionPopup";
+import axios from "axios";
+
+export const config = createConfig({
+  chains: [mainnet, sepolia, chiliz, spicy],
+  transports: {
+    [mainnet.id]: http(),
+    [sepolia.id]: http(),
+    [chiliz.id]: http(),
+    [spicy.id]: http()
+  }
+});
 
 // Styled Components
 const PageContainer = styled.div`
@@ -157,8 +171,68 @@ const CreateButton = styled(JoinButton)`
 
 const Collections = () => {
   const [activeTab, setActiveTab] = useState("explore");
-  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+  const [isEligible, setIsEligible] = useState<any>(undefined);
   const [isOpen, setIsOpen] = useState(false);
+  const [error, setError] = useState<any>(false);
+  const navigate = useNavigate();
+  const account = useAccount();
+
+  const handleAccess = async (contractAddress: string) => {
+    if (!contractAddress) return;
+    setIsLoading(true);
+    try {
+      const balance = await getBalance(config, {
+        address: account.address!,
+        token: contractAddress,
+        chainId: spicy.id,
+        blockTag: "latest"
+      });
+
+      setIsEligible(balance.value > 1);
+
+      setTimeout(() => {
+        handleNavigate(contractAddress);
+      }, 2000);
+    } catch (e) {
+      console.log(e);
+      setError(e);
+      // setIsLoading(false);
+    }
+  };
+
+  const isHolderOfNFTContract = (network: string, contractAddress: string) => {
+    if (!contractAddress) return;
+    setIsLoading(true);
+    try {
+      const options = {
+        method: "GET",
+        headers: { accept: "application/json" }
+      };
+      const alchemyKey = import.meta.env.VITE_ALCHEMY_API_KEY;
+      axios
+        .get(
+          `https://${network}.g.alchemy.com/nft/v3/${alchemyKey}/isHolderOfContract?wallet=${account.address}&contractAddress=${contractAddress}`,
+          options
+        )
+        .then((response) => {
+          setIsEligible(response.data?.isHolderOfContract);
+          if (response.data.isHolderOfContract) {
+            setTimeout(() => {
+              handleNavigate(contractAddress);
+            }, 2000);
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+          setError(e);
+        });
+    } catch (e) {
+      console.log(e);
+      setError(e);
+      // setIsLoading(false);
+    }
+  };
 
   const handleNavigate = (id: string) => {
     navigate(`/community/${id}`);
@@ -166,6 +240,12 @@ const Collections = () => {
 
   const handleCloseModal = () => {
     setIsOpen(false);
+  };
+
+  const handleCloseVerificationModal = () => {
+    setIsLoading(false);
+    setError(false);
+    setIsEligible(undefined);
   };
 
   const handleSubmit = () => {
@@ -180,7 +260,9 @@ const Collections = () => {
             {myNFTs.map((nft) => (
               <NewItemCard
                 key={nft.contract.symbol}
-                onClick={() => handleNavigate(nft.contract.address)}
+                onClick={() =>
+                  isHolderOfNFTContract("eth-sepolia", nft.contract.address)
+                }
               >
                 <ItemImage
                   src={nft.image.cachedUrl}
@@ -215,7 +297,7 @@ const Collections = () => {
             {fanTokens.map((fan) => (
               <NewItemCard
                 key={fan.symbol}
-                onClick={() => handleNavigate(fan.token_address)}
+                onClick={() => handleAccess(fan.token_address)}
               >
                 <ItemImage
                   src={fan.tokenDetails.logoURI}
@@ -249,6 +331,14 @@ const Collections = () => {
         <CreateCommunityModal
           onClose={handleCloseModal}
           onSubmit={handleSubmit}
+        />
+      )}
+
+      {isLoading && (
+        <TransactionConfirmationPopup
+          onClose={handleCloseVerificationModal}
+          isEligible={isEligible}
+          error={error}
         />
       )}
       <Section>

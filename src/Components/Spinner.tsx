@@ -12,7 +12,7 @@ const spin = keyframes`
 
 // Create a styled component for the spinner
 const Spinner = styled.div`
-  border: 4px solid rgba(255, 255, 255, 0.2);
+  border: 4px solid #8364e2;
   border-top: 4px solid #fff;
   border-radius: 50%;
   width: 100px;

@@ -1,7 +1,6 @@
 import { useEffect, useRef } from "react";
 import styled from "styled-components";
 import LoadingSpinner from "./Spinner";
-import { useStateContext } from "../context";
 
 const Overlay = styled.div`
   position: fixed;
@@ -17,7 +16,7 @@ const Overlay = styled.div`
 `;
 
 const PopupContainer = styled.div`
-  background-color: #1a1b1e;
+  background-color: #fff;
   border-radius: 16px;
   padding: 2rem;
   width: 400px;
@@ -25,7 +24,6 @@ const PopupContainer = styled.div`
 `;
 
 const Title = styled.h2`
-  color: #ffffff;
   font-size: 1.5rem;
   font-weight: 700;
   margin-bottom: 1rem;
@@ -60,68 +58,27 @@ const Button = styled.button<{ primary?: boolean }>`
 `;
 
 const TransactionConfirmationPopup = ({
-  isOpen = true,
+  isEligible,
   onClose,
-  onCloseWithoutSubmit,
-  txHash,
   error
 }: {
-  isOpen?: boolean;
+  isEligible: any;
   onClose?: () => void;
-  onCloseWithoutSubmit?: () => void;
-  txHash: string | null;
-  error: Error | null;
+  error: any;
 }) => {
-  if (!isOpen) return null;
-
   const popupRef = useRef<HTMLDivElement>(null);
-  const { chain } = useStateContext();
-
-  const handleClickOutside = (event: MouseEvent) => {
-    if (
-      onCloseWithoutSubmit &&
-      popupRef.current &&
-      !popupRef.current.contains(event.target as Node)
-    ) {
-      onCloseWithoutSubmit();
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [onClose]);
 
   return (
     <Overlay>
       <PopupContainer ref={popupRef}>
-        <Title>Transaction Confirmation</Title>
-        <Message>
-          {txHash ? (
-            <div>
-              Your transaction has been submitted. Check your transaction here
-              on{" "}
-              <a
-                href={`https://${chain}.blockscout.com/tx/${txHash}`}
-                target="_blank"
-                style={{ color: "#e16abd" }}
-              >
-                Blockscout
-              </a>
-            </div>
-          ) : error ? (
-            <>{error}</>
-          ) : (
-            <LoadingSpinner />
-          )}
-        </Message>
-        {(error || txHash) && (
-          <ButtonContainer>
-            <Button onClick={onClose}>Close</Button>
-          </ButtonContainer>
-        )}
+        <Title>
+          {isEligible === undefined
+            ? "Verifying your balance. Please wait.."
+            : isEligible
+            ? "You are verified. Redirecting..."
+            : "You dont have the required balance to enter the community"}
+        </Title>
+        {isEligible === undefined && <LoadingSpinner />}
       </PopupContainer>
     </Overlay>
   );
