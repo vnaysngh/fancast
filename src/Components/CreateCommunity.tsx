@@ -1,6 +1,10 @@
-import React, { useState } from "react";
+import { ethers } from "ethers";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-
+import { useStateContext } from "../context";
+import { Unlock, PublicLock } from "@unlock-protocol/contracts";
+const UnlockABI = Unlock.abi;
+const PublicLockABI = PublicLock.abi;
 const ModalOverlay = styled.div`
   position: fixed;
   top: 0;
@@ -89,6 +93,7 @@ const CreateCommunityModal: React.FC<CreateCommunityModalProps> = ({
   onClose,
   onSubmit
 }) => {
+  const { signer, address } = useStateContext();
   const [formData, setFormData] = useState<CommunityData>({
     name: "",
     membershipDuration: 30,
@@ -116,6 +121,36 @@ const CreateCommunityModal: React.FC<CreateCommunityModalProps> = ({
     e.preventDefault();
     onSubmit(formData);
   };
+
+  console.log(formData, "formData");
+
+  useEffect(() => {
+    // Version must match the PublicLock import above!
+    const version = 13;
+    const unlockAddress = "0x36b34e10295cCE69B652eEB5a8046041074515Da";
+    const deployLock = async () => {
+      // Create an instance of the Unlock factory contract.
+      const unlock = new ethers.Contract(unlockAddress, UnlockABI, signer);
+
+      // To create a lock, depending on the version, we need to create calldata
+      // For this, we use the PublicLock's ABI to encode the right function call
+      const lockInterface = new ethers.Interface(PublicLockABI);
+      const calldata = lockInterface.encodeFunctionData(
+        "initialize(address,uint256,address,uint256,uint256,string)",
+        [
+          address,
+          60 * 60 * 24 * 30,
+          "0x0000000000000000000000000000000000000000",
+          12000000000000000n,
+          999,
+          "My demo membership contract"
+        ]
+      );
+      await unlock.createUpgradeableLockAtVersion(calldata, version);
+    };
+
+    if (signer && address) deployLock();
+  }, [signer, address]);
 
   return (
     <ModalOverlay>
@@ -152,8 +187,9 @@ const CreateCommunityModal: React.FC<CreateCommunityModalProps> = ({
             required
           >
             <option value="sepolia">Sepolia</option>
-            <option value="optimism">Optimism</option>
-            <option value="arbitrum">Arbitrum</option>
+            <option value="op-sepolia">Optimism Sepolia</option>
+            <option value="arb-sepolia">Arbitrum Sepolia</option>
+            <option value="base-sepolia">Base Sepolia</option>
           </Select>
 
           <Label htmlFor="numberOfMemberships">
