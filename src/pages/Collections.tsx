@@ -24,7 +24,6 @@ export const config = createConfig({
 
 // Styled Components
 const PageContainer = styled.div`
-  background-color: #fff;
   padding: 20px;
 `;
 
@@ -52,18 +51,13 @@ const Tabs = styled.div`
 const TabButton = styled.button<{ active: boolean; firstTab?: boolean }>`
   font-family: "DM Sans";
   padding: 10px 15px;
-  color: ${(props) => (props.active ? "#8364e2" : "#000")};
+  color: ${(props) => (props.active ? "#0d0c22" : "#000")};
   border: none;
-  border-radius: 5px;
   background-color: transparent;
   font-size: 1.25rem;
   cursor: pointer;
   font-weight: ${(props) => (props.active ? "bold" : "normal")};
   padding-left: ${(props) => (props.firstTab ? 0 : "inherit")};
-
-  &:hover {
-    background-color: "#ddd";
-  }
 `;
 
 const NewItemsGrid = styled.div`
@@ -79,16 +73,24 @@ const FanTokensGrid = styled.div`
 `;
 
 const NewItemCard = styled.div`
-  border-radius: 10px;
+  border-radius: 0;
   cursor: pointer;
+  border: solid 1px #888;
+  box-shadow: 6px 6px 0px 0px rgba(0, 0, 0, 0.09);
+`;
+
+const FanItemCard = styled(NewItemCard)`
+  text-align: center;
   padding: 15px;
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
 `;
 
 const ItemImage = styled.img`
   width: 100%;
-  border-radius: 10px;
+  margin-bottom: 15px;
+`;
+
+const FanItemImage = styled(ItemImage)`
+  width: 80%;
   margin-bottom: 15px;
 `;
 
@@ -96,6 +98,11 @@ const ItemInfo = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
+  padding: 15px;
+`;
+
+const FanItemInfo = styled(ItemInfo)`
+  padding: 0;
 `;
 
 const ItemTitle = styled.div`
@@ -106,14 +113,6 @@ const ItemTitle = styled.div`
 
 const FanItemTitle = styled(ItemTitle)`
   font-size: 1rem;
-`;
-
-const ItemStats = styled.div`
-  font-size: 0.9rem;
-  color: #666;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 `;
 
 const TagsContainer = styled.div`
@@ -132,18 +131,19 @@ const Tag = styled.span`
 
 const JoinButton = styled.button`
   font-family: "DM Sans";
-  background-color: #8364e2;
+  background-color: #0d0c22;
   color: white;
   padding: 10px 15px;
-  border: none;
-  border-radius: 5px;
   cursor: pointer;
   margin-top: 10px;
   font-weight: bold;
   text-align: center;
 
   &:hover {
-    background-color: #7e6faa;
+    background-color: #fff;
+    color: #0d0c22;
+    box-shadow: 6px 6px 0px 0px rgba(0, 0, 0, 0.09);
+    border: 1px solid #0d0c22;
   }
 `;
 
@@ -152,6 +152,7 @@ const BalanceContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 5px;
+  justify-content: center;
 `;
 
 const CreateButton = styled(JoinButton)`
@@ -297,14 +298,6 @@ const Collections = () => {
                 />
                 <ItemInfo>
                   <ItemTitle>{nft.contract.name}</ItemTitle>
-                  <ItemStats>
-                    <span>{Math.floor(Math.random() * 10000) + 1} members</span>
-                    <span>{Math.floor(Math.random() * 100) + 1} online</span>
-                  </ItemStats>
-                  <ItemStats>
-                    <span>45 new posts today</span>
-                    <span>3 events this week</span>
-                  </ItemStats>
                   <TagsContainer>
                     <Tag>#Gaming</Tag>
                     <Tag>#Art</Tag>
@@ -327,7 +320,7 @@ const Collections = () => {
 
               return (
                 <LockItem key={lock.address}>
-                  <ItemImage
+                  <FanItemImage
                     src="https://via.placeholder.com/100"
                     alt={lock.name ?? ""}
                   />
@@ -353,28 +346,23 @@ const Collections = () => {
         return (
           <FanTokensGrid>
             {fanTokens.map((fan) => (
-              <NewItemCard
+              <FanItemCard
                 key={fan.symbol}
                 onClick={() => handleAccess(fan.token_address)}
               >
-                <ItemImage
+                <FanItemImage
                   src={fan.tokenDetails.logoURI}
                   alt={fan.name ?? ""}
                 />
-                <ItemInfo>
+                <FanItemInfo>
                   <FanItemTitle>{fan.name}</FanItemTitle>
                   <BalanceContainer>
                     <span>Balance:</span>
                     <img width={16} src={fan.tokenDetails.logoURI} />
                     <span> {fan.balance}</span>
                   </BalanceContainer>
-                  {/*  <TagsContainer>
-                    <Tag>#Gaming</Tag>
-                    <Tag>#SportsFi</Tag>
-                  </TagsContainer> */}
-                  {/* <JoinButton>Join Now</JoinButton> */}
-                </ItemInfo>
-              </NewItemCard>
+                </FanItemInfo>
+              </FanItemCard>
             ))}
           </FanTokensGrid>
         );

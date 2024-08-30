@@ -8,15 +8,20 @@ import { injected } from "wagmi/connectors";
 
 const LoginButton = styled.button`
   font-family: "DM Sans", sans-serif;
-  display: flex;
-  align-items: center;
-  font-size: 1.25rem;
-  font-weight: 700;
-  padding: 10px 20px;
-  outline: none;
+  margin-top: 1.5rem;
+  padding: 0.75rem;
+  background-color: #0d0c22;
+  color: white;
   cursor: pointer;
-  border: 0;
-  background: transparent;
+  font-weight: 700;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: #fff;
+    color: #0d0c22;
+    box-shadow: 6px 6px 0px 0px rgba(0, 0, 0, 0.09);
+    border: 1px solid #0d0c22;
+  }
 `;
 
 function Web3Auth() {

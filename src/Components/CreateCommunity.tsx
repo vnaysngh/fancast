@@ -27,8 +27,6 @@ const Modal = styled.div`
   transform: translate(-50%, -50%);
   background-color: white;
   padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   width: 90%;
   max-width: 500px;
 `;
@@ -69,13 +67,18 @@ const Button = styled.button`
   font-family: "DM Sans", sans-serif;
   margin-top: 1.5rem;
   padding: 0.75rem;
-  background-color: #8364e2;
+  background-color: #0d0c22;
   color: white;
-  border: none;
-  border-radius: 4px;
   cursor: pointer;
   font-weight: 700;
   transition: background-color 0.2s;
+
+  &:hover {
+    background-color: #fff;
+    color: #0d0c22;
+    box-shadow: 6px 6px 0px 0px rgba(0, 0, 0, 0.09);
+    border: 1px solid #0d0c22;
+  }
 `;
 
 interface CreateCommunityModalProps {

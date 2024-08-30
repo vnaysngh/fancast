@@ -22,7 +22,6 @@ export const Router = () => {
           <Routes>
             <Route path="/" element={<Homepage />} />
             <Route path="/community/:communityId" element={<Community />} />
-            <Route path="/community/:communityId" element={<Community />} />
             <Route path="/community/:communityId/inbox" element={<Inbox />} />
             <Route
               path="/community/:communityId/inbox/:memberId"

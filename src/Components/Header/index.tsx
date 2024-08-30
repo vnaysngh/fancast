@@ -7,7 +7,6 @@ const Header = styled.header`
   justify-content: space-between;
   align-items: center;
   padding: 0 1.25rem;
-  background-color: #fff; /* Ensure the background color is set */
   position: sticky;
   top: 0;
   z-index: 1000; /* Adjust z-index as needed */
