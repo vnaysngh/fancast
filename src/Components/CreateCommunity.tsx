@@ -20,7 +20,7 @@ const ModalOverlay = styled.div`
 `;
 
 const Modal = styled.div`
-  font-family: "DM Sans", sans-serif;
+  font-family: "Bungee", sans-serif;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -48,7 +48,7 @@ const Label = styled.label`
 `;
 
 const Input = styled.input`
-  font-family: "DM Sans", sans-serif;
+  font-family: "Bungee", sans-serif;
   padding: 0.5rem;
   margin-top: 0.25rem;
   border: 1px solid #ccc;
@@ -56,7 +56,7 @@ const Input = styled.input`
 `;
 
 const Select = styled.select`
-  font-family: "DM Sans", sans-serif;
+  font-family: "Bungee", sans-serif;
   padding: 0.5rem;
   margin-top: 0.25rem;
   border: 1px solid #ccc;
@@ -64,7 +64,7 @@ const Select = styled.select`
 `;
 
 const Button = styled.button`
-  font-family: "DM Sans", sans-serif;
+  font-family: "Bungee", sans-serif;
   margin-top: 1.5rem;
   padding: 0.75rem;
   background-color: #0d0c22;

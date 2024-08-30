@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  font-family: "DM Sans", sans-serif;
+  font-family: "Bungee", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   scroll-behavior: smooth;
@@ -19,7 +19,7 @@ body {
 /* web3 auth */
 
 .w3a-parent-container #w3a-modal {
-  font-family: "DM Sans", sans-serif !important;
+  font-family: "Bungee", sans-serif !important;
 }
 
 .w3a-modal__inner {

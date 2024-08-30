@@ -53,17 +53,10 @@ const Grid = styled.div`
 
 const Card = styled.div`
   // background-color: #fff;
-  border-radius: 8px;
   padding: 1.5rem;
   transition: transform 0.3s;
-  background: linear-gradient(
-    45deg,
-    rgba(26, 167, 236, 0.2) 0%,
-    rgba(121, 126, 246, 0.2) 50%
-  );
-  &:hover {
-    transform: translateY(-5px);
-  }
+  border: solid 1px #888;
+  box-shadow: 6px 6px 0px 0px rgba(0, 0, 0, 0.09);
 `;
 
 const CardTitle = styled.h2`
@@ -77,6 +70,7 @@ const CardContent = styled.div`
 `;
 
 const Button = styled.button`
+  font-family: "Bungee", sans-serif;
   background-color: #0d0c22;
   color: white;
   border: none;
@@ -89,7 +83,6 @@ const Button = styled.button`
     background-color: #fff;
     color: #0d0c22;
     box-shadow: 6px 6px 0px 0px rgba(0, 0, 0, 0.09);
-    border: 1px solid #0d0c22;
   }
 `;
 
@@ -144,9 +137,7 @@ const HomePage = () => {
         </Card>
 
         <Card>
-          <CardTitle>
-            Community Stats <BarChart2 />
-          </CardTitle>
+          <CardTitle>Community Stats</CardTitle>
           {/*  <CardContent>
             <p>Members: {communityStats.members}</p>
             <p>Active Posts: {communityStats.activePosts}</p>
@@ -155,9 +146,7 @@ const HomePage = () => {
         </Card>
 
         <Card>
-          <CardTitle>
-            Other Members <UserPlus />
-          </CardTitle>
+          <CardTitle>Other Members</CardTitle>
           <CardContent>
             <p>Connect with fellow NFT enthusiasts:</p>
             <Button>Browse Members</Button>
@@ -165,9 +154,7 @@ const HomePage = () => {
         </Card>
 
         <Card>
-          <CardTitle>
-            Farcaster Casts <CastIcon />
-          </CardTitle>
+          <CardTitle>Farcaster Casts</CardTitle>
           <CardContent>
             {/* {recentCasts.map((cast) => (
               <p key={cast.id}>
@@ -179,9 +166,7 @@ const HomePage = () => {
         </Card>
 
         <Card>
-          <CardTitle>
-            Community Games <GamepadIcon />
-          </CardTitle>
+          <CardTitle>Community Games</CardTitle>
           <CardContent>
             {/*  <ul>
               {games.map((game) => (
@@ -195,9 +180,7 @@ const HomePage = () => {
         </Card>
 
         <Card>
-          <CardTitle>
-            Leaderboard <Trophy />
-          </CardTitle>
+          <CardTitle>Leaderboard</CardTitle>
           <CardContent>
             {/*             <p>Top contributors this week:</p>
             <ol>

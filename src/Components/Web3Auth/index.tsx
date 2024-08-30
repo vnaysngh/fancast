@@ -7,7 +7,7 @@ import { useAccount, useConnect, useConnectors, useDisconnect } from "wagmi";
 import { injected } from "wagmi/connectors";
 
 const LoginButton = styled.button`
-  font-family: "DM Sans", sans-serif;
+  font-family: "Bungee", sans-serif;
   margin-top: 1.5rem;
   padding: 0.75rem;
   background-color: #0d0c22;

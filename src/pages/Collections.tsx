@@ -1,6 +1,10 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { myNFTs, nftsJson } from "../constants/nftconstants";
+import {
+  myNFTs,
+  nftsJson,
+  openseaSepoliaCollection
+} from "../constants/nftconstants";
 import { useNavigate } from "react-router-dom";
 import CreateCommunityModal from "../components/CreateCommunity";
 import { fanTokens } from "../constants/fanTokens";
@@ -49,9 +53,9 @@ const Tabs = styled.div`
 `;
 
 const TabButton = styled.button<{ active: boolean; firstTab?: boolean }>`
-  font-family: "DM Sans";
+  font-family: "Bungee";
   padding: 10px 15px;
-  color: ${(props) => (props.active ? "#0d0c22" : "#000")};
+  color: ${(props) => (props.active ? "#0d0c22" : "#333")};
   border: none;
   background-color: transparent;
   font-size: 1.25rem;
@@ -62,7 +66,7 @@ const TabButton = styled.button<{ active: boolean; firstTab?: boolean }>`
 
 const NewItemsGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
 `;
 
@@ -75,7 +79,7 @@ const FanTokensGrid = styled.div`
 const NewItemCard = styled.div`
   border-radius: 0;
   cursor: pointer;
-  border: solid 1px #888;
+  border: solid 2px #888;
   box-shadow: 6px 6px 0px 0px rgba(0, 0, 0, 0.09);
 `;
 
@@ -130,7 +134,7 @@ const Tag = styled.span`
 `;
 
 const JoinButton = styled.button`
-  font-family: "DM Sans";
+  font-family: "Bungee";
   background-color: #0d0c22;
   color: white;
   padding: 10px 15px;
@@ -187,6 +191,18 @@ const EtherscanLink = styled.a`
   &:hover {
     text-decoration: underline;
   }
+`;
+
+const ImageContainer = styled.div`
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+`;
+
+const Image = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 `;
 
 const Collections = () => {
@@ -283,6 +299,33 @@ const Collections = () => {
   const renderContent = () => {
     switch (activeTab) {
       case "explore":
+        return (
+          <NewItemsGrid>
+            {openseaSepoliaCollection.map((nft) => (
+              <NewItemCard
+                key={nft.collection}
+                onClick={() =>
+                  isHolderOfNFTContract("eth-sepolia", nft.contracts[0].address)
+                }
+              >
+                {/* <ItemImage src={nft.image_url} alt={nft.name ?? ""} /> */}
+                <ImageContainer>
+                  <Image src={nft.image_url} alt={nft.name ?? ""} />
+                </ImageContainer>
+                <ItemInfo>
+                  <ItemTitle>{nft.name}</ItemTitle>
+                  <TagsContainer>
+                    <Tag>#Gaming</Tag>
+                    <Tag>#Art</Tag>
+                    <Tag>#DeFi</Tag>
+                  </TagsContainer>
+                  <JoinButton>Join Now</JoinButton>
+                </ItemInfo>
+              </NewItemCard>
+            ))}
+          </NewItemsGrid>
+        );
+      case "mynfts":
         return (
           <NewItemsGrid>
             {myNFTs.map((nft) => (
@@ -405,6 +448,13 @@ const Collections = () => {
               onClick={() => setActiveTab("fanTokens")}
             >
               Fan Tokens
+            </TabButton>
+            <TabButton
+              firstTab
+              active={activeTab === "mynfts"}
+              onClick={() => setActiveTab("mynfts")}
+            >
+              My NFTs
             </TabButton>
             <TabButton
               active={activeTab === "myCommunities"}

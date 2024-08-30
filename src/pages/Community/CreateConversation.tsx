@@ -6,7 +6,7 @@ const ChatContainer = styled.div`
   flex-direction: column;
   min-height: 80vh;
   max-height: 80vh;
-  font-family: "DM Sans", sans-serif;
+  font-family: "Bungee", sans-serif;
 `;
 
 const MessagesContainer = styled.div`
@@ -47,7 +47,7 @@ const InputContainer = styled.div`
 `;
 
 const Input = styled.input`
-  font-family: "DM Sans", sans-serif;
+  font-family: "Bungee", sans-serif;
   flex-grow: 1;
   padding: 1rem;
   border: none;

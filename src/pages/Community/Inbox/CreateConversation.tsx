@@ -132,7 +132,7 @@ const InputContainer = styled.div`
 `;
 
 const ChatInput = styled.input`
-  font-family: "DM Sans", sans-serif;
+  font-family: "Bungee", sans-serif;
   flex: 1;
   padding: 10px;
   font-size: 1rem;
@@ -142,7 +142,7 @@ const ChatInput = styled.input`
 `;
 
 const SendButton = styled.button`
-  font-family: "DM Sans", sans-serif;
+  font-family: "Bungee", sans-serif;
   padding: 10px 20px;
   font-size: 1rem;
   background-color: #8363e2;
