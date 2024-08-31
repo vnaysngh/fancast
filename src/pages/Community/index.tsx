@@ -1,12 +1,6 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
-import {
-  UserPlus,
-  Trophy,
-  GamepadIcon,
-  CastIcon,
-  BarChart2
-} from "lucide-react";
 
 // Styled components
 const Container = styled.div`
@@ -107,13 +101,20 @@ const games = [
 
 const HomePage = () => {
   const [username, setUsername] = useState("");
-
+  const navigate = useNavigate();
+  const { communityId } = useParams<{
+    communityId: string;
+  }>();
   useEffect(() => {
     // Simulating fetching user data
     setTimeout(() => {
       setUsername("CryptoEnthusiast");
     }, 1000);
   }, []);
+
+  const handleNavigation = (route: string) => {
+    navigate(`/community/${communityId}/${route}`);
+  };
 
   return (
     <Container>
@@ -179,8 +180,8 @@ const HomePage = () => {
           </CardContent>
         </Card>
 
-        <Card>
-          <CardTitle>Leaderboard</CardTitle>
+        <Card onClick={() => handleNavigation("what-if")}>
+          <CardTitle>What If</CardTitle>
           <CardContent>
             {/*             <p>Top contributors this week:</p>
             <ol>
@@ -188,7 +189,7 @@ const HomePage = () => {
               <li>NFTQueen</li>
               <li>BlockchainWizard</li>
             </ol> */}
-            <Button>View Full Leaderboard</Button>
+            <Button>View</Button>
           </CardContent>
         </Card>
       </Grid>

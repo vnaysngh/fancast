@@ -447,7 +447,7 @@ const Collections = () => {
               active={activeTab === "fanTokens"}
               onClick={() => setActiveTab("fanTokens")}
             >
-              Fan Tokens
+              Chiliz Fan Tokens
             </TabButton>
             <TabButton
               firstTab

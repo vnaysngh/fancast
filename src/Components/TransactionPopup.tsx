@@ -68,6 +68,23 @@ const TransactionConfirmationPopup = ({
 }) => {
   const popupRef = useRef<HTMLDivElement>(null);
 
+  const handleClickOutside = (event: MouseEvent) => {
+    if (
+      onClose &&
+      popupRef.current &&
+      !popupRef.current.contains(event.target as Node)
+    ) {
+      onClose();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [onClose]);
+
   return (
     <Overlay>
       <PopupContainer ref={popupRef}>
