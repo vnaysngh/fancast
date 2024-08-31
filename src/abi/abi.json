@@ -5,6 +5,11 @@
         "internalType": "address",
         "name": "_endpoint",
         "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_delegate",
+        "type": "address"
       }
     ],
     "stateMutability": "nonpayable",
@@ -45,6 +50,17 @@
   {
     "inputs": [],
     "name": "InvalidEndpointCall",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "optionType",
+        "type": "uint16"
+      }
+    ],
+    "name": "InvalidOptionType",
     "type": "error"
   },
   {
@@ -121,6 +137,22 @@
       }
     ],
     "name": "OwnableUnauthorizedAccount",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint8",
+        "name": "bits",
+        "type": "uint8"
+      },
+      {
+        "internalType": "uint256",
+        "name": "value",
+        "type": "uint256"
+      }
+    ],
+    "name": "SafeCastOverflowedUintDowncast",
     "type": "error"
   },
   {
@@ -511,6 +543,47 @@
         "internalType": "bytes32",
         "name": "peer",
         "type": "bytes32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "_name",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_description",
+        "type": "string"
+      },
+      {
+        "internalType": "uint32[]",
+        "name": "_dstChainIds",
+        "type": "uint32[]"
+      }
+    ],
+    "name": "quote",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "nativeFee",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "lzTokenFee",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct MessagingFee",
+        "name": "totalFee",
+        "type": "tuple"
       }
     ],
     "stateMutability": "view",

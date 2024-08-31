@@ -1,9 +1,10 @@
 import { useContext, createContext, useMemo, useEffect, useState } from "react";
 import { ethers } from "ethers";
 import { useAccount, useReadContract } from "wagmi";
-import { writeContract } from "@wagmi/core";
+import { writeContract, simulateContract } from "@wagmi/core";
 import abi from "../abi/abi.json";
 import { config } from "../main";
+import { optimismSepolia } from "viem/chains";
 
 const StateContext = createContext<any>({});
 const windowObj: any = window;
@@ -21,12 +22,6 @@ export const StateContextProvider = ({ children }: { children: any }) => {
           const provider = new ethers.BrowserProvider(windowObj.ethereum);
           const signer = await provider.getSigner();
           const address = await signer.getAddress();
-          const contract = new ethers.Contract(
-            "0x88C1770353BD23f435F6F049cc26936009B27B69",
-            abi
-          );
-
-          console.log(contract, "contract");
           setSigner(signer);
           setAddress(address);
         } catch (error) {
@@ -40,23 +35,25 @@ export const StateContextProvider = ({ children }: { children: any }) => {
     if (account.address) connectWallet();
   }, [account.isConnected]);
 
-  const result = useReadContract({
-    abi,
-    address: "0xE6675a20e8a348cb0a1af52dc1C864D8Bb05465b",
-    functionName: "getTotalStories"
-  });
-
-  console.log(result.data, "result");
-
   const createStory = async () => {
-    const result = await writeContract(config, {
+    const result: any = await simulateContract(config, {
       abi,
-      address: "0xE6675a20e8a348cb0a1af52dc1C864D8Bb05465b",
-      functionName: "createStory",
-      args: ["first story", "first story desc"]
+      address: "0xc97139659d6Ee90A76027E68cd318821956d90dF",
+      functionName: "quote",
+      args: ["My Story Name", "This is a description of my story", [40245]],
+      chainId: optimismSepolia.id
     });
 
-    console.log(result, "result");
+    const nativeFee = result?.result?.nativeFee.toString();
+
+    const createStoryResponse = await writeContract(config, {
+      abi,
+      address: "0xc97139659d6Ee90A76027E68cd318821956d90dF",
+      functionName: "createStory",
+      args: ["My Story Name", "This is a description of my story", [40245]],
+      chainId: optimismSepolia.id,
+      value: nativeFee
+    });
   };
 
   return (
