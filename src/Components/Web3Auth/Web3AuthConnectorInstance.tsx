@@ -13,43 +13,42 @@ import { OpenloginAdapter } from "@web3auth/openlogin-adapter";
 import { MetamaskAdapter } from "@web3auth/metamask-adapter";
 import { CoinbaseAdapter } from "@web3auth/coinbase-adapter";
 
+const chainConfig = {
+  chainNamespace: CHAIN_NAMESPACES.EIP155,
+  chainId: "0xaa37dc", // hex of 69
+  rpcTarget: "https://sepolia.optimism.io",
+  // Avoid using public rpcTarget in production.
+  // Use services like Infura, Quicknode etc
+  displayName: "Optimism Testnet",
+  blockExplorerUrl: "https://sepolia-optimistic.etherscan.io",
+  ticker: "OP",
+  tickerName: "OP",
+  logo: "https://cryptologos.cc/logos/optimism-ethereum-op-logo.png"
+};
+
 const metamaskAdapter = new MetamaskAdapter({
   clientId:
     "BPi5PB_UiIZ-cPz1GtV5i1I2iOSOHuimiXBI0e-Oe_u6X3oVAbCiAZOTEBtTXw4tsluTITPqA8zMsfxIKMjiqNQ",
   sessionTime: 3600, // 1 hour in seconds
   web3AuthNetwork: "sapphire_mainnet",
-  chainConfig: {
-    chainNamespace: CHAIN_NAMESPACES.EIP155,
-    chainId: "0xaa36a7",
-    rpcTarget: "https://rpc.ankr.com/eth_sepolia" // This is the public RPC we have added, please pass on your own endpoint while creating an app
-  }
+  chainConfig
 });
 
-const coinbaseAdapter = new CoinbaseAdapter({
-  clientId:
-    "BPi5PB_UiIZ-cPz1GtV5i1I2iOSOHuimiXBI0e-Oe_u6X3oVAbCiAZOTEBtTXw4tsluTITPqA8zMsfxIKMjiqNQ",
-  sessionTime: 3600, // 1 hour in seconds
-  chainConfig: {
-    chainNamespace: CHAIN_NAMESPACES.EIP155,
-    chainId: "0xaa36a7",
-    rpcTarget: "https://rpc.ankr.com/eth_sepolia" // This is the public RPC we have added, please pass on your own endpoint while creating an app
-  },
-  web3AuthNetwork: WEB3AUTH_NETWORK.SAPPHIRE_MAINNET
-});
+// const coinbaseAdapter = new CoinbaseAdapter({
+//   clientId:
+//     "BPi5PB_UiIZ-cPz1GtV5i1I2iOSOHuimiXBI0e-Oe_u6X3oVAbCiAZOTEBtTXw4tsluTITPqA8zMsfxIKMjiqNQ",
+//   sessionTime: 3600, // 1 hour in seconds
+//   chainConfig: {
+//     chainNamespace: CHAIN_NAMESPACES.EIP155,
+//     chainId: "0xaa36a7",
+//     rpcTarget: "https://rpc.ankr.com/eth_sepolia" // This is the public RPC we have added, please pass on your own endpoint while creating an app
+//   },
+//   web3AuthNetwork: WEB3AUTH_NETWORK.SAPPHIRE_MAINNET
+// });
 
 export default function Web3AuthConnectorInstance(chains: Chain[]) {
   // Create Web3Auth Instance
   const name = "Fancast";
-  const chainConfig = {
-    chainId: "0xaa36a7", // for wallet connect make sure to pass in this chain in the loginSettings of the adapter.
-    displayName: "Ethereum Sepolia",
-    chainNamespace: CHAIN_NAMESPACES.EIP155,
-    tickerName: "Ethereum Sepolia",
-    ticker: "ETH",
-    rpcTarget: "https://rpc.ankr.com/eth_sepolia",
-    blockExplorerUrl: "https://sepolia.etherscan.io",
-    logo: "https://cryptologos.cc/logos/ethereum-eth-logo.png"
-  };
 
   const privateKeyProvider = new EthereumPrivateKeyProvider({
     config: { chainConfig }
@@ -71,30 +70,26 @@ export default function Web3AuthConnectorInstance(chains: Chain[]) {
       primaryButton: "socialLogin",
       loginMethodsOrder: ["farcaster"]
     },
-    web3AuthNetwork: WEB3AUTH_NETWORK.SAPPHIRE_DEVNET,
+    web3AuthNetwork: WEB3AUTH_NETWORK.SAPPHIRE_MAINNET,
     enableLogging: true
   });
 
   web3AuthInstance.configureAdapter(metamaskAdapter);
-  web3AuthInstance.configureAdapter(coinbaseAdapter);
+  // web3AuthInstance.configureAdapter(coinbaseAdapter);
   // You can also change the adapter settings later on
-  coinbaseAdapter.setAdapterSettings({
-    sessionTime: 86400, // 1 day in seconds
-    chainConfig: {
-      chainNamespace: CHAIN_NAMESPACES.EIP155,
-      chainId: "0xaa36a7",
-      rpcTarget: "https://rpc.ankr.com/eth_sepolia" // This is the public RPC we have added, please pass on your own endpoint while creating an app
-    },
-    web3AuthNetwork: "sapphire_mainnet"
-  });
+  // coinbaseAdapter.setAdapterSettings({
+  //   sessionTime: 86400, // 1 day in seconds
+  //   chainConfig: {
+  //     chainNamespace: CHAIN_NAMESPACES.EIP155,
+  //     chainId: "0xaa36a7",
+  //     rpcTarget: "https://rpc.ankr.com/eth_sepolia" // This is the public RPC we have added, please pass on your own endpoint while creating an app
+  //   },
+  //   web3AuthNetwork: "sapphire_mainnet"
+  // });
 
   metamaskAdapter.setAdapterSettings({
     sessionTime: 86400, // 1 day in seconds
-    chainConfig: {
-      chainNamespace: CHAIN_NAMESPACES.EIP155,
-      chainId: "0xaa36a7",
-      rpcTarget: "https://rpc.ankr.com/eth_sepolia" // This is the public RPC we have added, please pass on your own endpoint while creating an app
-    },
+    chainConfig,
     web3AuthNetwork: "sapphire_mainnet"
   });
 

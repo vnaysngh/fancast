@@ -15,16 +15,7 @@ import axios from "axios";
 import { useStateContext } from "../context";
 import { locksOwnedByLockManager } from "../graphql/query";
 import { useQuery } from "@apollo/client";
-
-export const config = createConfig({
-  chains: [mainnet, sepolia, chiliz, spicy],
-  transports: {
-    [mainnet.id]: http(),
-    [sepolia.id]: http(),
-    [chiliz.id]: http(),
-    [spicy.id]: http()
-  }
-});
+import { config } from "../main";
 
 // Styled Components
 const PageContainer = styled.div`
@@ -212,7 +203,7 @@ const Collections = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [error, setError] = useState<any>(false);
   const navigate = useNavigate();
-  const { address } = useStateContext();
+  const { address, createStory } = useStateContext();
 
   const {
     loading,
@@ -296,6 +287,10 @@ const Collections = () => {
     setIsOpen(false);
   };
 
+  const handleCreateStory = () => {
+    createStory();
+  };
+
   const renderContent = () => {
     switch (activeTab) {
       case "explore":
@@ -362,7 +357,7 @@ const Collections = () => {
               );
 
               return (
-                <LockItem key={lock.address}>
+                <LockItem key={lock.address} onClick={handleCreateStory}>
                   <FanItemImage
                     src="https://via.placeholder.com/100"
                     alt={lock.name ?? ""}

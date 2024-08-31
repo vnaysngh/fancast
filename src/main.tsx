@@ -9,7 +9,11 @@ import {
   optimism,
   arbitrum,
   optimismSepolia,
-  polygonMumbai
+  polygonMumbai,
+  base,
+  baseSepolia,
+  chiliz,
+  spicy
 } from "wagmi/chains";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter } from "react-router-dom";
@@ -23,17 +27,45 @@ import { ApolloProvider } from "@apollo/client";
 const queryClient = new QueryClient();
 
 // Set up client
-const config = createConfig({
-  chains: [mainnet, sepolia, polygon, polygonMumbai, optimism, optimismSepolia],
+export const config = createConfig({
+  chains: [
+    mainnet,
+    sepolia,
+    polygon,
+    polygonMumbai,
+    optimism,
+    optimismSepolia,
+    base,
+    baseSepolia,
+    chiliz,
+    spicy
+  ],
   transports: {
     [mainnet.id]: http(),
+    [base.id]: http(),
     [sepolia.id]: http(),
     [polygon.id]: http(),
     [optimism.id]: http(),
     [polygonMumbai.id]: http(),
-    [optimismSepolia.id]: http()
+    [optimismSepolia.id]: http(),
+    [baseSepolia.id]: http(),
+    [chiliz.id]: http(),
+    [spicy.id]: http()
   },
-  connectors: [Web3AuthConnectorInstance([mainnet, sepolia, polygon])]
+  connectors: [
+    Web3AuthConnectorInstance([
+      mainnet,
+      sepolia,
+      polygon,
+      base,
+      optimismSepolia,
+      baseSepolia,
+      optimism,
+      polygonMumbai,
+      chiliz,
+      spicy
+    ])
+  ]
 });
 
 const Home: React.FC = () => {
