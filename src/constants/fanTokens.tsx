@@ -238,6 +238,30 @@ export const fanTokens = [
       logoURI:
         "https://raw.githubusercontent.com/kewlexchange/assets/main/chiliz/tokens/0xd1723eb9e7c6ee7c7e2d421b2758dc0f2166eddc/logo.svg"
     }
+  },
+  {
+    token_address: "0x0ffa63502f957b66e61F87761cc240e51C74cee5",
+    symbol: "UFC",
+    name: "UFC",
+    logo: null,
+    thumbnail: null,
+    decimals: 0,
+    balance: "100",
+    possible_spam: false,
+    verified_contract: false,
+    total_supply: "11217600",
+    total_supply_formatted: "11217600",
+    percentage_relative_to_total_supply: 0.000891456282983882,
+    security_score: null,
+    tokenDetails: {
+      chainId: 88888,
+      address: "0x0ffa63502f957b66e61F87761cc240e51C74cee5",
+      name: "UFC",
+      symbol: "UFC",
+      decimals: 0,
+      logoURI:
+        "https://raw.githubusercontent.com/kewlexchange/assets/main/chiliz/tokens/0x0ffa63502f957b66e61f87761cc240e51c74cee5/logo.svg"
+    }
   }
 ];
 

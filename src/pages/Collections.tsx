@@ -226,9 +226,11 @@ const Collections = () => {
 
       setIsEligible(balance.value > 1);
 
-      setTimeout(() => {
-        handleNavigate(contractAddress);
-      }, 2000);
+      if (balance.value > 1) {
+        setTimeout(() => {
+          handleNavigate(contractAddress);
+        }, 2000);
+      }
     } catch (e) {
       console.log(e);
       setError(e);
