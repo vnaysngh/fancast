@@ -154,7 +154,7 @@ const HomePage = () => {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card onClick={() => handleNavigation("casts")}>
           <CardTitle>Farcaster Casts</CardTitle>
           <CardContent>
             {/* {recentCasts.map((cast) => (

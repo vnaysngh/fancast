@@ -164,7 +164,7 @@ const membersData: Member[] = [
 const MembersComponent: React.FC = () => {
   return (
     <PageContainer>
-      <h2>BAYC Members</h2>
+      <h2>BAYC Members (293)</h2>
       <MembersList>
         {membersData.map((member) => (
           <MemberCard key={member.id}>
