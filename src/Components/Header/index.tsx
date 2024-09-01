@@ -42,6 +42,7 @@ const DropdownContainer = styled.div`
 `;
 
 const DropdownButton = styled.button`
+  font-family: "Bungee";
   display: flex;
   align-items: center;
   padding: 10px 20px;
@@ -85,15 +86,15 @@ const DropdownItem = styled.div`
 `;
 
 const NetworkIcon = styled.img`
-  width: 20px;
-  height: 20px;
+  width: 1.5rem;
+  height: 1.5rem;
   margin-right: 10px;
 `;
 
 const HeaderComponent = () => {
   const navigate = useNavigate();
   const [selectedNetwork, setSelectedNetwork] = useState({
-    name: "Optimism",
+    name: "Op Sepolia",
     icon: optimismLogo
   });
 
@@ -106,10 +107,8 @@ const HeaderComponent = () => {
         setSelectedNetwork({ name: "Base", icon: baseLogo });
         break;
       case "Ethereum":
-        setSelectedNetwork({ name: "Ethereum", icon: ethereumLogo });
+        setSelectedNetwork({ name: "Sepolia", icon: ethereumLogo });
         break;
-      case "Arb Sepolia":
-        setSelectedNetwork({ name: "Arb Sepolia", icon: arbLogo });
         break;
       default:
         break;
@@ -127,23 +126,20 @@ const HeaderComponent = () => {
               src={selectedNetwork.icon}
               alt={selectedNetwork.name}
             />
+            {selectedNetwork.name}
           </DropdownButton>
           <DropdownContent>
             <DropdownItem onClick={() => handleNetworkChange("Optimism")}>
               <img src={optimismLogo} alt="Optimism" />
-              Optimism
+              Op Sepolia
             </DropdownItem>
             <DropdownItem onClick={() => handleNetworkChange("Base")}>
               <img src={baseLogo} alt="Base" />
-              Base
+              Base Sepolia
             </DropdownItem>
             <DropdownItem onClick={() => handleNetworkChange("Ethereum")}>
               <img src={ethereumLogo} alt="Ethereum" />
-              Ethereum
-            </DropdownItem>
-            <DropdownItem onClick={() => handleNetworkChange("Arb Sepolia")}>
-              <img src={arbLogo} alt="Arb Sepolia" />
-              Arb Sepolia
+              Sepolia
             </DropdownItem>
           </DropdownContent>
         </DropdownContainer>
