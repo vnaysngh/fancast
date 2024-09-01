@@ -13,6 +13,19 @@ import { OpenloginAdapter } from "@web3auth/openlogin-adapter";
 import { MetamaskAdapter } from "@web3auth/metamask-adapter";
 import { CoinbaseAdapter } from "@web3auth/coinbase-adapter";
 
+export const chainLogos = {
+  ethereum: "https://cryptologos.cc/logos/ethereum-eth-logo.png",
+  base: "https://strapi.mewapi.io/uploads/large_Base_Symbol_Blue_ee3f3fb0a5.png",
+  optimism: "https://cryptologos.cc/logos/optimism-ethereum-op-logo.png",
+  polygon: "https://cryptologos.cc/logos/polygon-matic-logo.png",
+  arbitrum: "https://cryptologos.cc/logos/arbitrum-arb-logo.png"
+};
+
+export const arbLogo = chainLogos["arbitrum"];
+export const optimismLogo = chainLogos["optimism"];
+export const baseLogo = chainLogos["base"];
+export const ethereumLogo = chainLogos["ethereum"];
+
 const chainConfig = {
   chainNamespace: CHAIN_NAMESPACES.EIP155,
   chainId: "0xaa37dc", // hex of 69

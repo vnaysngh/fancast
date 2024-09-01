@@ -8,7 +8,6 @@ import { injected } from "wagmi/connectors";
 
 const LoginButton = styled.button`
   font-family: "Bungee", sans-serif;
-  margin-top: 1.5rem;
   padding: 0.75rem;
   background-color: #0d0c22;
   color: white;

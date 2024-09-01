@@ -68,6 +68,8 @@ export const config = createConfig({
   ]
 });
 
+console.log(optimismSepolia);
+
 const Home: React.FC = () => {
   return (
     <ApolloProvider client={client}>
