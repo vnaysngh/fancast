@@ -146,7 +146,7 @@ const HomePage = () => {
           </CardContent> */}
         </Card>
 
-        <Card>
+        <Card onClick={() => handleNavigation("members")}>
           <CardTitle>Other Members</CardTitle>
           <CardContent>
             <p>Connect with fellow NFT enthusiasts:</p>

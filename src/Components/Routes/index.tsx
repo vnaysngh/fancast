@@ -8,6 +8,7 @@ const Homepage = lazy(() => import("../../pages/Collections"));
 const Community = lazy(() => import("../../pages/Community"));
 const Inbox = lazy(() => import("../../pages/Community/Inbox"));
 const WhatIf = lazy(() => import("../../pages/Community/Activities/WhatIf"));
+const Members = lazy(() => import("../../pages/Community/Members"));
 
 const RoutesContainer = styled.div`
   max-width: 80%;
@@ -35,6 +36,10 @@ export const Router = () => {
             <Route
               path="/community/:communityId/what-if/feed"
               element={<WhatIf />}
+            />
+            <Route
+              path="/community/:communityId/members"
+              element={<Members />}
             />
             <Route
               path="/community/:communityId/inbox/:memberId"
