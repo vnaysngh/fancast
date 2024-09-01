@@ -35,25 +35,27 @@ export const StateContextProvider = ({ children }: { children: any }) => {
     if (account.address) connectWallet();
   }, [account.isConnected]);
 
-  const createStory = async () => {
-    const result: any = await simulateContract(config, {
+  const createStory = async (title: string, description: string) => {
+    const quote = await simulateContract(config, {
       abi,
       address: "0xc97139659d6Ee90A76027E68cd318821956d90dF",
       functionName: "quote",
-      args: ["My Story Name", "This is a description of my story", [40245]],
+      args: [title, description, [40245]],
       chainId: optimismSepolia.id
-    });
+    }).catch((err) => err);
 
-    const nativeFee = result?.result?.nativeFee.toString();
+    const nativeFee = quote?.result?.nativeFee.toString();
 
-    const createStoryResponse = await writeContract(config, {
+    return await writeContract(config, {
       abi,
       address: "0xc97139659d6Ee90A76027E68cd318821956d90dF",
       functionName: "createStory",
-      args: ["My Story Name", "This is a description of my story", [40245]],
+      args: [title, description, [40245]],
       chainId: optimismSepolia.id,
-      value: nativeFee
-    });
+      value: nativeFee!
+    })
+      .then((res) => res)
+      .catch((err) => err);
   };
 
   return (

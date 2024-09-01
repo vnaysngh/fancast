@@ -2,7 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { FiThumbsUp } from "react-icons/fi";
 import { FaCoins } from "react-icons/fa";
-
+import { useReadContract } from "wagmi";
+import abi from "../../../../abi/abi.json";
 interface StoryProps {
   userName: string;
   userAddress: string;
@@ -101,264 +102,53 @@ const TipCount = styled.span`
   color: #0d0c22;
 `;
 
-const Story: React.FC<StoryProps> = ({
-  userName,
-  userAddress,
-  title,
-  description,
-  upvotes,
-  tips,
-  onUpvote,
-  onTip
-}) => {
+const Story: React.FC<StoryProps> = ({ onUpvote, onTip }) => {
+  const result: any = useReadContract({
+    abi,
+    address: "0xc97139659d6Ee90A76027E68cd318821956d90dF",
+    functionName: "getAllStories"
+  });
+
   return (
     <>
-      <StoryCard>
-        <UserProfile>
-          <ProfileImage
-            src="https://via.placeholder.com/100"
-            alt="User Profile"
-          />
-          <UserInfo>
-            <UserName>vinaysingh.eth</UserName>
-            <UserAddress>
-              0x0B95ec21579aee6Ef7b712976bD86689D68b5A08
-            </UserAddress>
-          </UserInfo>
-        </UserProfile>
-        <Title>First What If</Title>
-        <Description>
-          In a futuristic twist, FIFA decides to host the 2026 World Cup on a
-          specially designed space station orbiting Earth. The tournament,
-          dubbed “World Cup Galactica,” takes place in zero gravity, requiring
-          players to adapt to the challenges of a weightless environment. Messi,
-          Ronaldo, and Mbappé—all a decade older—are selected as team captains
-          in this once-in-a-lifetime event. But the real surprise comes when the
-          tournament is crashed by an alien team, claiming they invented
-          football centuries ago. The final match between Earth’s all-stars and
-          the extraterrestrial team is broadcast across the galaxy, with the
-          fate of football’s true origins hanging in the balance.
-        </Description>
-        <ButtonsContainer>
-          <div>
-            <Button onClick={onUpvote}>
-              <FiThumbsUp />
-              Upvote
-            </Button>
-          </div>
-          <div>
-            <Button onClick={onTip}>
-              <FaCoins />
-              Tip
-            </Button>
-          </div>
-        </ButtonsContainer>
-      </StoryCard>
-      <StoryCard>
-        <UserProfile>
-          <ProfileImage
-            src="https://via.placeholder.com/100"
-            alt="User Profile"
-          />
-          <UserInfo>
-            <UserName>vinaysingh.eth</UserName>
-            <UserAddress>
-              0x0B95ec21579aee6Ef7b712976bD86689D68b5A08
-            </UserAddress>
-          </UserInfo>
-        </UserProfile>
-        <Title>First What If</Title>
-        <Description>
-          In a futuristic twist, FIFA decides to host the 2026 World Cup on a
-          specially designed space station orbiting Earth. The tournament,
-          dubbed “World Cup Galactica,” takes place in zero gravity, requiring
-          players to adapt to the challenges of a weightless environment. Messi,
-          Ronaldo, and Mbappé—all a decade older—are selected as team captains
-          in this once-in-a-lifetime event. But the real surprise comes when the
-          tournament is crashed by an alien team, claiming they invented
-          football centuries ago. The final match between Earth’s all-stars and
-          the extraterrestrial team is broadcast across the galaxy, with the
-          fate of football’s true origins hanging in the balance.
-        </Description>
-        <ButtonsContainer>
-          <div>
-            <Button onClick={onUpvote}>
-              <FiThumbsUp />
-              Upvote
-            </Button>
-          </div>
-          <div>
-            <Button onClick={onTip}>
-              <FaCoins />
-              Tip
-            </Button>
-          </div>
-        </ButtonsContainer>
-      </StoryCard>
-      <StoryCard>
-        <UserProfile>
-          <ProfileImage
-            src="https://via.placeholder.com/100"
-            alt="User Profile"
-          />
-          <UserInfo>
-            <UserName>vinaysingh.eth</UserName>
-            <UserAddress>
-              0x0B95ec21579aee6Ef7b712976bD86689D68b5A08
-            </UserAddress>
-          </UserInfo>
-        </UserProfile>
-        <Title>First What If</Title>
-        <Description>
-          In a futuristic twist, FIFA decides to host the 2026 World Cup on a
-          specially designed space station orbiting Earth. The tournament,
-          dubbed “World Cup Galactica,” takes place in zero gravity, requiring
-          players to adapt to the challenges of a weightless environment. Messi,
-          Ronaldo, and Mbappé—all a decade older—are selected as team captains
-          in this once-in-a-lifetime event. But the real surprise comes when the
-          tournament is crashed by an alien team, claiming they invented
-          football centuries ago. The final match between Earth’s all-stars and
-          the extraterrestrial team is broadcast across the galaxy, with the
-          fate of football’s true origins hanging in the balance.
-        </Description>
-        <ButtonsContainer>
-          <div>
-            <Button onClick={onUpvote}>
-              <FiThumbsUp />
-              Upvote
-            </Button>
-          </div>
-          <div>
-            <Button onClick={onTip}>
-              <FaCoins />
-              Tip
-            </Button>
-          </div>
-        </ButtonsContainer>
-      </StoryCard>
-      <StoryCard>
-        <UserProfile>
-          <ProfileImage
-            src="https://via.placeholder.com/100"
-            alt="User Profile"
-          />
-          <UserInfo>
-            <UserName>vinaysingh.eth</UserName>
-            <UserAddress>
-              0x0B95ec21579aee6Ef7b712976bD86689D68b5A08
-            </UserAddress>
-          </UserInfo>
-        </UserProfile>
-        <Title>First What If</Title>
-        <Description>
-          In a futuristic twist, FIFA decides to host the 2026 World Cup on a
-          specially designed space station orbiting Earth. The tournament,
-          dubbed “World Cup Galactica,” takes place in zero gravity, requiring
-          players to adapt to the challenges of a weightless environment. Messi,
-          Ronaldo, and Mbappé—all a decade older—are selected as team captains
-          in this once-in-a-lifetime event. But the real surprise comes when the
-          tournament is crashed by an alien team, claiming they invented
-          football centuries ago. The final match between Earth’s all-stars and
-          the extraterrestrial team is broadcast across the galaxy, with the
-          fate of football’s true origins hanging in the balance.
-        </Description>
-        <ButtonsContainer>
-          <div>
-            <Button onClick={onUpvote}>
-              <FiThumbsUp />
-              Upvote
-            </Button>
-          </div>
-          <div>
-            <Button onClick={onTip}>
-              <FaCoins />
-              Tip
-            </Button>
-          </div>
-        </ButtonsContainer>
-      </StoryCard>
-      <StoryCard>
-        <UserProfile>
-          <ProfileImage
-            src="https://via.placeholder.com/100"
-            alt="User Profile"
-          />
-          <UserInfo>
-            <UserName>vinaysingh.eth</UserName>
-            <UserAddress>
-              0x0B95ec21579aee6Ef7b712976bD86689D68b5A08
-            </UserAddress>
-          </UserInfo>
-        </UserProfile>
-        <Title>First What If</Title>
-        <Description>
-          In a futuristic twist, FIFA decides to host the 2026 World Cup on a
-          specially designed space station orbiting Earth. The tournament,
-          dubbed “World Cup Galactica,” takes place in zero gravity, requiring
-          players to adapt to the challenges of a weightless environment. Messi,
-          Ronaldo, and Mbappé—all a decade older—are selected as team captains
-          in this once-in-a-lifetime event. But the real surprise comes when the
-          tournament is crashed by an alien team, claiming they invented
-          football centuries ago. The final match between Earth’s all-stars and
-          the extraterrestrial team is broadcast across the galaxy, with the
-          fate of football’s true origins hanging in the balance.
-        </Description>
-        <ButtonsContainer>
-          <div>
-            <Button onClick={onUpvote}>
-              <FiThumbsUp />
-              Upvote
-            </Button>
-          </div>
-          <div>
-            <Button onClick={onTip}>
-              <FaCoins />
-              Tip
-            </Button>
-          </div>
-        </ButtonsContainer>
-      </StoryCard>
-      <StoryCard>
-        <UserProfile>
-          <ProfileImage
-            src="https://via.placeholder.com/100"
-            alt="User Profile"
-          />
-          <UserInfo>
-            <UserName>vinaysingh.eth</UserName>
-            <UserAddress>
-              0x0B95ec21579aee6Ef7b712976bD86689D68b5A08
-            </UserAddress>
-          </UserInfo>
-        </UserProfile>
-        <Title>First What If</Title>
-        <Description>
-          In a futuristic twist, FIFA decides to host the 2026 World Cup on a
-          specially designed space station orbiting Earth. The tournament,
-          dubbed “World Cup Galactica,” takes place in zero gravity, requiring
-          players to adapt to the challenges of a weightless environment. Messi,
-          Ronaldo, and Mbappé—all a decade older—are selected as team captains
-          in this once-in-a-lifetime event. But the real surprise comes when the
-          tournament is crashed by an alien team, claiming they invented
-          football centuries ago. The final match between Earth’s all-stars and
-          the extraterrestrial team is broadcast across the galaxy, with the
-          fate of football’s true origins hanging in the balance.
-        </Description>
-        <ButtonsContainer>
-          <div>
-            <Button onClick={onUpvote}>
-              <FiThumbsUp />
-              Upvote
-            </Button>
-          </div>
-          <div>
-            <Button onClick={onTip}>
-              <FaCoins />
-              Tip
-            </Button>
-          </div>
-        </ButtonsContainer>
-      </StoryCard>
+      {result && result.data && result.data.length > 0 ? (
+        <>
+          {result.data.map((story: any) => {
+            return (
+              <StoryCard key={story.id}>
+                <UserProfile>
+                  <ProfileImage
+                    src="https://via.placeholder.com/100"
+                    alt="User Profile"
+                  />
+                  <UserInfo>
+                    <UserName>vinaysingh.eth</UserName>
+                    <UserAddress>{story.author}</UserAddress>
+                  </UserInfo>
+                </UserProfile>
+                <Title>{story.name}</Title>
+                <Description>{story.description}</Description>
+                <ButtonsContainer>
+                  <div>
+                    <Button onClick={onUpvote}>
+                      <FiThumbsUp />
+                      Upvote
+                    </Button>
+                  </div>
+                  <div>
+                    <Button onClick={onTip}>
+                      <FaCoins />
+                      Tip
+                    </Button>
+                  </div>
+                </ButtonsContainer>
+              </StoryCard>
+            );
+          })}
+        </>
+      ) : (
+        "Loading..."
+      )}
     </>
   );
 };

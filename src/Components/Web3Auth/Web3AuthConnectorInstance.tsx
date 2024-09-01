@@ -30,14 +30,25 @@ const chainConfig = {
   chainNamespace: CHAIN_NAMESPACES.EIP155,
   chainId: "0xaa37dc", // hex of 69
   rpcTarget: "https://sepolia.optimism.io",
-  // Avoid using public rpcTarget in production.
-  // Use services like Infura, Quicknode etc
   displayName: "Optimism Testnet",
   blockExplorerUrl: "https://sepolia-optimistic.etherscan.io",
   ticker: "OP",
   tickerName: "OP",
   logo: "https://cryptologos.cc/logos/optimism-ethereum-op-logo.png"
 };
+
+// const chainConfig = {
+//   chainNamespace: CHAIN_NAMESPACES.EIP155,
+//   chainId: "0x14A34", // hex of 84532
+//   rpcTarget: "https://sepolia.base.org",
+//   // Avoid using public rpcTarget in production.
+//   // Use services like Infura, Quicknode etc
+//   displayName: "Base Sepolia",
+//   blockExplorerUrl: "https://sepolia-explorer.base.org",
+//   ticker: "ETH",
+//   tickerName: "ETH",
+//   logo: "https://github.com/base-org/brand-kit/blob/main/logo/symbol/Base_Symbol_Blue.svg"
+// };
 
 const metamaskAdapter = new MetamaskAdapter({
   clientId:

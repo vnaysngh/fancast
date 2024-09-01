@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import styled from "styled-components";
-import LoadingSpinner from "./Spinner";
+import LoadingSpinner from "../Spinner";
 
 const Overlay = styled.div`
   position: fixed;
@@ -58,13 +58,15 @@ const Button = styled.button<{ primary?: boolean }>`
 `;
 
 const TransactionConfirmationPopup = ({
-  isEligible,
+  isLoading,
   onClose,
-  error
+  error,
+  txHash
 }: {
-  isEligible?: any;
+  isLoading?: any;
   onClose?: () => void;
   error: any;
+  txHash: string;
 }) => {
   const popupRef = useRef<HTMLDivElement>(null);
 
@@ -89,13 +91,15 @@ const TransactionConfirmationPopup = ({
     <Overlay>
       <PopupContainer ref={popupRef}>
         <Title>
-          {isEligible === undefined
+          {isLoading
             ? "Verifying your balance. Please wait.."
-            : isEligible
-            ? "You are verified. Redirecting..."
-            : "You dont have the required balance to enter the community"}
+            : txHash
+            ? "Your tx has been submitted."
+            : error
+            ? "Error"
+            : null}
         </Title>
-        {isEligible === undefined && <LoadingSpinner />}
+        {isLoading === undefined && <LoadingSpinner />}
       </PopupContainer>
     </Overlay>
   );

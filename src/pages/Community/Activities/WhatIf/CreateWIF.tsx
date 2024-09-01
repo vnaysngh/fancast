@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { useStateContext } from "../../../../context";
+import TransactionConfirmationPopup from "../../../../components/popups/whatIfTxPopup";
 
 // Styled Components
 const Container = styled.div`
@@ -80,27 +82,40 @@ interface Story {
 
 // Main Component
 const WhatIfCommunity: React.FC = () => {
-  const [stories, setStories] = useState<Story[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [userAddress, setUserAddress] = useState("");
+  const [error, setError] = useState<any>(false);
+  const [txHash, setTxHash] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const { createStory } = useStateContext();
+
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const newStory: Story = {
-      id: Math.random().toString(36).substr(2, 9), // Random ID for the story
-      title,
-      description,
-      userAddress
-    };
-    setStories([...stories, newStory]);
-    setTitle("");
-    setDescription("");
-    setUserAddress("");
+    setIsOpen(true);
+    setIsLoading(true);
+    const response = await createStory(title, description);
+    if (typeof response === "string") setTxHash(response);
+    else setError(response);
+    setIsLoading(false);
+  };
+
+  const handleCloseModal = () => {
+    setIsOpen(false);
   };
 
   return (
     <Container>
+      {isOpen && (
+        <TransactionConfirmationPopup
+          isLoading={isLoading}
+          onClose={handleCloseModal}
+          error={error}
+          txHash={txHash}
+        />
+      )}
+
       <Title>Create WHAT IF</Title>
       <Form onSubmit={handleFormSubmit}>
         <FormGroup>
@@ -118,15 +133,6 @@ const WhatIfCommunity: React.FC = () => {
             rows={5}
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            required
-          />
-        </FormGroup>
-        <FormGroup>
-          <Label>Your Address</Label>
-          <Input
-            type="text"
-            value={userAddress}
-            onChange={(e) => setUserAddress(e.target.value)}
             required
           />
         </FormGroup>
