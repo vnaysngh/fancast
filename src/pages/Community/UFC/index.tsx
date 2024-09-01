@@ -144,11 +144,43 @@ export const VSContainer = styled.div`
   color: #007bff;
 `;
 
+export const Button = styled.button`
+  font-family: "Bungee";
+  padding: 0.5rem 1rem;
+  border: none;
+  cursor: pointer;
+  background: transparent;
+
+  &:hover {
+    background: #0d0c22;
+    color: #fff;
+  }
+`;
+
+export const InputContainer = styled.div`
+  display: flex;
+  font-family: "Roboto Slab", sans-serif;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1rem;
+`;
+
+export const CustomPromptInput = styled.textarea`
+  width: 100%;
+  max-width: 500px;
+  height: 100px;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border: solid 2px #888;
+  box-shadow: 6px 6px 0px 0px rgba(0, 0, 0, 0.09);
+`;
+
 const FighterSelector: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState<string>("all");
   const [fighters, setFighters] = useState<any[]>([]);
   const [selectedFighters, setSelectedFighters] = useState<Fighter[]>([]);
   const [prediction, setPrediction] = useState<string | null>(null);
+  const [customPrompt, setCustomPrompt] = useState<string>("");
 
   useEffect(() => {
     if (selectedTab === "all") {
@@ -242,12 +274,26 @@ const FighterSelector: React.FC = () => {
             ))}
           </>
         )}
+        <div>
+          {selectedFighters.length === 2 && (
+            <VSContainer>
+              {selectedFighters[0].name} <span>VS</span>{" "}
+              {selectedFighters[1].name}
+            </VSContainer>
+          )}
+          {selectedFighters.length === 2 && (
+            <InputContainer>
+              <CustomPromptInput
+                placeholder="Enter custom prompt for prediction..."
+                value={customPrompt}
+                onChange={(e) => setCustomPrompt(e.target.value)}
+              />
+              <Button onClick={handlePredict}>Get Prediction</Button>
+            </InputContainer>
+          )}
+        </div>
       </SelectedFighters>
-      {selectedFighters.length === 2 && (
-        <VSContainer>
-          {selectedFighters[0].name} <span>VS</span> {selectedFighters[1].name}
-        </VSContainer>
-      )}
+
       {/* <Button onClick={handlePredict}>Create Prediction</Button> */}
       {fighters.length > 0 && (
         <WeightClassContainer>
