@@ -63,7 +63,7 @@ const NewItemsGrid = styled.div`
 
 const FanTokensGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 20px;
 `;
 
@@ -143,6 +143,8 @@ const JoinButton = styled.button`
 `;
 
 const BalanceContainer = styled.div`
+  font-family: "Roboto Slab", sans-serif;
+  font-weight: bold;
   border-radius: 20px;
   display: flex;
   align-items: center;

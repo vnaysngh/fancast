@@ -1,13 +1,9 @@
 import styled from "styled-components";
 import Web3Auth from "../Web3Auth";
 import { useNavigate } from "react-router-dom";
-import {
-  arbLogo,
-  baseLogo,
-  ethereumLogo,
-  optimismLogo
-} from "../Web3Auth/Web3AuthConnectorInstance";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import networks from "../Web3Auth/chainConfig";
+import { useAccount, useSwitchChain } from "wagmi";
 
 const Header = styled.header`
   display: flex;
@@ -93,56 +89,48 @@ const NetworkIcon = styled.img`
 
 const HeaderComponent = () => {
   const navigate = useNavigate();
-  const [selectedNetwork, setSelectedNetwork] = useState({
-    name: "Op Sepolia",
-    icon: optimismLogo
-  });
-
-  const handleNetworkChange = (network: string) => {
-    switch (network) {
-      case "Optimism":
-        setSelectedNetwork({ name: "Optimism", icon: optimismLogo });
-        break;
-      case "Base":
-        setSelectedNetwork({ name: "Base", icon: baseLogo });
-        break;
-      case "Ethereum":
-        setSelectedNetwork({ name: "Sepolia", icon: ethereumLogo });
-        break;
-        break;
-      default:
-        break;
+  const [selectedNetwork, setSelectedNetwork] = useState<any>();
+  const account = useAccount();
+  const { chains, switchChain } = useSwitchChain();
+  useEffect(() => {
+    if (account && account.chainId) {
+      const selectedNetwork = networks.find(
+        (network) => network.id === account.chainId
+      );
+      setSelectedNetwork(selectedNetwork);
     }
-  };
+  }, [account]);
 
   return (
     <Header>
       <PageTitle onClick={() => navigate("/")}>Fancast</PageTitle>
       <UserInfo>
         <Web3Auth />
-        <DropdownContainer>
-          <DropdownButton>
-            <NetworkIcon
-              src={selectedNetwork.icon}
-              alt={selectedNetwork.name}
-            />
-            {selectedNetwork.name}
-          </DropdownButton>
-          <DropdownContent>
-            <DropdownItem onClick={() => handleNetworkChange("Optimism")}>
-              <img src={optimismLogo} alt="Optimism" />
-              Op Sepolia
-            </DropdownItem>
-            <DropdownItem onClick={() => handleNetworkChange("Base")}>
-              <img src={baseLogo} alt="Base" />
-              Base Sepolia
-            </DropdownItem>
-            <DropdownItem onClick={() => handleNetworkChange("Ethereum")}>
-              <img src={ethereumLogo} alt="Ethereum" />
-              Sepolia
-            </DropdownItem>
-          </DropdownContent>
-        </DropdownContainer>
+        {account.address && selectedNetwork && (
+          <DropdownContainer>
+            <DropdownButton>
+              <NetworkIcon
+                src={selectedNetwork.logo}
+                alt={selectedNetwork.name}
+              />
+              {selectedNetwork.name}
+            </DropdownButton>
+            <DropdownContent>
+              {chains
+                .filter((chain) => chain.id !== account.chainId)
+                .map((chain) => {
+                  return (
+                    <DropdownItem
+                      onClick={() => switchChain({ chainId: chain.id })}
+                    >
+                      {/* <img src={network.logo} alt="Optimism" /> */}
+                      {chain.name}
+                    </DropdownItem>
+                  );
+                })}
+            </DropdownContent>
+          </DropdownContainer>
+        )}
       </UserInfo>
     </Header>
   );

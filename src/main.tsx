@@ -28,52 +28,26 @@ const queryClient = new QueryClient();
 
 // Set up client
 export const config = createConfig({
-  chains: [
-    mainnet,
-    sepolia,
-    polygon,
-    polygonMumbai,
-    optimism,
-    optimismSepolia,
-    base,
-    baseSepolia,
-    chiliz,
-    spicy
-  ],
+  chains: [optimismSepolia, baseSepolia, sepolia],
   transports: {
-    [mainnet.id]: http(),
-    [base.id]: http(),
-    [sepolia.id]: http(),
-    [polygon.id]: http(),
-    [optimism.id]: http(),
-    [polygonMumbai.id]: http(),
     [optimismSepolia.id]: http(),
     [baseSepolia.id]: http(),
-    [chiliz.id]: http(),
-    [spicy.id]: http()
+    [sepolia.id]: http()
   },
   connectors: [
-    Web3AuthConnectorInstance([
-      mainnet,
-      sepolia,
-      polygon,
-      base,
-      optimismSepolia,
-      baseSepolia,
-      optimism,
-      polygonMumbai,
-      chiliz,
-      spicy
-    ])
+    walletConnect({
+      projectId: "3314f39613059cb687432d249f1658d2",
+      showQrModal: true
+    }),
+    coinbaseWallet({ appName: "wagmi" }),
+    Web3AuthConnectorInstance([optimismSepolia, baseSepolia, sepolia])
   ]
 });
 
-console.log(optimismSepolia);
-
 const Home: React.FC = () => {
   return (
-    <ApolloProvider client={client}>
-      <WagmiProvider config={config}>
+    <WagmiProvider config={config}>
+      <ApolloProvider client={client}>
         <QueryClientProvider client={queryClient}>
           <NeynarContextProvider
             settings={{
@@ -90,8 +64,8 @@ const Home: React.FC = () => {
             </XMTPProvider>
           </NeynarContextProvider>
         </QueryClientProvider>
-      </WagmiProvider>
-    </ApolloProvider>
+      </ApolloProvider>
+    </WagmiProvider>
   );
 };
 
