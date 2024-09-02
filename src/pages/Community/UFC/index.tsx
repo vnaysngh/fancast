@@ -297,9 +297,6 @@ const FighterSelector: React.FC = () => {
       {/* <Button onClick={handlePredict}>Create Prediction</Button> */}
       {fighters.length > 0 && (
         <WeightClassContainer>
-          <WeightClassTitle>
-            {selectedTab.charAt(0).toUpperCase() + selectedTab.slice(1)}
-          </WeightClassTitle>
           <FighterList>
             {fighters.map((fighter) => (
               <FighterCard

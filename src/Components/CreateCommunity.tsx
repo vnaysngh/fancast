@@ -43,16 +43,18 @@ const Form = styled.form`
 
 const Label = styled.label`
   margin-top: 1rem;
-  font-weight: bold;
   color: #555;
 `;
 
 const Input = styled.input`
-  font-family: "Bungee", sans-serif;
+  font-family: "Roboto Slab", sans-serif;
   padding: 0.5rem;
   margin-top: 0.25rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  font-weight: bold;
+  font-size: 1rem;
+  border-radius: 0px;
+  border: solid 2px #888;
+  box-shadow: 6px 6px 0px 0px rgba(0, 0, 0, 0.09);
 `;
 
 const Select = styled.select`
