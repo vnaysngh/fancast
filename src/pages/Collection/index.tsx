@@ -4,18 +4,19 @@ import {
   myNFTs,
   nftsJson,
   openseaSepoliaCollection
-} from "../constants/nftconstants";
+} from "../../constants/nftconstants";
 import { useNavigate } from "react-router-dom";
-import CreateCommunityModal from "../components/CreateCommunity";
-import { fanTokens } from "../constants/fanTokens";
+import { fanTokens } from "../../constants/fanTokens";
 import { http, createConfig, getBalance } from "@wagmi/core";
 import { chiliz, mainnet, sepolia, spicy } from "@wagmi/core/chains";
-import TransactionConfirmationPopup from "../components/TransactionPopup";
+import TransactionConfirmationPopup from "../../components/TransactionPopup";
 import axios from "axios";
-import { useStateContext } from "../context";
-import { locksOwnedByLockManager } from "../graphql/query";
+import { useStateContext } from "../../context";
+import { locksOwnedByLockManager } from "../../graphql/query";
 import { useQuery } from "@apollo/client";
-import { config } from "../main";
+import { config } from "../../main";
+import CreateCommunityModal from "../../components/CreateCommunity";
+import Popup from "./mint";
 
 // Styled Components
 const PageContainer = styled.div`
@@ -199,13 +200,17 @@ const Image = styled.img`
 `;
 
 const Collections = () => {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("explore");
   const [isLoading, setIsLoading] = useState(false);
   const [isEligible, setIsEligible] = useState<any>(undefined);
   const [isOpen, setIsOpen] = useState(false);
   const [error, setError] = useState<any>(false);
-  const navigate = useNavigate();
-  const { address, createStory } = useStateContext();
+  const { address, createStory, handleMint } = useStateContext();
+  const [isPopupVisible, setIsPopupVisible] = useState(false);
+  const [selectedCommunity, setSelectedCommunity] = useState<any>(null);
+  const [isMinting, setIsMinting] = useState(false);
+  const [txHash, setTxHash] = useState<string>("");
 
   const {
     loading,
@@ -240,8 +245,12 @@ const Collections = () => {
     }
   };
 
-  const isHolderOfNFTContract = (network: string, contractAddress: string) => {
-    if (!contractAddress) return;
+  const isHolderOfNFTContract = () => {
+    if (!selectedCommunity) return;
+    const contractAddress =
+      selectedCommunity?.community?.contracts?.[0]?.address ??
+      selectedCommunity?.community?.contract.address;
+    const network = selectedCommunity.network;
     setIsLoading(true);
     try {
       const options = {
@@ -256,11 +265,7 @@ const Collections = () => {
         )
         .then((response) => {
           setIsEligible(response.data?.isHolderOfContract);
-          if (response.data.isHolderOfContract) {
-            setTimeout(() => {
-              handleNavigate(contractAddress);
-            }, 2000);
-          }
+          setIsLoading(false);
         })
         .catch((err) => {
           console.error(err);
@@ -269,7 +274,7 @@ const Collections = () => {
     } catch (e) {
       console.log(e);
       setError(e);
-      // setIsLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -281,18 +286,39 @@ const Collections = () => {
     setIsOpen(false);
   };
 
-  const handleCloseVerificationModal = () => {
-    setIsLoading(false);
-    setError(false);
-    setIsEligible(undefined);
-  };
-
   const handleSubmit = () => {
     setIsOpen(false);
   };
 
   const handleCreateStory = () => {
     createStory();
+  };
+
+  const handleOpenPopup = (network: string, community: object) => {
+    setSelectedCommunity({
+      network,
+      community
+    });
+    setIsPopupVisible(true);
+  };
+
+  const handleClosePopup = () => {
+    setIsLoading(false);
+    setError(false);
+    setIsPopupVisible(false);
+    setSelectedCommunity(null);
+    setIsEligible(undefined);
+  };
+
+  const mintNFT = async () => {
+    // Implement your NFT minting logic here
+    setIsMinting(true);
+    const response = await handleMint();
+    if (typeof response === "string") {
+      setTxHash(response);
+    } else {
+      setError(true);
+    }
   };
 
   const renderContent = () => {
@@ -303,9 +329,7 @@ const Collections = () => {
             {openseaSepoliaCollection.map((nft) => (
               <NewItemCard
                 key={nft.collection}
-                onClick={() =>
-                  isHolderOfNFTContract("eth-sepolia", nft.contracts[0].address)
-                }
+                onClick={() => handleOpenPopup("eth-sepolia", nft)}
               >
                 {/* <ItemImage src={nft.image_url} alt={nft.name ?? ""} /> */}
                 <ImageContainer>
@@ -330,9 +354,7 @@ const Collections = () => {
             {myNFTs.map((nft) => (
               <NewItemCard
                 key={nft.contract.symbol}
-                onClick={() =>
-                  isHolderOfNFTContract("eth-sepolia", nft.contract.address)
-                }
+                onClick={() => handleOpenPopup("eth-sepolia", nft)}
               >
                 <ItemImage
                   src={nft.image.cachedUrl}
@@ -422,11 +444,17 @@ const Collections = () => {
         />
       )}
 
-      {isLoading && (
-        <TransactionConfirmationPopup
-          onClose={handleCloseVerificationModal}
+      {isPopupVisible && (
+        <Popup
+          isMinting={isMinting}
+          isLoading={isLoading}
           isEligible={isEligible}
           error={error}
+          onClose={handleClosePopup}
+          community={selectedCommunity}
+          mintNFT={mintNFT}
+          isHolderOfNFTContract={isHolderOfNFTContract}
+          txHash={txHash}
         />
       )}
       <Section>

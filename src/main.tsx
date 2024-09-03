@@ -28,11 +28,12 @@ const queryClient = new QueryClient();
 
 // Set up client
 export const config = createConfig({
-  chains: [optimismSepolia, baseSepolia, sepolia],
+  chains: [optimismSepolia, baseSepolia, sepolia, spicy],
   transports: {
     [optimismSepolia.id]: http(),
     [baseSepolia.id]: http(),
-    [sepolia.id]: http()
+    [sepolia.id]: http(),
+    [spicy.id]: http()
   },
   connectors: [
     walletConnect({

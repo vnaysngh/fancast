@@ -3,6 +3,7 @@ import { ethers } from "ethers";
 import { useAccount, useReadContract } from "wagmi";
 import { writeContract, simulateContract } from "@wagmi/core";
 import abi from "../abi/abi.json";
+import ERC721ABI from "../abi/erc721.json";
 import { config } from "../main";
 import { optimismSepolia } from "viem/chains";
 
@@ -35,6 +36,29 @@ export const StateContextProvider = ({ children }: { children: any }) => {
     if (account.address) connectWallet();
   }, [account.isConnected]);
 
+  const handleMint = async () => {
+    try {
+      return await writeContract(config, {
+        abi: ERC721ABI,
+        address: "0xC47620A7A3cF543e04B0A27D43C64EeC9c8FA80A",
+        functionName: "joinCommunity",
+        args: [address, "0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D"],
+        chainId: optimismSepolia.id
+      })
+        .then((res) => res)
+        .catch((err) => err);
+    } catch (error) {
+      console.error("Minting failed:", error);
+    }
+  };
+
+  const userInfo = useReadContract({
+    abi: ERC721ABI,
+    address: "0xC47620A7A3cF543e04B0A27D43C64EeC9c8FA80A",
+    functionName: "getUserInfo",
+    args: [address]
+  });
+
   const createStory = async (title: string, description: string) => {
     const quote = await simulateContract(config, {
       abi,
@@ -58,12 +82,16 @@ export const StateContextProvider = ({ children }: { children: any }) => {
       .catch((err) => err);
   };
 
+  console.log(userInfo.data, "user info");
+
   return (
     <StateContext.Provider
       value={{
         signer,
+        userInfo,
         address,
-        createStory
+        createStory,
+        handleMint
       }}
     >
       {children}

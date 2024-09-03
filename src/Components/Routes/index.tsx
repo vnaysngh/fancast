@@ -4,7 +4,7 @@ import { Link, Navigate, Route, Routes, useLocation } from "react-router-dom";
 import HeaderComponent from "../Header";
 import styled from "styled-components";
 
-const Homepage = lazy(() => import("../../pages/Collections"));
+const Homepage = lazy(() => import("../../pages/Collection"));
 const Community = lazy(() => import("../../pages/Community"));
 const Inbox = lazy(() => import("../../pages/Community/Inbox"));
 const WhatIf = lazy(() => import("../../pages/Community/Activities/WhatIf"));
