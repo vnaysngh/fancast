@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import networks from "../Web3Auth/chainConfig";
 import { useAccount, useSwitchChain } from "wagmi";
+import { FaCrown } from "react-icons/fa"; // Icon for NFT holder
 
 const Header = styled.header`
   display: flex;
@@ -30,6 +31,19 @@ const UserInfo = styled.div`
   align-items: center;
   padding: 10px 20px;
   border-radius: 20px;
+`;
+
+const NFTBadge = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 5px 10px;
+  background: gold;
+  margin-right: 10px;
+  font-weight: 600;
+
+  svg {
+    margin-right: 5px;
+  }
 `;
 
 const DropdownContainer = styled.div`
@@ -92,20 +106,41 @@ const HeaderComponent = () => {
   const [selectedNetwork, setSelectedNetwork] = useState<any>();
   const account = useAccount();
   const { chains, switchChain } = useSwitchChain();
+
+  // Placeholder for checking if the user holds the platform NFT
+  const [hasPlatformNFT, setHasPlatformNFT] = useState(false);
+
   useEffect(() => {
     if (account && account.chainId) {
       const selectedNetwork = networks.find(
         (network) => network.id === account.chainId
       );
       setSelectedNetwork(selectedNetwork);
+
+      // Placeholder logic to check if the user holds the platform NFT
+      // Replace this with actual logic to verify the NFT holding
+      const userHasNFT = true;
+      setHasPlatformNFT(userHasNFT);
     }
   }, [account]);
+
+  // Placeholder function for NFT check
+  const checkUserHasNFT = (address: string): boolean => {
+    // Implement the actual logic to check if the user holds the NFT
+    return true; // Placeholder value
+  };
 
   return (
     <Header>
       <PageTitle onClick={() => navigate("/")}>Fancast</PageTitle>
       <UserInfo>
+        {hasPlatformNFT && (
+          <NFTBadge>
+            <FaCrown /> NFT Holder
+          </NFTBadge>
+        )}
         <Web3Auth />
+
         {account.address && selectedNetwork && (
           <DropdownContainer>
             <DropdownButton>

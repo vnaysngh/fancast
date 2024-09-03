@@ -13,6 +13,12 @@ export const optimismLogo = chainLogos["optimism"];
 export const baseLogo = chainLogos["base"];
 export const ethereumLogo = chainLogos["ethereum"];
 
+export const openSeaChainConfig: { [key: number]: string } = {
+  [sepolia.id]: "sepolia",
+  [optimismSepolia.id]: "optimism_sepolia",
+  [baseSepolia.id]: "base_sepolia"
+};
+
 const networks = [
   {
     name: "Op Sepolia",

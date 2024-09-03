@@ -61,9 +61,8 @@ const ButtonContainer = styled.div`
   gap: 10px;
 `;
 
-const NonEligibleContainer = styled.div``;
-
 interface PopupProps {
+  isUserFCHolder: boolean;
   isLoading: boolean;
   isMinting: boolean;
   onClose: () => void;
@@ -73,9 +72,12 @@ interface PopupProps {
   error: any;
   mintNFT: () => void;
   isHolderOfNFTContract: () => void;
+  handleJoinMoreCommunities: () => void;
 }
 
 const Popup = ({
+  handleJoinMoreCommunities,
+  isUserFCHolder,
   isLoading,
   onClose,
   community,
@@ -87,7 +89,6 @@ const Popup = ({
   isHolderOfNFTContract
 }: PopupProps) => {
   const communityName = community?.community?.name;
-
   return (
     <>
       <Overlay onClick={onClose} />
@@ -122,14 +123,42 @@ const Popup = ({
               </Message>
             )}
           </>
+        ) : isUserFCHolder ? (
+          <>
+            {error ? (
+              "Something went wrong"
+            ) : txHash ? (
+              <Message>
+                Transaction Submitted. Check back under 'Subscribed' in sometime
+              </Message>
+            ) : (
+              <>
+                <Message>
+                  You are FC NFT Holder. To join the{" "}
+                  <b style={{ color: "steelblue" }}> {communityName}</b>{" "}
+                  community, we need to check if you are eligible. Click 'Check'
+                  to proceed.
+                </Message>
+                <ButtonContainer>
+                  <Button
+                    onClick={handleJoinMoreCommunities}
+                    disabled={isMinting}
+                  >
+                    {isMinting
+                      ? "Please confirm transaction in your wallet..."
+                      : "Join"}
+                  </Button>
+                </ButtonContainer>
+              </>
+            )}
+          </>
         ) : (
           <>
             {error ? (
               "Something went wrong"
             ) : txHash ? (
               <Message>
-                Transaction Submitted. Check back under 'My Communities' in
-                sometime
+                Transaction Submitted. Check back under 'Subscribed' in sometime
               </Message>
             ) : (
               <>
