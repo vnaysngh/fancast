@@ -7,9 +7,8 @@ import {
 } from "../../constants/nftconstants";
 import { useNavigate } from "react-router-dom";
 import { fanTokens } from "../../constants/fanTokens";
-import { http, createConfig, getBalance } from "@wagmi/core";
-import { chiliz, mainnet, sepolia, spicy } from "@wagmi/core/chains";
-import TransactionConfirmationPopup from "../../components/TransactionPopup";
+import { getBalance } from "@wagmi/core";
+import { spicy } from "@wagmi/core/chains";
 import axios from "axios";
 import { useStateContext } from "../../context";
 import { locksOwnedByLockManager } from "../../graphql/query";
@@ -17,6 +16,7 @@ import { useQuery } from "@apollo/client";
 import { config } from "../../main";
 import CreateCommunityModal from "../../components/CreateCommunity";
 import Popup from "./mint";
+import { FaUsers, FaEthereum } from "react-icons/fa";
 
 // Styled Components
 const PageContainer = styled.div`
@@ -161,10 +161,9 @@ const CreateButton = styled(JoinButton)`
 
 const LockItem = styled.div`
   border: 1px solid #ddd;
-  border-radius: 8px;
   padding: 16px;
-  background: #f9f9f9;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: solid 2px #888;
+  box-shadow: 6px 6px 0px 0px rgba(0, 0, 0, 0.09);
   cursor: pointer;
 `;
 
@@ -173,14 +172,32 @@ const Title = styled.h3`
   font-size: 1rem;
 `;
 
-const Details = styled.p`
-  margin: 8px 0;
+const LockDetails = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
   font-size: 1rem;
+`;
+
+const IconContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  align-items: center;
+`;
+
+const Icon = styled.img`
+  height: 1rem;
+  width: 1rem;
+  cursor: pointer;
 `;
 
 const EtherscanLink = styled.a`
   color: #1e90ff;
   text-decoration: none;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
 
   &:hover {
     text-decoration: underline;
@@ -215,7 +232,7 @@ const Collections = () => {
   const {
     loading,
     error: apolloError,
-    data
+    data: userCreatedCommunities
   } = useQuery(locksOwnedByLockManager, {
     variables: { deployer: address }
   });
@@ -290,10 +307,6 @@ const Collections = () => {
     setIsOpen(false);
   };
 
-  const handleCreateStory = () => {
-    createStory();
-  };
-
   const handleOpenPopup = (network: string, community: object) => {
     setSelectedCommunity({
       network,
@@ -320,7 +333,6 @@ const Collections = () => {
       setError(true);
     }
   };
-
   const renderContent = () => {
     switch (activeTab) {
       case "explore":
@@ -376,31 +388,40 @@ const Collections = () => {
       case "myCommunities":
         return (
           <FanTokensGrid>
-            {data?.locks.map((lock: any) => {
+            {userCreatedCommunities?.locks.map((lock: any) => {
               // Convert expiration duration from seconds to days
-              const expirationDurationDays = Math.floor(
+              /*  const expirationDurationDays = Math.floor(
                 Number(lock.expirationDuration) / (60 * 60 * 24)
               );
-
+ */
               return (
-                <LockItem key={lock.address} onClick={handleCreateStory}>
-                  <FanItemImage
+                <LockItem key={lock.address}>
+                  <ItemImage
                     src="https://via.placeholder.com/100"
                     alt={lock.name ?? ""}
                   />
                   <Title>{lock.name}</Title>
-                  <Details>
-                    Expiration Duration: {expirationDurationDays} days
-                  </Details>
-                  <Details>Price: {parseFloat(lock.price) / 1e18} ETH</Details>
-                  <Details>Number of Keys: {lock.totalKeys}</Details>
-                  <EtherscanLink
-                    href={`https://etherscan.io/address/${lock.address}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    View on Etherscan
-                  </EtherscanLink>
+                  <IconContainer>
+                    <EtherscanLink
+                      href={`https://etherscan.io/address/${lock.address}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Icon
+                        src="https://altcoinsbox.com/wp-content/uploads/2023/01/etherscan-logo.png"
+                        alt="Etherscan"
+                      />
+                    </EtherscanLink>
+                    <LockDetails>
+                      <FaUsers />
+                      {lock.totalKeys}
+                    </LockDetails>
+
+                    <LockDetails>
+                      <FaEthereum />
+                      {lock.price > 0 ? parseFloat(lock.price) / 1e18 : "Free"}
+                    </LockDetails>
+                  </IconContainer>
                 </LockItem>
               );
             })}
