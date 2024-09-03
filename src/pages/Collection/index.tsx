@@ -335,7 +335,7 @@ const Collections = () => {
     setIsOpen(false);
   };
 
-  const handleOpenPopup = (network: string, community: object) => {
+  const handleOpenPopup = (network: string, community: any) => {
     setSelectedCommunity({
       network,
       community
@@ -522,7 +522,7 @@ const Collections = () => {
             {subscribed?.map((nft: any) => (
               <NewItemCard
                 key={nft.collection}
-                onClick={() => handleOpenPopup("eth-sepolia", nft)}
+                onClick={() => handleNavigate(nft.contract)}
               >
                 <ImageContainer>
                   <Image

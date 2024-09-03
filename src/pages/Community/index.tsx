@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
+import { useReadContract } from "wagmi";
+import ERC721ABI from "../../abi/erc721.json";
 
 // Styled components
 const Container = styled.div`
@@ -116,6 +118,13 @@ const HomePage = () => {
     navigate(`/community/${communityId}/${route}`);
   };
 
+  const communityMembersCount: any = useReadContract({
+    abi: ERC721ABI,
+    address: "0xc97139659d6Ee90A76027E68cd318821956d90dF",
+    functionName: "getCommunityCount",
+    args: [communityId!]
+  });
+
   return (
     <Container>
       <Header>
@@ -133,17 +142,17 @@ const HomePage = () => {
           <CardTitle>Welcome, {username || "Loading..."}</CardTitle>
           <CardContent>
             <p>Glad to have you back in our exclusive NFT community!</p>
-            <Button>Update Profile</Button>
+            {/* <Button>Update Profile</Button> */}
           </CardContent>
         </Card>
 
         <Card>
           <CardTitle>Community Stats</CardTitle>
-          {/*  <CardContent>
-            <p>Members: {communityStats.members}</p>
-            <p>Active Posts: {communityStats.activePosts}</p>
-            <p>Avg. Engagement: {communityStats.avgEngagement}</p>
-          </CardContent> */}
+          <CardContent>
+            <p>Members: {communityMembersCount.data?.toString()}</p>
+            {/* <p>Active Posts: {communityStats.activePosts}</p>
+            <p>Avg. Engagement: {communityStats.avgEngagement}</p> */}
+          </CardContent>
         </Card>
 
         <Card onClick={() => handleNavigation("members")}>

@@ -1,6 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import { MessageCircle, DollarSign, ExternalLink } from "lucide-react";
+import { useReadContract } from "wagmi";
+import ERC721ABI from "../../../abi/erc721.json";
+import { useParams } from "react-router-dom";
 
 const PageContainer = styled.div`
   padding: 2rem;
@@ -8,7 +11,6 @@ const PageContainer = styled.div`
 
 const MembersList = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 1rem;
 `;
 
@@ -161,33 +163,45 @@ const membersData: Member[] = [
   // Add more members to see the grid layout in action
 ];
 
-const MembersComponent: React.FC = () => {
+const MembersComponent = () => {
+  const { communityId } = useParams<{
+    communityId: string;
+  }>();
+
+  const members: any = useReadContract({
+    abi: ERC721ABI,
+    address: "0xc97139659d6Ee90A76027E68cd318821956d90dF",
+    functionName: "getCommunityMembers",
+    args: [communityId!]
+  });
+
   return (
     <PageContainer>
-      <h2>BAYC Members (293)</h2>
+      <h2>BAYC Members ({members.data?.length})</h2>
       <MembersList>
-        {membersData.map((member) => (
-          <MemberCard key={member.id}>
-            <CardHeader>
-              <UserProfile>
-                <ProfileImage
-                  src="https://via.placeholder.com/100"
-                  alt="User Profile"
-                />
-                <UserInfo>
-                  <Name>{member.name}</Name>
-                  <Address>
-                    {member.address}{" "}
-                    <ExternalLink
-                      size={12}
-                      style={{ verticalAlign: "middle", cursor: "pointer" }}
-                    />
-                  </Address>
-                </UserInfo>
-              </UserProfile>
-            </CardHeader>
-            <Bio>{member.bio}</Bio>
-            {/* <NFTSection>
+        {members.data &&
+          members.data.map((address: string) => (
+            <MemberCard key={address}>
+              <CardHeader>
+                <UserProfile>
+                  <ProfileImage
+                    src="https://via.placeholder.com/100"
+                    alt="User Profile"
+                  />
+                  <UserInfo>
+                    <Name>{"member.name"}</Name>
+                    <Address>
+                      {address}{" "}
+                      <ExternalLink
+                        size={12}
+                        style={{ verticalAlign: "middle", cursor: "pointer" }}
+                      />
+                    </Address>
+                  </UserInfo>
+                </UserProfile>
+              </CardHeader>
+              <Bio>{"member.bio"}</Bio>
+              {/* <NFTSection>
               <NFTGrid>
                 {member.nfts.slice(0, 3).map((nft) => (
                   <NFTImage key={nft.id} src={nft.image} alt="NFT" />
@@ -201,18 +215,18 @@ const MembersComponent: React.FC = () => {
                 )}
               </NFTGrid>
             </NFTSection> */}
-            <ActionSection>
-              <MessageButton>
-                <MessageCircle size={14} style={{ marginRight: "0.25rem" }} />
-                Message
-              </MessageButton>
-              <TipButton>
-                <DollarSign size={14} style={{ marginRight: "0.25rem" }} />
-                Tip
-              </TipButton>
-            </ActionSection>
-          </MemberCard>
-        ))}
+              <ActionSection>
+                <MessageButton>
+                  <MessageCircle size={14} style={{ marginRight: "0.25rem" }} />
+                  Message
+                </MessageButton>
+                <TipButton>
+                  <DollarSign size={14} style={{ marginRight: "0.25rem" }} />
+                  Tip
+                </TipButton>
+              </ActionSection>
+            </MemberCard>
+          ))}
       </MembersList>
     </PageContainer>
   );
