@@ -5,11 +5,10 @@ import { writeContract, simulateContract } from "@wagmi/core";
 import abi from "../abi/abi.json";
 import ERC721ABI from "../abi/erc721.json";
 import { config } from "../main";
-import { optimismSepolia, sepolia } from "viem/chains";
+import { optimismSepolia, sepolia, spicy } from "viem/chains";
 import axios from "axios";
 import { openSeaChainConfig } from "../components/Web3Auth/chainConfig";
-import { client } from "../neynarClient";
-import { FeedType } from "@neynar/nodejs-sdk";
+import Moralis from "moralis";
 
 const StateContext = createContext<any>({});
 const windowObj: any = window;
@@ -20,7 +19,30 @@ export const StateContextProvider = ({ children }: { children: any }) => {
   const [userNFTs, setUserNFTs] = useState<any>({ nfts: [] });
   const [subscribed, setSubscribed] = useState([]);
   const [membersMetadata, setMembersMetadata] = useState({});
+  const [chilizFanTokens, setChilizFanTokens] = useState<any>([]);
   const account = useAccount();
+
+  /* useEffect(() => {
+    const fetchUserCHZTokenBalances = async () => {
+      try {
+        await Moralis.start({
+          apiKey: import.meta.env.VITE_MORALIS_API_KEY
+        });
+
+        const response =
+          await Moralis.EvmApi.wallets.getWalletTokenBalancesPrice({
+            chain: "88882",
+            address
+          });
+
+        setChilizFanTokens(response.result);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+
+    if (address) fetchUserCHZTokenBalances();
+  }, [address]); */
 
   useEffect(() => {
     const connectWallet = async () => {
@@ -100,7 +122,7 @@ export const StateContextProvider = ({ children }: { children: any }) => {
     const baseUrl = `https://eth-sepolia.g.alchemy.com/nft/v3/${apiKey}/getOwnersForContract?`;
     const url = `${baseUrl}contractAddress=${nftAddr}&withTokenBalances=false`;
 
-    const result = axios
+    axios
       .get(url, {
         headers: { accept: "application/json" }
       })
@@ -214,6 +236,7 @@ export const StateContextProvider = ({ children }: { children: any }) => {
         handleMint,
         joinAdditionalCommunity,
         userNFTs,
+        chilizFanTokens,
         subscribed,
         isUserFCHolder,
         membersMetadata,

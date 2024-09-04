@@ -1,242 +1,34 @@
 export const fanTokens = [
   {
-    token_address: "0xc926130fa2240e16a41c737d54c1d9b1d4d45257",
-    symbol: "ATM",
-    name: "Atletico De Madrid",
+    token_address: "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+    symbol: "CHZ",
+    name: "Chiliz",
     logo: null,
     thumbnail: null,
-    decimals: 0,
-    balance: "100",
+    decimals: 18,
+    balance: "34786675425595000000",
     possible_spam: false,
-    verified_contract: false,
-    total_supply: "11217600",
-    total_supply_formatted: "11217600",
-    percentage_relative_to_total_supply: 0.000891456282983882,
+    verified_contract: true,
+    total_supply: null,
+    total_supply_formatted: null,
+    percentage_relative_to_total_supply: null,
     security_score: null,
+    balance_formatted: "34.786675425595",
+    usd_price: null,
+    usd_price_24hr_percent_change: null,
+    usd_price_24hr_usd_change: null,
+    usd_value: null,
+    usd_value_24hr_usd_change: null,
+    native_token: true,
+    portfolio_percentage: 0,
     tokenDetails: {
       chainId: 88888,
-      address: "0xe9506F70be469d2369803Ccf41823713BAFe8154",
-      name: "Atlético de Madrid",
-      symbol: "ATM",
-      decimals: 0,
+      address: "0x721EF6871f1c4Efe730Dce047D40D1743B886946",
+      name: "Wrapped Chiliz",
+      symbol: "WCHZ",
+      decimals: 18,
       logoURI:
-        "https://raw.githubusercontent.com/kewlexchange/assets/main/chiliz/tokens/0xe9506f70be469d2369803ccf41823713bafe8154/logo.svg"
-    }
-  },
-  {
-    token_address: "0xb0fa395a3386800658b9617f90e834e2cec76dd3",
-    symbol: "PSG",
-    name: "Paris Saint-Germain",
-    logo: null,
-    thumbnail: null,
-    decimals: 0,
-    balance: "100",
-    possible_spam: false,
-    verified_contract: false,
-    total_supply: "11217800",
-    total_supply_formatted: "11217800",
-    percentage_relative_to_total_supply: 0.000891440389381162,
-    security_score: null,
-    tokenDetails: {
-      chainId: 88888,
-      address: "0xc2661815C69c2B3924D3dd0c2C1358A1E38A3105",
-      name: "Paris Saint-Germain",
-      symbol: "PSG",
-      decimals: 0,
-      logoURI:
-        "https://raw.githubusercontent.com/kewlexchange/assets/main/chiliz/tokens/0xc2661815c69c2b3924d3dd0c2c1358a1e38a3105/logo.svg"
-    }
-  },
-  {
-    token_address: "0x9b9c9aaa74678fcf4e1c76eeb1fa969a8e7254f8",
-    symbol: "SPURS",
-    name: "Tottenham Hotspur",
-    logo: null,
-    thumbnail: null,
-    decimals: 0,
-    balance: "100",
-    possible_spam: false,
-    verified_contract: false,
-    total_supply: "11217800",
-    total_supply_formatted: "11217800",
-    percentage_relative_to_total_supply: 0.000891440389381162,
-    security_score: null,
-    tokenDetails: {
-      chainId: 88888,
-      address: "0x93D84Ff2c5F5a5A3D7291B11aF97679E75eEAc92",
-      name: "Tottenham Hotspur",
-      symbol: "SPURS",
-      decimals: 0,
-      logoURI:
-        "https://raw.githubusercontent.com/kewlexchange/assets/main/chiliz/tokens/0x93d84ff2c5f5a5a3d7291b11af97679e75eeac92/logo.svg"
-    }
-  },
-  {
-    token_address: "0x945eed98f5cbada87346028ad0bee0ea66849a0e",
-    symbol: "JUV",
-    name: "Juventus",
-    logo: null,
-    thumbnail: null,
-    decimals: 0,
-    balance: "100",
-    possible_spam: false,
-    verified_contract: false,
-    total_supply: "11217600",
-    total_supply_formatted: "11217600",
-    percentage_relative_to_total_supply: 0.000891456282983882,
-    security_score: null,
-    tokenDetails: {
-      chainId: 88888,
-      address: "0x454038003a93cf44766aF352F74bad6B745616D0",
-      name: "Juventus",
-      symbol: "JUV",
-      decimals: 0,
-      logoURI:
-        "https://raw.githubusercontent.com/kewlexchange/assets/main/chiliz/tokens/0x454038003a93cf44766af352f74bad6b745616d0/logo.svg"
-    }
-  },
-  {
-    token_address: "0x8dbe49c4dcde110616faff53b39270e1c48f861a",
-    symbol: "NAP",
-    name: "Napoli",
-    logo: null,
-    thumbnail: null,
-    decimals: 0,
-    balance: "100",
-    possible_spam: false,
-    verified_contract: false,
-    total_supply: "11217600",
-    total_supply_formatted: "11217600",
-    percentage_relative_to_total_supply: 0.000891456282983882,
-    security_score: null,
-    tokenDetails: {
-      chainId: 88888,
-      address: "0xbE7f1eBB1Fd6246844E093B04991ae0e66D12C77",
-      name: "Napoli",
-      symbol: "NAP",
-      decimals: 0,
-      logoURI:
-        "https://raw.githubusercontent.com/kewlexchange/assets/main/chiliz/tokens/0xbe7f1ebb1fd6246844e093b04991ae0e66d12c77/logo.svg"
-    }
-  },
-  {
-    token_address: "0x7f73c50748560bd2b286a4c7bf6a805cfb6f735d",
-    symbol: "BAR",
-    name: "FC Barcelona",
-    logo: null,
-    thumbnail: null,
-    decimals: 0,
-    balance: "100",
-    possible_spam: false,
-    verified_contract: false,
-    total_supply: "11217800",
-    total_supply_formatted: "11217800",
-    percentage_relative_to_total_supply: 0.000891440389381162,
-    security_score: null,
-    tokenDetails: {
-      chainId: 88888,
-      address: "0xFD3C73b3B09D418841dd6Aff341b2d6e3abA433b",
-      name: "FC Barcelona",
-      symbol: "BAR",
-      decimals: 0,
-      logoURI:
-        "https://raw.githubusercontent.com/kewlexchange/assets/main/chiliz/tokens/0xfd3c73b3b09d418841dd6aff341b2d6e3aba433b/logo.svg"
-    }
-  },
-  {
-    token_address: "0x66f80ddaf5ccfbb082a0b0fae3f21ea19f6b88ef",
-    symbol: "CITY",
-    name: "Manchester City",
-    logo: null,
-    thumbnail: null,
-    decimals: 0,
-    balance: "227",
-    possible_spam: false,
-    verified_contract: false,
-    total_supply: "11217700",
-    total_supply_formatted: "11217700",
-    percentage_relative_to_total_supply: 0.002023587722973515,
-    security_score: null,
-    tokenDetails: {
-      chainId: 88888,
-      address: "0x6401b29F40a02578Ae44241560625232A01B3F79",
-      name: "Manchester City FC",
-      symbol: "CITY",
-      decimals: 0,
-      logoURI:
-        "https://raw.githubusercontent.com/kewlexchange/assets/main/chiliz/tokens/0x6401b29f40a02578ae44241560625232a01b3f79/logo.svg"
-    }
-  },
-  {
-    token_address: "0x641d040db51398ba3a4f2d7839532264ecdcc3ae",
-    symbol: "ACM",
-    name: "AC Milan",
-    logo: null,
-    thumbnail: null,
-    decimals: 0,
-    balance: "100",
-    possible_spam: false,
-    verified_contract: false,
-    total_supply: "11217800",
-    total_supply_formatted: "11217800",
-    percentage_relative_to_total_supply: 0.000891440389381162,
-    security_score: null,
-    tokenDetails: {
-      chainId: 88888,
-      address: "0xF9C0F80a6c67b1B39bdDF00ecD57f2533ef5b688",
-      name: "AC Milan",
-      symbol: "ACM",
-      decimals: 0,
-      logoURI:
-        "https://raw.githubusercontent.com/kewlexchange/assets/main/chiliz/tokens/0xf9c0f80a6c67b1b39bddf00ecd57f2533ef5b688/logo.svg"
-    }
-  },
-  {
-    token_address: "0x44b190d30198f2e585de8974999a28f5c68c6e0f",
-    symbol: "AFC",
-    name: "Arsenal",
-    logo: null,
-    thumbnail: null,
-    decimals: 0,
-    balance: "200",
-    possible_spam: false,
-    verified_contract: false,
-    total_supply: "11217700",
-    total_supply_formatted: "11217700",
-    percentage_relative_to_total_supply: 0.001782896672223361,
-    security_score: null,
-    tokenDetails: {
-      chainId: 88888,
-      address: "0x1d4343d35f0E0e14C14115876D01dEAa4792550b",
-      name: "Arsenal FC",
-      symbol: "AFC",
-      decimals: 0,
-      logoURI:
-        "https://raw.githubusercontent.com/kewlexchange/assets/main/chiliz/tokens/0x1d4343d35f0e0e14c14115876d01deaa4792550b/logo.svg"
-    }
-  },
-  {
-    token_address: "0x1cc71168281dd78ff004ba6098e113bbbcbdc914",
-    symbol: "MENGO",
-    name: "Flamengo",
-    logo: null,
-    thumbnail: null,
-    decimals: 0,
-    balance: "200",
-    possible_spam: false,
-    verified_contract: false,
-    total_supply: "11217700",
-    total_supply_formatted: "11217700",
-    percentage_relative_to_total_supply: 0.001782896672223361,
-    security_score: null,
-    tokenDetails: {
-      chainId: 88888,
-      address: "0xD1723Eb9e7C6eE7c7e2d421B2758dc0f2166eDDc",
-      name: "Flamengo",
-      symbol: "MENGO",
-      decimals: 0,
-      logoURI:
-        "https://raw.githubusercontent.com/kewlexchange/assets/main/chiliz/tokens/0xd1723eb9e7c6ee7c7e2d421b2758dc0f2166eddc/logo.svg"
+        "https://raw.githubusercontent.com/kewlexchange/assets/main/chiliz/tokens/0x721ef6871f1c4efe730dce047d40d1743b886946/logo.svg"
     }
   },
   {

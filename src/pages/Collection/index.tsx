@@ -1,10 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
-import {
-  myNFTs,
-  nftsJson,
-  openseaSepoliaCollection
-} from "../../constants/nftconstants";
+import { openseaSepoliaCollection } from "../../constants/nftconstants";
 import { useNavigate } from "react-router-dom";
 import { fanTokens } from "../../constants/fanTokens";
 import { getBalance } from "@wagmi/core";
@@ -248,7 +244,8 @@ const Collections = () => {
     handleMint,
     isUserFCHolder,
     joinAdditionalCommunity,
-    userInfo
+    userInfo,
+    chilizFanTokens
   } = useStateContext();
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const [selectedCommunity, setSelectedCommunity] = useState<any>(null);
@@ -437,7 +434,12 @@ const Collections = () => {
                   <BalanceContainer>
                     <span>Balance:</span>
                     <img width={16} src={fan.tokenDetails.logoURI} />
-                    <span> {fan.balance}</span>
+                    <span>
+                      {" "}
+                      {fan.balance_formatted
+                        ? fan.balance_formatted
+                        : fan.balance}
+                    </span>
                   </BalanceContainer>
                 </FanItemInfo>
               </FanItemCard>
@@ -591,7 +593,7 @@ const Collections = () => {
               active={activeTab === "fanTokens"}
               onClick={() => setActiveTab("fanTokens")}
             >
-              Chiliz Fan Tokens
+              Chiliz
             </TabButton>
             <TabButton
               firstTab
@@ -610,7 +612,7 @@ const Collections = () => {
               active={activeTab === "subscribed"}
               onClick={() => setActiveTab("subscribed")}
             >
-              Subscribed <FaCrown style={{ color: "goldenrod" }} />
+              Subscribed
             </TabButton>
           </Tabs>
           <CreateButton onClick={() => setIsOpen(true)}>Create</CreateButton>
