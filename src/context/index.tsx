@@ -11,6 +11,7 @@ import axios from "axios";
 import { openSeaChainConfig } from "../components/Web3Auth/chainConfig";
 import { erc20Abi, getContract } from "viem";
 import Web3 from "web3";
+import { dstIds, OAPP } from "../constants/contract";
 const web3 = new Web3(Web3.givenProvider || "ws://localhost:8545");
 const StateContext = createContext<any>({});
 const windowObj: any = window;
@@ -209,22 +210,21 @@ export const StateContextProvider = ({ children }: { children: any }) => {
   };
 
   const createStory = async (title: string, description: string) => {
+    if (!account || !account.chainId) return;
     const quote = await simulateContract(config, {
       abi,
-      address: "0xc97139659d6Ee90A76027E68cd318821956d90dF",
+      address: OAPP[account.chainId],
       functionName: "quote",
-      args: [title, description, [40245]],
-      chainId: optimismSepolia.id
+      args: [title, description, dstIds[account.chainId]]
     }).catch((err) => err);
 
     const nativeFee = quote?.result?.nativeFee.toString();
 
     return await writeContract(config, {
       abi,
-      address: "0xc97139659d6Ee90A76027E68cd318821956d90dF",
+      address: OAPP[account.chainId],
       functionName: "createStory",
-      args: [title, description, [40245]],
-      chainId: optimismSepolia.id,
+      args: [title, description, dstIds[account.chainId]],
       value: nativeFee!
     })
       .then((res) => res)

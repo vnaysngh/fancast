@@ -2,11 +2,14 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { FiThumbsUp } from "react-icons/fi";
 import { FaCoins } from "react-icons/fa";
-import { useReadContract } from "wagmi";
+import { useAccount, useReadContract } from "wagmi";
 import abi from "../../../../abi/abi.json";
 import { useNavigate, useParams } from "react-router-dom";
 import TipModal from "./Tip";
 import { useStateContext } from "../../../../context";
+import { OAPP } from "../../../../constants/contract";
+import { sepolia } from "wagmi/chains";
+
 interface StoryProps {
   userName: string;
   userAddress: string;
@@ -121,18 +124,20 @@ const TipCount = styled.span`
 `;
 
 const Story: React.FC<StoryProps> = () => {
-  const result: any = useReadContract({
-    abi,
-    address: "0xc97139659d6Ee90A76027E68cd318821956d90dF",
-    functionName: "getAllStories"
-  });
   const { tipAuthor } = useStateContext();
-  const [openTipModal, setOpenTipModal] = useState(true);
+  const [openTipModal, setOpenTipModal] = useState(false);
   const [tipping, setTipping] = useState(false);
   const [tipAmount, setTipAmount] = useState<string>("");
   const [txHash, setTxHash] = useState(null);
   const { communityId } = useParams<{ communityId: string }>();
+  const account = useAccount();
   const navigate = useNavigate();
+
+  const result: any = useReadContract({
+    abi,
+    address: OAPP[account?.chainId ?? sepolia.id],
+    functionName: "getAllStories"
+  });
 
   // Utility function for navigation
   const handleNavigation = (actionType: string) => {
@@ -156,6 +161,8 @@ const Story: React.FC<StoryProps> = () => {
   const onUpvote = () => {
     // tipAuthor(amount)
   };
+
+  console.log(result, "result");
 
   return (
     <>

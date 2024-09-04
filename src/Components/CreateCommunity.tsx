@@ -1,5 +1,5 @@
 import { ethers } from "ethers";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { useStateContext } from "../context";
 import { Unlock, PublicLock } from "@unlock-protocol/contracts";
@@ -86,7 +86,6 @@ const Button = styled.button`
 
 interface CreateCommunityModalProps {
   onClose: () => void;
-  onSubmit: (communityData: CommunityData) => void;
 }
 
 interface CommunityData {
@@ -100,6 +99,8 @@ interface CommunityData {
 const CreateCommunityModal: React.FC<CreateCommunityModalProps> = ({
   onClose
 }) => {
+  const popupRef = useRef<HTMLDivElement>(null);
+
   const { signer, address } = useStateContext();
   const [isLoading, setIsLoading] = useState(false);
   const [txHash, setTxHash] = useState(null);
@@ -175,9 +176,26 @@ const CreateCommunityModal: React.FC<CreateCommunityModalProps> = ({
     }
   };
 
+  const handleClickOutside = (event: MouseEvent) => {
+    if (
+      onClose &&
+      popupRef.current &&
+      !popupRef.current.contains(event.target as Node)
+    ) {
+      onClose();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [onClose]);
+
   return (
     <ModalOverlay>
-      <Modal>
+      <Modal ref={popupRef}>
         {isLoading ? (
           <LoadingSpinner />
         ) : txHash ? (

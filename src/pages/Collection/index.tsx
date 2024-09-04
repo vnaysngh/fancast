@@ -41,9 +41,9 @@ const Tabs = styled.div`
 `;
 
 const TabButton = styled.button<{ active: boolean; firstTab?: boolean }>`
-  font-family: "DM Sans", sans-serif;
+  font-family: "Bungee", sans-serif;
   padding: 10px 15px;
-  color: ${(props) => (props.active ? "#0d0c22" : "#333")};
+  color: ${(props) => (props.active ? "#333" : "#555")};
   border: none;
   background-color: transparent;
   font-size: 1.25rem;
@@ -450,6 +450,7 @@ const Collections = () => {
         return (
           <NewItemsGrid>
             {stampSubscribedFromUnSubscribed &&
+            stampSubscribedFromUnSubscribed.length ? (
               stampSubscribedFromUnSubscribed?.map((nft: any) => (
                 <NewItemCard
                   key={nft.collection}
@@ -479,72 +480,91 @@ const Collections = () => {
                     </JoinButton>
                   </ItemInfo>
                 </NewItemCard>
-              ))}
+              ))
+            ) : (
+              <ItemTitle style={{ width: "max-content" }}>
+                You do not own any NFTs
+              </ItemTitle>
+            )}
           </NewItemsGrid>
         );
 
       case "myCommunities":
         return (
           <FanTokensGrid>
-            {userCreatedCommunities?.locks.map((lock: any) => {
-              return (
-                <LockItem key={lock.address}>
-                  <ItemImage
-                    src="/image-placeholder.jpg"
-                    alt={lock.name ?? ""}
-                  />
-                  <Title>{lock.name}</Title>
-                  <IconContainer>
-                    <EtherscanLink
-                      href={`https://etherscan.io/address/${lock.address}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <Icon
-                        src="https://altcoinsbox.com/wp-content/uploads/2023/01/etherscan-logo.png"
-                        alt="Etherscan"
-                      />
-                    </EtherscanLink>
-                    <LockDetails>
-                      <FaUsers />
-                      {lock.totalKeys}
-                    </LockDetails>
+            {userCreatedCommunities?.locks?.length ? (
+              userCreatedCommunities?.locks.map((lock: any) => {
+                return (
+                  <LockItem key={lock.address}>
+                    <ItemImage
+                      src="/image-placeholder.jpg"
+                      alt={lock.name ?? ""}
+                    />
+                    <Title>{lock.name}</Title>
+                    <IconContainer>
+                      <EtherscanLink
+                        href={`https://etherscan.io/address/${lock.address}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <Icon
+                          src="https://altcoinsbox.com/wp-content/uploads/2023/01/etherscan-logo.png"
+                          alt="Etherscan"
+                        />
+                      </EtherscanLink>
+                      <LockDetails>
+                        <FaUsers />
+                        {lock.totalKeys}
+                      </LockDetails>
 
-                    <LockDetails>
-                      <FaEthereum />
-                      {lock.price > 0 ? parseFloat(lock.price) / 1e18 : "Free"}
-                    </LockDetails>
-                  </IconContainer>
-                </LockItem>
-              );
-            })}
+                      <LockDetails>
+                        <FaEthereum />
+                        {lock.price > 0
+                          ? parseFloat(lock.price) / 1e18
+                          : "Free"}
+                      </LockDetails>
+                    </IconContainer>
+                  </LockItem>
+                );
+              })
+            ) : (
+              <ItemTitle style={{ width: "max-content" }}>
+                You do not own any communities.
+              </ItemTitle>
+            )}
           </FanTokensGrid>
         );
 
       case "subscribed":
         return (
           <NewItemsGrid>
-            {subscribed?.map((nft: any) => (
-              <NewItemCard
-                key={nft.collection}
-                onClick={() => handleNavigate(nft.contract)}
-              >
-                <ImageContainer>
-                  <Image
-                    src={
-                      nft.display_image_url
-                        ? nft.display_image_url
-                        : nft.image_url
-                    }
-                    alt={nft.name ?? ""}
-                  />
-                </ImageContainer>
-                <ItemInfo>
-                  <ItemTitle>{nft.name}</ItemTitle>
-                  <JoinButton>Enter</JoinButton>
-                </ItemInfo>
-              </NewItemCard>
-            ))}
+            {subscribed?.length ? (
+              subscribed?.map((nft: any) => (
+                <NewItemCard
+                  key={nft.collection}
+                  onClick={() => handleNavigate(nft.contract)}
+                >
+                  <ImageContainer>
+                    <Image
+                      src={
+                        nft.display_image_url
+                          ? nft.display_image_url
+                          : nft.image_url
+                      }
+                      alt={nft.name ?? ""}
+                    />
+                  </ImageContainer>
+                  <ItemInfo>
+                    <ItemTitle>{nft.name}</ItemTitle>
+                    <JoinButton>Enter</JoinButton>
+                  </ItemInfo>
+                </NewItemCard>
+              ))
+            ) : (
+              <ItemTitle style={{ width: "max-content" }}>
+                You have not subscribed to any communities yet.
+              </ItemTitle>
+            )}
           </NewItemsGrid>
         );
       default:
@@ -554,12 +574,7 @@ const Collections = () => {
 
   return (
     <PageContainer>
-      {isOpen && (
-        <CreateCommunityModal
-          onClose={handleCloseModal}
-          onSubmit={handleSubmit}
-        />
-      )}
+      {isOpen && <CreateCommunityModal onClose={handleCloseModal} />}
 
       {isPopupVisible && (
         <Popup
