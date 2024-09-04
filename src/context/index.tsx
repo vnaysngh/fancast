@@ -4,12 +4,14 @@ import { useAccount, useReadContract } from "wagmi";
 import { writeContract, simulateContract } from "@wagmi/core";
 import abi from "../abi/abi.json";
 import ERC721ABI from "../abi/erc721.json";
+import ERC20ABI from "../abi/erc20.json";
 import { config } from "../main";
 import { optimismSepolia, sepolia, spicy } from "viem/chains";
 import axios from "axios";
 import { openSeaChainConfig } from "../components/Web3Auth/chainConfig";
-import Moralis from "moralis";
-
+import { erc20Abi, getContract } from "viem";
+import Web3 from "web3";
+const web3 = new Web3(Web3.givenProvider || "ws://localhost:8545");
 const StateContext = createContext<any>({});
 const windowObj: any = window;
 
@@ -49,6 +51,7 @@ export const StateContextProvider = ({ children }: { children: any }) => {
       if (typeof windowObj.ethereum !== undefined) {
         try {
           const provider = new ethers.BrowserProvider(windowObj.ethereum);
+          web3.setProvider(windowObj.ethereum);
           const signer = await provider.getSigner();
           const address = await signer.getAddress();
           setSigner(signer);
@@ -76,6 +79,8 @@ export const StateContextProvider = ({ children }: { children: any }) => {
         };
 
         const chain = openSeaChainConfig[account.chainId!];
+
+        if (!chain) return;
         axios
           .get(
             `https://testnets-api.opensea.io/api/v2/chain/${chain}/account/${account.address}/nfts`,
@@ -226,6 +231,19 @@ export const StateContextProvider = ({ children }: { children: any }) => {
       .catch((err) => err);
   };
 
+  const tipAuthor = async (amount: string) => {
+    if (!address) return;
+
+    return await web3.eth
+      .sendTransaction({
+        from: address,
+        to: "0x05f6E2F2f196db4cD964b230Ac95EDfB436c7461",
+        value: ethers.parseEther(amount)
+      })
+      .then((res) => res)
+      .catch((err) => err);
+  };
+
   return (
     <StateContext.Provider
       value={{
@@ -240,7 +258,8 @@ export const StateContextProvider = ({ children }: { children: any }) => {
         subscribed,
         isUserFCHolder,
         membersMetadata,
-        getOwnersForContract
+        getOwnersForContract,
+        tipAuthor
       }}
     >
       {children}

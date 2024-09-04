@@ -103,7 +103,7 @@ const HomePage = () => {
   };
 
   useEffect(() => {
-    if (communityId) getOwnersForContract(communityId);
+    if (communityId && getOwnersForContract) getOwnersForContract(communityId);
   }, [communityId]);
 
   const communityMembersCount: any = useReadContract({
@@ -154,38 +154,26 @@ const HomePage = () => {
         <Card onClick={() => handleNavigation("casts")}>
           <CardTitle>Farcaster Casts</CardTitle>
           <CardContent>
-            {/* {recentCasts.map((cast) => (
-              <p key={cast.id}>
-                <strong>{cast.author}:</strong> {cast.content}
-              </p>
-            ))} */}
+            <p>Farcaster casts tailored for community members</p>
             <Button>View More</Button>
           </CardContent>
         </Card>
 
         <Card>
-          <CardTitle>Community Games</CardTitle>
+          <CardTitle>Marketplace</CardTitle>
           <CardContent>
-            {/*  <ul>
-              {games.map((game) => (
-                <li key={game.id}>
-                  {game.name} - {game.players} players
-                </li>
-              ))}
-            </ul> */}
+            <p>Trade exclusive NFTs in our community marketplace</p>
             <Button>Play Now</Button>
           </CardContent>
         </Card>
 
-        <Card onClick={() => handleNavigation("what-if")}>
+        <Card onClick={() => handleNavigation("what-if/feed")}>
           <CardTitle>What If</CardTitle>
           <CardContent>
-            {/*             <p>Top contributors this week:</p>
-            <ol>
-              <li>CryptoKing</li>
-              <li>NFTQueen</li>
-              <li>BlockchainWizard</li>
-            </ol> */}
+            <p>
+              Where sports fans explore alternate realities for their favorite
+              teams and players!
+            </p>
             <Button>View</Button>
           </CardContent>
         </Card>

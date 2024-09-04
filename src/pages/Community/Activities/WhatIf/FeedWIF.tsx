@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { FiThumbsUp } from "react-icons/fi";
 import { FaCoins } from "react-icons/fa";
 import { useReadContract } from "wagmi";
 import abi from "../../../../abi/abi.json";
+import { useNavigate, useParams } from "react-router-dom";
+import TipModal from "./Tip";
+import { useStateContext } from "../../../../context";
 interface StoryProps {
   userName: string;
   userAddress: string;
@@ -16,9 +19,10 @@ interface StoryProps {
 }
 
 const StoryCard = styled.div`
+  border-radius: 4px;
   padding: 20px;
   margin: 20px 0;
-  border: 1px solid #ccc;
+  border: 2px solid #ccc;
   box-shadow: 6px 6px 0px 0px rgba(0, 0, 0, 0.09);
 `;
 
@@ -63,13 +67,14 @@ const Description = styled.p`
 
 const ButtonsContainer = styled.div`
   display: flex;
-  justify-content: space-between;
+  gap: 1rem;
 `;
 
 const Button = styled.button`
   font-family: "Bungee";
-  background-color: #0d0c22;
-  color: white;
+  background-color: transparent;
+  // color: #0d0c22;
+  border-radius: 4px;
   padding: 10px 15px;
   cursor: pointer;
   margin-top: 10px;
@@ -77,16 +82,29 @@ const Button = styled.button`
   text-align: center;
   display: flex;
   align-items: center;
+`;
+
+const Header = styled.div`
+  display: flex;
+  justify-content: end;
+`;
+
+const CreateButton = styled.button`
+  font-family: "Bungee";
+  background: #0d0c22;
+  border: none;
+  color: white;
+  padding: 10px 15px;
+  cursor: pointer;
+  margin-top: 10px;
+  font-weight: bold;
+  text-align: center;
 
   &:hover {
     background-color: #fff;
     color: #0d0c22;
     box-shadow: 6px 6px 0px 0px rgba(0, 0, 0, 0.09);
     border: 1px solid #0d0c22;
-  }
-
-  & > svg {
-    margin-right: 8px;
   }
 `;
 
@@ -102,15 +120,59 @@ const TipCount = styled.span`
   color: #0d0c22;
 `;
 
-const Story: React.FC<StoryProps> = ({ onUpvote, onTip }) => {
+const Story: React.FC<StoryProps> = () => {
   const result: any = useReadContract({
     abi,
     address: "0xc97139659d6Ee90A76027E68cd318821956d90dF",
     functionName: "getAllStories"
   });
+  const { tipAuthor } = useStateContext();
+  const [openTipModal, setOpenTipModal] = useState(true);
+  const [tipping, setTipping] = useState(false);
+  const [tipAmount, setTipAmount] = useState<string>("");
+  const [txHash, setTxHash] = useState(null);
+  const { communityId } = useParams<{ communityId: string }>();
+  const navigate = useNavigate();
+
+  // Utility function for navigation
+  const handleNavigation = (actionType: string) => {
+    navigate(`/community/${communityId}/what-if/${actionType}`);
+  };
+
+  const onTip = async () => {
+    setTipping(true);
+    const response = await tipAuthor(tipAmount);
+    if (response && response.transactionHash) {
+      setTxHash(response.transactionHash);
+      setTipAmount("");
+    }
+    setTipping(false);
+  };
+
+  const handleCloseTipModal = () => {
+    setOpenTipModal(false);
+  };
+
+  const onUpvote = () => {
+    // tipAuthor(amount)
+  };
 
   return (
     <>
+      <TipModal
+        isOpen={openTipModal}
+        onClose={handleCloseTipModal}
+        onTip={onTip}
+        tipping={tipping}
+        setTipAmount={setTipAmount}
+        tipAmount={tipAmount}
+        txHash={txHash}
+      />
+      <Header>
+        <CreateButton onClick={() => handleNavigation("create")}>
+          Create
+        </CreateButton>
+      </Header>
       {result && result.data && result.data.length > 0 ? (
         <>
           {result.data.map((story: any) => {
@@ -132,13 +194,11 @@ const Story: React.FC<StoryProps> = ({ onUpvote, onTip }) => {
                   <div>
                     <Button onClick={onUpvote}>
                       <FiThumbsUp />
-                      Upvote
                     </Button>
                   </div>
                   <div>
-                    <Button onClick={onTip}>
+                    <Button onClick={() => setOpenTipModal(true)}>
                       <FaCoins />
-                      Tip
                     </Button>
                   </div>
                 </ButtonsContainer>
@@ -147,7 +207,7 @@ const Story: React.FC<StoryProps> = ({ onUpvote, onTip }) => {
           })}
         </>
       ) : (
-        "Loading..."
+        "No what if found"
       )}
     </>
   );
