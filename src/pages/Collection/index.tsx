@@ -16,7 +16,7 @@ import { useQuery } from "@apollo/client";
 import { config } from "../../main";
 import CreateCommunityModal from "../../components/CreateCommunity";
 import Popup from "./mint";
-import { FaUsers, FaEthereum } from "react-icons/fa";
+import { FaUsers, FaEthereum, FaCrown } from "react-icons/fa";
 
 // Styled Components
 const PageContainer = styled.div`
@@ -45,15 +45,18 @@ const Tabs = styled.div`
 `;
 
 const TabButton = styled.button<{ active: boolean; firstTab?: boolean }>`
-  font-family: "Bungee";
+  font-family: "DM Sans", sans-serif;
   padding: 10px 15px;
   color: ${(props) => (props.active ? "#0d0c22" : "#333")};
   border: none;
   background-color: transparent;
   font-size: 1.25rem;
   cursor: pointer;
-  font-weight: ${(props) => (props.active ? "bold" : "normal")};
+  font-weight: ${(props) => (props.active ? 900 : "normal")};
   padding-left: ${(props) => (props.firstTab ? 0 : "inherit")};
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 `;
 
 const NewItemsGrid = styled.div`
@@ -146,7 +149,7 @@ const JoinButton = styled.button<{ subscribed?: boolean }>`
 `;
 
 const BalanceContainer = styled.div`
-  font-family: "Roboto Slab", sans-serif;
+  font-family: "DM Sans", sans-serif;
   font-weight: bold;
   border-radius: 20px;
   display: flex;
@@ -288,7 +291,6 @@ const Collections = () => {
 
   const isHolderOfNFTContract = () => {
     if (!selectedCommunity) return;
-    console.log(selectedCommunity);
     const contractAddress =
       selectedCommunity?.community?.contract ??
       selectedCommunity?.community?.contracts?.[0]?.address ??
@@ -389,7 +391,7 @@ const Collections = () => {
           };
         } else return nft;
       })
-    : userNFTs;
+    : userNFTs?.nfts;
 
   const renderContent = () => {
     switch (activeTab) {
@@ -445,36 +447,37 @@ const Collections = () => {
       case "mynfts":
         return (
           <NewItemsGrid>
-            {stampSubscribedFromUnSubscribed?.map((nft: any) => (
-              <NewItemCard
-                key={nft.collection}
-                onClick={() => handleOpenPopup("eth-sepolia", nft)}
-                subscribed={nft.subscribed}
-              >
-                <ImageContainer>
-                  {nft.subscribed && <Badge>Subscribed</Badge>}
-                  <Image
-                    src={
-                      nft.display_image_url
-                        ? nft.display_image_url
-                        : nft.image_url
-                        ? nft.image_url
-                        : "https://via.placeholder.com/100"
-                    }
-                    alt={nft.name ?? nft.collection ?? ""}
-                  />
-                </ImageContainer>
-                <ItemInfo>
-                  <ItemTitle>{nft.name ?? nft.collection}</ItemTitle>
-                  <JoinButton
-                    disabled={nft.subscribed}
-                    subscribed={nft.subscribed}
-                  >
-                    {nft.subscribed ? "Subscribed" : "Join Now"}
-                  </JoinButton>
-                </ItemInfo>
-              </NewItemCard>
-            ))}
+            {stampSubscribedFromUnSubscribed &&
+              stampSubscribedFromUnSubscribed?.map((nft: any) => (
+                <NewItemCard
+                  key={nft.collection}
+                  onClick={() => handleOpenPopup("eth-sepolia", nft)}
+                  subscribed={nft.subscribed}
+                >
+                  <ImageContainer>
+                    {nft.subscribed && <Badge>Subscribed</Badge>}
+                    <Image
+                      src={
+                        nft.display_image_url
+                          ? nft.display_image_url
+                          : nft.image_url
+                          ? nft.image_url
+                          : "https://via.placeholder.com/100"
+                      }
+                      alt={nft.name ?? nft.collection ?? ""}
+                    />
+                  </ImageContainer>
+                  <ItemInfo>
+                    <ItemTitle>{nft.name ?? nft.collection}</ItemTitle>
+                    <JoinButton
+                      disabled={nft.subscribed}
+                      subscribed={nft.subscribed}
+                    >
+                      {nft.subscribed ? "Subscribed" : "Join Now"}
+                    </JoinButton>
+                  </ItemInfo>
+                </NewItemCard>
+              ))}
           </NewItemsGrid>
         );
 
@@ -485,7 +488,7 @@ const Collections = () => {
               return (
                 <LockItem key={lock.address}>
                   <ItemImage
-                    src="https://via.placeholder.com/100"
+                    src="/image-placeholder.jpg"
                     alt={lock.name ?? ""}
                   />
                   <Title>{lock.name}</Title>
@@ -607,7 +610,7 @@ const Collections = () => {
               active={activeTab === "subscribed"}
               onClick={() => setActiveTab("subscribed")}
             >
-              Subscribed
+              Subscribed <FaCrown style={{ color: "goldenrod" }} />
             </TabButton>
           </Tabs>
           <CreateButton onClick={() => setIsOpen(true)}>Create</CreateButton>

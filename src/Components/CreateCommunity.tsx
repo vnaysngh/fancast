@@ -17,6 +17,7 @@ const ModalOverlay = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 9999;
 `;
 
 const Modal = styled.div`
@@ -47,7 +48,7 @@ const Label = styled.label`
 `;
 
 const Input = styled.input`
-  font-family: "Roboto Slab", sans-serif;
+  font-family: "DM Sans", sans-serif;
   padding: 0.5rem;
   margin-top: 0.25rem;
   font-weight: bold;

@@ -58,7 +58,7 @@ const Title = styled.h2`
 const Description = styled.p`
   font-size: 16px;
   margin-bottom: 20px;
-  font-family: "Roboto Slab", sans-serif;
+  font-family: "DM Sans", sans-serif;
 `;
 
 const ButtonsContainer = styled.div`

@@ -98,7 +98,7 @@ const ActionSection = styled.div`
 `;
 
 const Button = styled.button`
-  font-family: "Roboto Slab", sans-serif;
+  font-family: "DM Sans", sans-serif;
   flex: 1;
   display: flex;
   align-items: center;

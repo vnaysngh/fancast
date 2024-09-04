@@ -159,7 +159,7 @@ export const Button = styled.button`
 
 export const InputContainer = styled.div`
   display: flex;
-  font-family: "Roboto Slab", sans-serif;
+  font-family: "DM Sans", sans-serif;
   flex-direction: column;
   align-items: center;
   margin-top: 1rem;

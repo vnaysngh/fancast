@@ -134,11 +134,11 @@ const HeaderComponent = () => {
     <Header>
       <PageTitle onClick={() => navigate("/")}>Fancast</PageTitle>
       <UserInfo>
-        {hasPlatformNFT && (
+        {/*   {hasPlatformNFT && (
           <NFTBadge>
             <FaCrown /> NFT Holder
           </NFTBadge>
-        )}
+        )} */}
         <Web3Auth />
 
         {account.address && selectedNetwork && (

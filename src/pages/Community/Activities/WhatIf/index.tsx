@@ -23,7 +23,7 @@ const Title = styled.h1`
 const Description = styled.h3`
   font-size: 2rem;
   color: #333;
-  font-family: "Roboto Slab", sans-serif;
+  font-family: "DM Sans", sans-serif;
 `;
 
 const ButtonContainer = styled.div`

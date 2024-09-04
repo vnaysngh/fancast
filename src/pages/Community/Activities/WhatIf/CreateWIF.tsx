@@ -35,7 +35,7 @@ const Label = styled.label`
 `;
 
 const Input = styled.input`
-  font-family: "Roboto Slab", sans-serif;
+  font-family: "DM Sans", sans-serif;
   width: 100%;
   padding: 0.75rem;
   font-size: 1rem;
