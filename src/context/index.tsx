@@ -8,6 +8,8 @@ import { config } from "../main";
 import { optimismSepolia, sepolia } from "viem/chains";
 import axios from "axios";
 import { openSeaChainConfig } from "../components/Web3Auth/chainConfig";
+import { client } from "../neynarClient";
+import { FeedType } from "@neynar/nodejs-sdk";
 
 const StateContext = createContext<any>({});
 const windowObj: any = window;
@@ -17,6 +19,7 @@ export const StateContextProvider = ({ children }: { children: any }) => {
   const [address, setAddress] = useState<string>("");
   const [userNFTs, setUserNFTs] = useState<any>({ nfts: [] });
   const [subscribed, setSubscribed] = useState([]);
+  const [membersMetadata, setMembersMetadata] = useState({});
   const account = useAccount();
 
   useEffect(() => {
@@ -69,6 +72,46 @@ export const StateContextProvider = ({ children }: { children: any }) => {
 
     if (account.address && account.chainId) fetchUserNFTs();
   }, [account.isConnected, account.chainId]);
+
+  const lookupUserByVerification = async (addresses: string) => {
+    const url = `https://api.neynar.com/v2/farcaster/user/bulk-by-address?addresses=${addresses}`;
+
+    const options = {
+      headers: {
+        accept: "application/json",
+        api_key: import.meta.env.VITE_NEYNAR_API_KEY
+      }
+    };
+
+    axios
+      .get(url, options)
+      .then(function (response) {
+        if (response.data) {
+          setMembersMetadata(response.data);
+        }
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+  };
+
+  const getOwnersForContract = (nftAddr: string) => {
+    const apiKey = import.meta.env.VITE_ALCHEMY_API_KEY;
+    const baseUrl = `https://eth-sepolia.g.alchemy.com/nft/v3/${apiKey}/getOwnersForContract?`;
+    const url = `${baseUrl}contractAddress=${nftAddr}&withTokenBalances=false`;
+
+    const result = axios
+      .get(url, {
+        headers: { accept: "application/json" }
+      })
+      .then((response) => {
+        if (response.data && response.data.owners)
+          lookupUserByVerification(response.data.owners);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
 
   const userInfo: any = useReadContract({
     abi: ERC721ABI,
@@ -172,7 +215,9 @@ export const StateContextProvider = ({ children }: { children: any }) => {
         joinAdditionalCommunity,
         userNFTs,
         subscribed,
-        isUserFCHolder
+        isUserFCHolder,
+        membersMetadata,
+        getOwnersForContract
       }}
     >
       {children}

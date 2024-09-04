@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { useReadContract } from "wagmi";
 import ERC721ABI from "../../abi/erc721.json";
+import { useStateContext } from "../../context";
 
 // Styled components
 const Container = styled.div`
@@ -82,31 +83,14 @@ const Button = styled.button`
   }
 `;
 
-// Mock data
-const communityStats = {
-  members: 1000,
-  activePosts: 150,
-  avgEngagement: "75%"
-};
-
-const recentCasts = [
-  { id: 1, author: "user1", content: "Just minted a new NFT!" },
-  { id: 2, author: "user2", content: "Whos up for a game night?" },
-  { id: 3, author: "user3", content: "Check out my latest project" }
-];
-
-const games = [
-  { id: 1, name: "NFT Trader", players: 50 },
-  { id: 2, name: "Crypto Puzzles", players: 30 },
-  { id: 3, name: "Blockchain Battles", players: 75 }
-];
-
 const HomePage = () => {
   const [username, setUsername] = useState("");
   const navigate = useNavigate();
   const { communityId } = useParams<{
     communityId: string;
   }>();
+  const { getOwnersForContract } = useStateContext();
+
   useEffect(() => {
     // Simulating fetching user data
     setTimeout(() => {
@@ -117,6 +101,10 @@ const HomePage = () => {
   const handleNavigation = (route: string) => {
     navigate(`/community/${communityId}/${route}`);
   };
+
+  useEffect(() => {
+    if (communityId) getOwnersForContract(communityId);
+  }, [communityId]);
 
   const communityMembersCount: any = useReadContract({
     abi: ERC721ABI,

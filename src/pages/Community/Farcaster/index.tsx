@@ -1,6 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import sampleFeed from "../../../constants/sampleFeed";
+import { useStateContext } from "../../../context";
+import { useParams } from "react-router-dom";
+import { client } from "../../../neynarClient";
+import { FeedType, FilterType } from "@neynar/nodejs-sdk";
+import { FeedResponse } from "@neynar/nodejs-sdk/build/neynar-api/v2";
 
 const FeedContainer = styled.div`
   margin: 0 auto;
@@ -30,9 +35,10 @@ const ContentContainer = styled.div`
 `;
 
 const Header = styled.div`
+  font-size: 1.25rem;
+  font-family: "DM Sans", sans-serif;
   display: flex;
   align-items: center;
-  margin-bottom: 8px;
 `;
 
 const Username = styled.span`
@@ -46,13 +52,16 @@ const DisplayName = styled.span`
 `;
 
 const Bio = styled.p`
+  font-family: "DM Sans", sans-serif;
   font-size: 12px;
+  font-weight: 500;
   color: #999;
   margin-top: 5px;
 `;
 
 const PostText = styled.p`
-  font-size: 16px;
+  font-family: "DM Sans", sans-serif;
+  font-size: 1rem;
   color: #333;
   margin: 10px 0;
 `;
@@ -67,24 +76,6 @@ const Reactions = styled.div`
   font-size: 14px;
   color: #555;
   margin-top: 10px;
-`;
-
-const ChannelInfo = styled.div`
-  display: flex;
-  align-items: center;
-  margin-top: 5px;
-`;
-
-const ChannelImage = styled.img`
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  margin-right: 8px;
-`;
-
-const ChannelName = styled.span`
-  font-size: 14px;
-  color: #777;
 `;
 
 const PaginationContainer = styled.div`
@@ -117,14 +108,41 @@ const PageButton = styled.button<{ active?: boolean }>`
 const FeedData = ({ feed }: any) => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
-
-  // Calculate indices for pagination
+  // // Calculate indices for pagination
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentFeeds = sampleFeed.slice(indexOfFirstItem, indexOfLastItem);
+  const [feeds, setUserFeeds] = useState<FeedResponse>();
+
+  const { membersMetadata } = useStateContext();
 
   // Calculate total pages
-  const totalPages = Math.ceil(sampleFeed.length / itemsPerPage);
+  const totalPages = feeds?.casts
+    ? Math.ceil(feeds?.casts?.length / itemsPerPage)
+    : 1;
+
+  useEffect(() => {
+    const fetchUserFeeds = async () => {
+      if (membersMetadata && Object.keys(membersMetadata).length) {
+        const fids = Object.keys(membersMetadata).map((member) => {
+          return membersMetadata[member][0]?.fid;
+        });
+
+        fids.filter((fid) => fid !== undefined);
+
+        if (fids.length) {
+          const userFeed = await client.fetchFeed(FeedType.Filter, {
+            filterType: FilterType.Fids,
+            fids
+          });
+
+          setUserFeeds(userFeed);
+        }
+      }
+    };
+
+    fetchUserFeeds();
+  }, [membersMetadata]);
 
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
@@ -132,25 +150,25 @@ const FeedData = ({ feed }: any) => {
 
   return (
     <FeedContainer>
-      <h2>BAYC Casts (4332)</h2>
-      {currentFeeds.map((item: any) => (
+      <h2>BAYC Casts ({feeds?.casts?.length ?? ""})</h2>
+      {feeds?.casts?.map((item: any) => (
         <FeedItem key={item.hash}>
-          <ProfilePic src={item.author.pfp_url} alt={item.author.username} />
+          <ProfilePic src={item?.author.pfp_url} alt={item?.author.username} />
           <ContentContainer>
             <Header>
-              <Username>{item.author.username}</Username>
-              <DisplayName>{item.author.display_name}</DisplayName>
+              <Username>{item?.author.username}</Username>
+              <DisplayName>{item?.author.display_name}</DisplayName>
             </Header>
-            <Bio>{item.author.profile.bio.text}</Bio>
+            <Bio>{item?.author.profile.bio.text}</Bio>
             <PostText>{item.text}</PostText>
             <Timestamp>{new Date(item.timestamp).toLocaleString()}</Timestamp>
-            <ChannelInfo>
+            {/* <ChannelInfo>
               <ChannelImage
                 src={item.channel?.image_url}
                 alt={item.channel?.name}
               />
               <ChannelName>{item.channel?.name}</ChannelName>
-            </ChannelInfo>
+            </ChannelInfo> */}
             <Reactions>
               ❤️ {item.reactions?.likes_count} • 🔁{" "}
               {item.reactions?.recasts_count} • 💬 {item.replies?.count}
