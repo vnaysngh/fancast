@@ -93,6 +93,13 @@ const SendButton = styled.button`
   }
 `;
 
+const EmptyState = styled.div`
+  border-radius: 10px;
+  padding: 20px;
+  background: #e8e5e1;
+  width: 100%;
+`;
+
 // Main Component
 const InboxPage: React.FC = () => {
   const navigate = useNavigate();
@@ -200,7 +207,13 @@ const InboxPage: React.FC = () => {
             <SendButton onClick={handleStartConversation}>Send</SendButton>
           </InputContainer>
         </ChatWindow>
-      ) : null}
+      ) : (
+        <EmptyState>
+          <ChatHeader>
+            Select a conversation from the left panel to get started
+          </ChatHeader>
+        </EmptyState>
+      )}
     </PageContainer>
   );
 };

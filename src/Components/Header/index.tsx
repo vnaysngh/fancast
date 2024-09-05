@@ -12,7 +12,7 @@ const Header = styled.header`
   align-items: center;
   padding: 0 1.25rem;
   position: sticky;
-  // background: #faf6f2;
+  background: #fff;
   top: 0;
   z-index: 1000;
 `;
@@ -66,7 +66,7 @@ const DropdownContent = styled.div`
   position: absolute;
   top: 100%;
   right: 0;
-  // background-color: #faf6f2;
+  background: #fff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   overflow: hidden;

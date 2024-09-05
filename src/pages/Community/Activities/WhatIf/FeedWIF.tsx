@@ -21,12 +21,50 @@ interface StoryProps {
   onTip: () => void;
 }
 
+const TabsContainer = styled.div`
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const Tabs = styled.div`
+  display: flex;
+  gap: 20px;
+`;
+
+const TabButton = styled.button<{ active: boolean; firstTab?: boolean }>`
+  font-family: "Bungee", sans-serif;
+  color: ${(props) => (props.active ? "#333" : "#555")};
+  border: none;
+  background-color: transparent;
+  font-size: 1.25rem;
+  cursor: pointer;
+  border-bottom: ${(props) => (props.active ? "2px solid #333" : 0)};
+  font-weight: ${(props) => (props.active ? 900 : "normal")};
+  padding-left: ${(props) => (props.firstTab ? 0 : "inherit")};
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+`;
+
+// Main container that includes sidebar and content
+const MainContainer = styled.div`
+  display: flex;
+  margin: 1rem 0;
+  // margin-left: 250px; /* This leaves space for the sidebar */
+`;
+
+const ContentWrapper = styled.div`
+  // padding: 20px;
+  flex-grow: 1;
+`;
+
 const StoryCard = styled.div`
   border-radius: 4px;
-  padding: 20px;
-  margin: 20px 0;
-  border: 2px solid #ccc;
-  box-shadow: 6px 6px 0px 0px rgba(0, 0, 0, 0.09);
+  padding: 20px 0;
+  // margin: 20px 0;
+  border-bottom: 2px solid #ccc;
+  // box-shadow: 6px 6px 0px 0px rgba(0, 0, 0, 0.09);
 `;
 
 const ContentContainer = styled.div`
@@ -36,11 +74,11 @@ const ContentContainer = styled.div`
 `;
 
 const TextContent = styled.div`
-  flex: 2; // This will make it take up 2/3 of the available space
+  flex: 2;
 `;
 
 const ImageContainer = styled.div`
-  flex: 1; // This will make it take up 1/3 of the available space
+  flex: 1;
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -54,6 +92,7 @@ const StoryImage = styled.img`
   min-height: 200px;
   max-height: 200px;
 `;
+
 const UserProfile = styled.div`
   display: flex;
   align-items: center;
@@ -95,21 +134,29 @@ const Description = styled.p`
 
 const ButtonsContainer = styled.div`
   display: flex;
+  background: #f4f4f4;
   gap: 1rem;
+  padding: 10px;
+  width: fit-content;
+  border-radius: 8px;
 `;
 
 const Button = styled.button`
   font-family: "Bungee";
   background-color: transparent;
-  // color: #333;
-  border-radius: 4px;
-  padding: 10px 15px;
+  // border-radius: 4px;
+  border: 0;
   cursor: pointer;
-  margin-top: 10px;
   font-weight: bold;
+  font-size: 1.5rem;
   text-align: center;
   display: flex;
   align-items: center;
+
+  img {
+    height: 1.5rem;
+    width: 1.5rem;
+  }
 `;
 
 const Header = styled.div`
@@ -124,7 +171,6 @@ const CreateButton = styled.button`
   color: white;
   padding: 10px 15px;
   cursor: pointer;
-  margin-top: 10px;
   font-weight: bold;
   text-align: center;
 
@@ -136,23 +182,10 @@ const CreateButton = styled.button`
   }
 `;
 
-const ImageUrl = styled.div``;
-
-const UpvoteCount = styled.span`
-  font-size: 14px;
-  margin-right: 10px;
-  color: #333;
-`;
-
-const TipCount = styled.span`
-  font-size: 14px;
-  margin-left: 10px;
-  color: #333;
-`;
-
 const Story: React.FC<StoryProps> = () => {
   const { tipAuthor } = useStateContext();
   const [openTipModal, setOpenTipModal] = useState(false);
+  const [activeTab, setActiveTab] = useState("explore");
   const [tipping, setTipping] = useState(false);
   const [tipAmount, setTipAmount] = useState<string>("");
   const [txHash, setTxHash] = useState(null);
@@ -166,11 +199,9 @@ const Story: React.FC<StoryProps> = () => {
     functionName: "getAllStories"
   });
 
-  console.log(result);
-
   // Utility function for navigation
-  const handleNavigation = (actionType: string) => {
-    navigate(`/community/${communityId}/what-if/${actionType}`);
+  const handleNavigation = (path: string) => {
+    navigate(`/community/${communityId}/what-if/${path}`);
   };
 
   const onTip = async () => {
@@ -202,54 +233,71 @@ const Story: React.FC<StoryProps> = () => {
         tipAmount={tipAmount}
         txHash={txHash}
       />
-      <Header>
+
+      <TabsContainer>
+        <Tabs>
+          <TabButton
+            firstTab
+            active={activeTab === "explore"}
+            onClick={() => setActiveTab("explore")}
+          >
+            Explore
+          </TabButton>
+          <TabButton
+            active={activeTab === "fanTokens"}
+            onClick={() => setActiveTab("fanTokens")}
+          >
+            My Stories
+          </TabButton>
+        </Tabs>
         <CreateButton onClick={() => handleNavigation("create")}>
           Create
         </CreateButton>
-      </Header>
-      {result && result.data && result.data.length > 0 ? (
-        <>
-          {result.data.map((story: any) => {
-            return (
-              <StoryCard key={story.id}>
-                <UserProfile>
-                  <ProfileImage
-                    src="https://via.placeholder.com/100"
-                    alt="User Profile"
-                  />
-                  <UserInfo>
-                    <UserName>vinaysingh.eth</UserName>
-                    <UserAddress>{story.author}</UserAddress>
-                  </UserInfo>
-                </UserProfile>
-                <Title>{story.name}</Title>
-                <ContentContainer>
-                  <TextContent>
-                    <Description>{story.description}</Description>
-                  </TextContent>
-                  {/*  <ImageContainer>
-                    <StoryImage src={story.imageUrl} alt="Story Image" />
-                  </ImageContainer> */}
-                </ContentContainer>
-                <ButtonsContainer>
-                  <div>
-                    <Button onClick={onUpvote}>
-                      <FiThumbsUp />
-                    </Button>
-                  </div>
-                  <div>
-                    <Button onClick={() => setOpenTipModal(true)}>
-                      <FaCoins />
-                    </Button>
-                  </div>
-                </ButtonsContainer>
-              </StoryCard>
-            );
-          })}
-        </>
-      ) : (
-        "No what if found"
-      )}
+      </TabsContainer>
+
+      <MainContainer>
+        <ContentWrapper>
+          {result && result.data && result.data.length > 0 ? (
+            <>
+              {result.data.map((story: any) => {
+                return (
+                  <StoryCard key={story.id}>
+                    <UserProfile>
+                      <ProfileImage
+                        src="https://via.placeholder.com/100"
+                        alt="User Profile"
+                      />
+                      <UserInfo>
+                        <UserName>vinaysingh.eth</UserName>
+                        <UserAddress>{story.author}</UserAddress>
+                      </UserInfo>
+                    </UserProfile>
+                    <Title>{story.name}</Title>
+                    <ContentContainer>
+                      <TextContent>
+                        <Description>{story.description}</Description>
+                      </TextContent>
+                    </ContentContainer>
+                    <ButtonsContainer>
+                      <Button onClick={onUpvote}>
+                        <FiThumbsUp />
+                      </Button>
+                      <Button onClick={() => setOpenTipModal(true)}>
+                        <img
+                          src="https://raw.githubusercontent.com/kewlexchange/assets/main/chiliz/tokens/0x721ef6871f1c4efe730dce047d40d1743b886946/logo.svg"
+                          alt="chiliz icon"
+                        />
+                      </Button>
+                    </ButtonsContainer>
+                  </StoryCard>
+                );
+              })}
+            </>
+          ) : (
+            "No stories found"
+          )}
+        </ContentWrapper>
+      </MainContainer>
     </>
   );
 };

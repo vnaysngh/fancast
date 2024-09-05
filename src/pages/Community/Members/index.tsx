@@ -63,9 +63,7 @@ const FeedData = () => {
 
   const handleNavigation = (memberId: string) => {
     if (!communityId) return;
-    navigate(
-      `/community/${communityId}/inbox/0x05f6E2F2f196db4cD964b230Ac95EDfB436c7461`
-    );
+    navigate(`/community/${communityId}/inbox/${memberId}`);
   };
 
   return (
