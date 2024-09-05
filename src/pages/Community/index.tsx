@@ -68,7 +68,7 @@ const CardContent = styled.div`
 
 const Button = styled.button`
   font-family: "Bungee", sans-serif;
-  background-color: #0d0c22;
+  background-color: #333;
   color: white;
   border: none;
   padding: 0.5rem 1rem;
@@ -78,7 +78,7 @@ const Button = styled.button`
 
   &:hover {
     background-color: #fff;
-    color: #0d0c22;
+    color: #333;
     box-shadow: 6px 6px 0px 0px rgba(0, 0, 0, 0.09);
   }
 `;
@@ -117,12 +117,12 @@ const HomePage = () => {
     <Container>
       <Header>
         <Title>NFT Community Hub</Title>
-        <Nav>
+        {/*  <Nav>
           <NavItem href="#home">Home</NavItem>
           <NavItem href="#members">Members</NavItem>
           <NavItem href="#games">Games</NavItem>
           <NavItem href="#profile">Profile</NavItem>
-        </Nav>
+        </Nav> */}
       </Header>
 
       <Grid>

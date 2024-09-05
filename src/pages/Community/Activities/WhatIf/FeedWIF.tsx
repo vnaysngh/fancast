@@ -29,6 +29,31 @@ const StoryCard = styled.div`
   box-shadow: 6px 6px 0px 0px rgba(0, 0, 0, 0.09);
 `;
 
+const ContentContainer = styled.div`
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+`;
+
+const TextContent = styled.div`
+  flex: 2; // This will make it take up 2/3 of the available space
+`;
+
+const ImageContainer = styled.div`
+  flex: 1; // This will make it take up 1/3 of the available space
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+`;
+
+const StoryImage = styled.img`
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+  object-fit: contain;
+  min-height: 200px;
+  max-height: 200px;
+`;
 const UserProfile = styled.div`
   display: flex;
   align-items: center;
@@ -76,7 +101,7 @@ const ButtonsContainer = styled.div`
 const Button = styled.button`
   font-family: "Bungee";
   background-color: transparent;
-  // color: #0d0c22;
+  // color: #333;
   border-radius: 4px;
   padding: 10px 15px;
   cursor: pointer;
@@ -94,7 +119,7 @@ const Header = styled.div`
 
 const CreateButton = styled.button`
   font-family: "Bungee";
-  background: #0d0c22;
+  background: #333;
   border: none;
   color: white;
   padding: 10px 15px;
@@ -105,22 +130,24 @@ const CreateButton = styled.button`
 
   &:hover {
     background-color: #fff;
-    color: #0d0c22;
+    color: #333;
     box-shadow: 6px 6px 0px 0px rgba(0, 0, 0, 0.09);
-    border: 1px solid #0d0c22;
+    border: 1px solid #333;
   }
 `;
+
+const ImageUrl = styled.div``;
 
 const UpvoteCount = styled.span`
   font-size: 14px;
   margin-right: 10px;
-  color: #0d0c22;
+  color: #333;
 `;
 
 const TipCount = styled.span`
   font-size: 14px;
   margin-left: 10px;
-  color: #0d0c22;
+  color: #333;
 `;
 
 const Story: React.FC<StoryProps> = () => {
@@ -138,6 +165,8 @@ const Story: React.FC<StoryProps> = () => {
     address: OAPP[account?.chainId ?? sepolia.id],
     functionName: "getAllStories"
   });
+
+  console.log(result);
 
   // Utility function for navigation
   const handleNavigation = (actionType: string) => {
@@ -161,8 +190,6 @@ const Story: React.FC<StoryProps> = () => {
   const onUpvote = () => {
     // tipAuthor(amount)
   };
-
-  console.log(result, "result");
 
   return (
     <>
@@ -196,7 +223,14 @@ const Story: React.FC<StoryProps> = () => {
                   </UserInfo>
                 </UserProfile>
                 <Title>{story.name}</Title>
-                <Description>{story.description}</Description>
+                <ContentContainer>
+                  <TextContent>
+                    <Description>{story.description}</Description>
+                  </TextContent>
+                  {/*  <ImageContainer>
+                    <StoryImage src={story.imageUrl} alt="Story Image" />
+                  </ImageContainer> */}
+                </ContentContainer>
                 <ButtonsContainer>
                   <div>
                     <Button onClick={onUpvote}>

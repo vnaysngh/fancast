@@ -88,14 +88,14 @@ const PageButton = styled.button<{ active?: boolean }>`
   font-family: "Bungee";
   padding: 10px 15px;
   margin: 0 5px;
-  background-color: ${(props) => (props.active ? "#0d0c22" : "#f0f0f0")};
+  background-color: ${(props) => (props.active ? "#333" : "#f0f0f0")};
   color: ${(props) => (props.active ? "#fff" : "#333")};
   cursor: pointer;
   border: solid 2px #888;
   box-shadow: 6px 6px 0px 0px rgba(0, 0, 0, 0.09);
 
   &:hover {
-    background-color: #0d0c22;
+    background-color: #333;
     color: #fff;
   }
 

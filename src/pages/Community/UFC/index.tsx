@@ -43,8 +43,8 @@ export const Tabs = styled.div`
 
 export const Tab = styled.button<{ active?: boolean }>`
   font-family: "Bungee";
-  background: ${(props) => (props.active ? "#0d0c22" : "#fff")};
-  color: ${(props) => (props.active ? "#fff" : "#0d0c22")};
+  background: ${(props) => (props.active ? "#333" : "#fff")};
+  color: ${(props) => (props.active ? "#fff" : "#333")};
   padding: 10px 15px;
   cursor: pointer;
   margin-top: 10px;
@@ -104,7 +104,7 @@ export const FighterRank = styled.div<{ champion: boolean }>`
   position: absolute;
   top: 1rem;
   right: 1rem;
-  background: ${(props) => (props.champion ? "#daa520" : "#0d0c22")};
+  background: ${(props) => (props.champion ? "#daa520" : "#333")};
   color: white;
   padding: 0.25rem 0.5rem;
   border-radius: 4px;
@@ -152,7 +152,7 @@ export const Button = styled.button`
   background: transparent;
 
   &:hover {
-    background: #0d0c22;
+    background: #333;
     color: #fff;
   }
 `;

@@ -75,7 +75,7 @@ const ModalFooter = styled.div`
 
 const SubmitButton = styled.button`
   font-family: "Bungee";
-  background-color: #4caf50;
+  background-color: #333;
   border: none;
   color: white;
   padding: 12px 20px;
@@ -90,9 +90,9 @@ const SubmitButton = styled.button`
 
 const CancelButton = styled.button`
   font-family: "Bungee";
-  background-color: #f44336;
+  background-color: #fff;
   border: none;
-  color: white;
+  color: #333;
   padding: 12px 20px;
   text-align: center;
   text-decoration: none;
@@ -154,7 +154,7 @@ const TipModal: React.FC<TipModalProps> = ({
           <ModalFooter>
             {!tipping && <CancelButton onClick={onClose}>Cancel</CancelButton>}
             <SubmitButton disabled={tipping} onClick={onTip}>
-              {tipping ? "Confirm Tx in your wallet" : "Submit Tip"}
+              {tipping ? "Confirm Tx in your wallet" : "Submit"}
             </SubmitButton>
           </ModalFooter>
         </ModalContent>

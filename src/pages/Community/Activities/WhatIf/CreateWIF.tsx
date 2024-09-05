@@ -56,7 +56,7 @@ const TextArea = styled.textarea`
 
 const Button = styled.button`
   font-family: "Bungee";
-  background-color: #0d0c22;
+  background-color: #333;
   color: white;
   padding: 10px 15px;
   cursor: pointer;
@@ -66,9 +66,9 @@ const Button = styled.button`
 
   &:hover {
     background-color: #fff;
-    color: #0d0c22;
+    color: #333;
     box-shadow: 6px 6px 0px 0px rgba(0, 0, 0, 0.09);
-    border: 1px solid #0d0c22;
+    border: 1px solid #333;
   }
 `;
 
