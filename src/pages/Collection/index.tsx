@@ -386,31 +386,31 @@ const Collections = () => {
     ? userNFTs?.nfts?.map((nft: any) => {
         const normalizedNftContract = nft.contract.toLowerCase();
 
-        if (userJoinedCommunities?.indexOf(normalizedNftContract) > -1) {
+        if (userJoinedCommunities?.indexOf(normalizedNftContract) === -1) {
           return {
             ...nft,
             subscribed: true
           };
-        } else return nft;
+        }
       })
     : userNFTs?.nfts;
 
-  const filteredCollection = collections?.collections?.length
-    ? collections?.collections?.filter(
-        (collection: any) =>
-          collection.owner.toLowerCase() ===
-            "0x0B95ec21579aee6Ef7b712976bD86689D68b5A08".toLowerCase() &&
-          (collection.image_url || collection.display_image_url)
-      )
-    : [];
+  // const filteredCollection = collections?.collections?.length
+  //   ? collections?.collections?.filter(
+  //       (collection: any) =>
+  //         collection.owner.toLowerCase() ===
+  //           "0x0B95ec21579aee6Ef7b712976bD86689D68b5A08".toLowerCase() &&
+  //         (collection.image_url || collection.display_image_url)
+  //     )
+  //   : [];
 
   const renderContent = () => {
     switch (activeTab) {
       case "explore":
         return (
           <NewItemsGrid>
-            {filteredCollection && filteredCollection.length
-              ? filteredCollection.map((nft: any) => (
+            {openseaSepoliaCollection
+              ? openseaSepoliaCollection.map((nft: any) => (
                   <NewItemCard key={nft.collection}>
                     {/* <ItemImage src={nft.image_url} alt={nft.name ?? ""} /> */}
                     <ImageContainer

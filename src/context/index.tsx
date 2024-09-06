@@ -82,7 +82,7 @@ export const StateContextProvider = ({ children }: { children: any }) => {
     if (account.address) connectWallet();
   }, [account.isConnected, account.chainId]);
 
-  useEffect(() => {
+  /*   useEffect(() => {
     const fetchCollections = () => {
       try {
         const options = {
@@ -113,7 +113,7 @@ export const StateContextProvider = ({ children }: { children: any }) => {
     };
 
     if (account.chainId) fetchCollections();
-  }, [account.chainId]);
+  }, [account.chainId]); */
 
   useEffect(() => {
     const fetchUserNFTs = () => {

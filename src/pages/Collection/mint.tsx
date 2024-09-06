@@ -44,6 +44,7 @@ const Button = styled.button`
 `;
 
 const Title = styled.h2`
+  font-family: "DM Sans", sans-serif;
   font-size: 1.5rem;
   font-weight: 300;
   margin-bottom: 1rem;
@@ -52,7 +53,6 @@ const Title = styled.h2`
 
 const Message = styled.p`
   font-family: "DM Sans", sans-serif;
-  font-weight: 700;
   font-size: 20px;
   margin-bottom: 20px;
   text-align: center;

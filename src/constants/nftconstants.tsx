@@ -308,20 +308,20 @@ export const myNFTs = [
 
 export const openseaSepoliaCollection = [
   {
-    collection: "mynft-10468",
-    name: "MyNFT",
+    collection: "i-can-fly",
+    name: "I Can Fly",
     description: "",
     image_url:
-      "https://i.seadn.io/s/raw/files/23ac8be891714e0763c9cb699b45a024.png?w=500&auto=format",
+      "https://i.seadn.io/s/raw/files/977f67d0877ec95738a4a36035f94fb4.webp?w=500&auto=format",
     banner_image_url: "",
-    owner: "0x0843873a9fe11918c3aef8e6b5b26037464e27d6",
+    owner: "0x0b95ec21579aee6ef7b712976bd86689d68b5a08",
     safelist_status: "not_requested",
     category: "",
     is_disabled: false,
     is_nsfw: false,
     trait_offers_enabled: false,
     collection_offers_enabled: true,
-    opensea_url: "https://testnets.opensea.io/collection/mynft-10468",
+    opensea_url: "https://testnets.opensea.io/collection/i-can-fly",
     project_url: "",
     wiki_url: "",
     discord_url: "",
@@ -330,83 +330,26 @@ export const openseaSepoliaCollection = [
     instagram_username: "",
     contracts: [
       {
-        address: "0x39da57fb3532a34cdb4fdf1926cae9e3155a1b61",
-        chain: "sepolia"
+        address: "0x630be285da948a1c6f334ce7bc728979eb936fd4",
+        chain: "base_sepolia"
       }
     ]
   },
   {
-    collection: "cauda",
-    name: "Cauda",
-    description: "Asperiores ipsa denuncio facilis aeneus ulciscor tamisium.",
-    image_url:
-      "https://i.seadn.io/s/raw/files/a483573ae03e46ebae1f6c58a8c7fa72.png?w=500&auto=format",
-    banner_image_url: "",
-    owner: "0x3d3d7a1c2262b27f1f20ec9cf48e946837bc924f",
-    safelist_status: "not_requested",
-    category: "",
-    is_disabled: false,
-    is_nsfw: false,
-    trait_offers_enabled: false,
-    collection_offers_enabled: true,
-    opensea_url: "https://testnets.opensea.io/collection/cauda",
-    project_url: "",
-    wiki_url: "",
-    discord_url: "",
-    telegram_url: "",
-    twitter_username: "",
-    instagram_username: "",
-    contracts: [
-      {
-        address: "0xeeb31544e8069f5c2977e07f6c3d798f8de8c05c",
-        chain: "sepolia"
-      }
-    ]
-  },
-  {
-    collection: "series-collection-1000",
-    name: "series-collection 1000",
-    description: "series-collection-1000 series-collection-1000",
-    image_url:
-      "https://i.seadn.io/s/raw/files/80741f6f4957a27889899621bc0e5fda.jpg?w=500&auto=format",
-    banner_image_url: "",
-    owner: "0x1ea2485ceed06384542bf475986b405aa1e66422",
-    safelist_status: "not_requested",
-    category: "",
-    is_disabled: false,
-    is_nsfw: false,
-    trait_offers_enabled: false,
-    collection_offers_enabled: true,
-    opensea_url:
-      "https://testnets.opensea.io/collection/series-collection-1000",
-    project_url: "",
-    wiki_url: "",
-    discord_url: "",
-    telegram_url: "",
-    twitter_username: "",
-    instagram_username: "",
-    contracts: [
-      {
-        address: "0x7ede58c2cd42cf44b0eedfe195af942dba5c236f",
-        chain: "sepolia"
-      }
-    ]
-  },
-  {
-    collection: "mytoken-10950",
-    name: "MyToken",
+    collection: "pinky-ocean",
+    name: "Pinky Ocean",
     description: "",
     image_url:
-      "https://i.seadn.io/s/raw/files/4991c2dd11458f0fd57c9aecc7f4d15c.png?w=500&auto=format",
+      "https://i.seadn.io/s/raw/files/297d6e7d058a3d3348f0360cb0f8a4e1.jpg?w=500&auto=format",
     banner_image_url: "",
-    owner: "0xc5ad2dc4301b8abeb93b0638cf74eb97c08b4eb0",
+    owner: "0x0b95ec21579aee6ef7b712976bd86689d68b5a08",
     safelist_status: "not_requested",
     category: "",
     is_disabled: false,
     is_nsfw: false,
     trait_offers_enabled: false,
     collection_offers_enabled: true,
-    opensea_url: "https://testnets.opensea.io/collection/mytoken-10950",
+    opensea_url: "https://testnets.opensea.io/collection/pinky-ocean",
     project_url: "",
     wiki_url: "",
     discord_url: "",
@@ -415,26 +358,26 @@ export const openseaSepoliaCollection = [
     instagram_username: "",
     contracts: [
       {
-        address: "0x588f25db97ca1ff492d3bfbbf4e5e56207436029",
-        chain: "sepolia"
+        address: "0x4ea393f69a6f1653135f2e36c122c03bd0956d85",
+        chain: "base_sepolia"
       }
     ]
   },
   {
-    collection: "editionsv2-1",
-    name: "EDITIONSV2",
+    collection: "running-puppets",
+    name: "Running Puppets",
     description: "",
     image_url:
-      "https://i.seadn.io/s/raw/files/cf7e9ea372b3b7df384e32d826068fab.png?w=500&auto=format",
+      "https://i.seadn.io/s/raw/files/dd9d459cdebbb3784f1563390812ee1b.webp?w=500&auto=format",
     banner_image_url: "",
-    owner: "0xea6b5147c353904d5fafa801422d268772f09512",
+    owner: "0x0b95ec21579aee6ef7b712976bd86689d68b5a08",
     safelist_status: "not_requested",
     category: "",
     is_disabled: false,
     is_nsfw: false,
     trait_offers_enabled: false,
     collection_offers_enabled: true,
-    opensea_url: "https://testnets.opensea.io/collection/editionsv2-1",
+    opensea_url: "https://testnets.opensea.io/collection/running-puppets",
     project_url: "",
     wiki_url: "",
     discord_url: "",
@@ -443,55 +386,26 @@ export const openseaSepoliaCollection = [
     instagram_username: "",
     contracts: [
       {
-        address: "0x80e9cbb125e8f41fbdc841ef77bca08ece345e0d",
-        chain: "sepolia"
+        address: "0x2de3fe01a95b5d617cc3a5d243ee8c4de5c0468e",
+        chain: "base_sepolia"
       }
     ]
   },
   {
-    collection: "varius-tubineus-blanditiis-consectetur-condico",
-    name: "Varius Tubineus Blanditiis Consectetur Condico",
-    description: "Alias decerno qui abduco clarus.",
-    image_url:
-      "https://i.seadn.io/s/raw/files/a483573ae03e46ebae1f6c58a8c7fa72.png?w=500&auto=format",
-    banner_image_url: "",
-    owner: "0x3d3d7a1c2262b27f1f20ec9cf48e946837bc924f",
-    safelist_status: "not_requested",
-    category: "",
-    is_disabled: false,
-    is_nsfw: false,
-    trait_offers_enabled: false,
-    collection_offers_enabled: true,
-    opensea_url:
-      "https://testnets.opensea.io/collection/varius-tubineus-blanditiis-consectetur-condico",
-    project_url: "",
-    wiki_url: "",
-    discord_url: "",
-    telegram_url: "",
-    twitter_username: "",
-    instagram_username: "",
-    contracts: [
-      {
-        address: "0xf58a74b101c0bc688352e78281d7a7dd876e1889",
-        chain: "sepolia"
-      }
-    ]
-  },
-  {
-    collection: "beanz-47",
-    name: "Beanz",
+    collection: "anime-sailor-club",
+    name: "Anime Sailor Club",
     description: "",
     image_url:
-      "https://i.seadn.io/s/raw/files/514b5a1af33a7a0e271e96782228df3e.png?w=500&auto=format",
+      "https://i.seadn.io/s/raw/files/2feebb5e0093a32bafec8cbd0334f292.jpg?w=500&auto=format",
     banner_image_url: "",
-    owner: "0xecbd61c764e6988299ae4dd5ecf8f296cba39c29",
+    owner: "0x0b95ec21579aee6ef7b712976bd86689d68b5a08",
     safelist_status: "not_requested",
     category: "",
     is_disabled: false,
     is_nsfw: false,
     trait_offers_enabled: false,
     collection_offers_enabled: true,
-    opensea_url: "https://testnets.opensea.io/collection/beanz-47",
+    opensea_url: "https://testnets.opensea.io/collection/anime-sailor-club",
     project_url: "",
     wiki_url: "",
     discord_url: "",
@@ -500,26 +414,26 @@ export const openseaSepoliaCollection = [
     instagram_username: "",
     contracts: [
       {
-        address: "0xe4a4903e0e5a343776bf1fdb8fd2e33a75bc35eb",
-        chain: "sepolia"
+        address: "0xaee584151e5aec1c347f99582966dba2899fb8ac",
+        chain: "base_sepolia"
       }
     ]
   },
   {
-    collection: "squarenft-898",
-    name: "SquareNFT",
+    collection: "pixel-world-1",
+    name: "Pixel World",
     description: "",
     image_url:
-      "https://raw.seadn.io/files/a4b9696f782f3ac8dfdde4fd730ab0b5.svg",
+      "https://i.seadn.io/s/raw/files/d27cd480d7de7750b07a9a080c252cf8.jpg?w=500&auto=format",
     banner_image_url: "",
-    owner: "",
+    owner: "0x0b95ec21579aee6ef7b712976bd86689d68b5a08",
     safelist_status: "not_requested",
     category: "",
     is_disabled: false,
     is_nsfw: false,
     trait_offers_enabled: false,
     collection_offers_enabled: true,
-    opensea_url: "https://testnets.opensea.io/collection/squarenft-898",
+    opensea_url: "https://testnets.opensea.io/collection/pixel-world-1",
     project_url: "",
     wiki_url: "",
     discord_url: "",
@@ -528,26 +442,26 @@ export const openseaSepoliaCollection = [
     instagram_username: "",
     contracts: [
       {
-        address: "0x4e02b6cb9614f74ae3ab2cbb4d75bd5ee7a02fc5",
-        chain: "sepolia"
+        address: "0x40427ccad21bd6c06356faa6d52e26ca0d16ee3e",
+        chain: "base_sepolia"
       }
     ]
   },
   {
-    collection: "astra-genesis-nft-3",
-    name: "ASTRA GENESIS NFT",
+    collection: "cute-astronaut",
+    name: "Cute Astronaut",
     description: "",
     image_url:
-      "https://i.seadn.io/s/raw/files/da49c1faf2ce422bdc1b10ead01cf184.png?w=500&auto=format",
+      "https://i.seadn.io/s/raw/files/f27cdfbfe617f33ed5e8db6a7fa0b8ae.jpg?w=500&auto=format",
     banner_image_url: "",
-    owner: "0xbdc4ec2eb969076b56a9666cb91361ac7bb018d7",
+    owner: "0x0b95ec21579aee6ef7b712976bd86689d68b5a08",
     safelist_status: "not_requested",
     category: "",
     is_disabled: false,
     is_nsfw: false,
     trait_offers_enabled: false,
     collection_offers_enabled: true,
-    opensea_url: "https://testnets.opensea.io/collection/astra-genesis-nft-3",
+    opensea_url: "https://testnets.opensea.io/collection/cute-astronaut",
     project_url: "",
     wiki_url: "",
     discord_url: "",
@@ -556,26 +470,26 @@ export const openseaSepoliaCollection = [
     instagram_username: "",
     contracts: [
       {
-        address: "0x899a810861fd68aa3625a2386333f156fcd2d88e",
-        chain: "sepolia"
+        address: "0x978ed6f2c96bd7d3682e102e95dd7088823ce495",
+        chain: "base_sepolia"
       }
     ]
   },
   {
-    collection: "idcard-2",
-    name: "IdCard",
+    collection: "loop-donut",
+    name: "Loop Donut",
     description: "",
     image_url:
-      "https://raw.seadn.io/files/0fa6199fd026d908ebab608abf49c786.svg",
+      "https://i.seadn.io/s/raw/files/28b07b4d8e24bd19edc3956290142c24.webp?w=500&auto=format",
     banner_image_url: "",
-    owner: "0xce3ceeb3ab15e50ab502c406330fe99b16216fdb",
+    owner: "0x0b95ec21579aee6ef7b712976bd86689d68b5a08",
     safelist_status: "not_requested",
     category: "",
     is_disabled: false,
     is_nsfw: false,
     trait_offers_enabled: false,
     collection_offers_enabled: true,
-    opensea_url: "https://testnets.opensea.io/collection/idcard-2",
+    opensea_url: "https://testnets.opensea.io/collection/loop-donut",
     project_url: "",
     wiki_url: "",
     discord_url: "",
@@ -584,26 +498,26 @@ export const openseaSepoliaCollection = [
     instagram_username: "",
     contracts: [
       {
-        address: "0x0c92d292e932164780167af8b1eeb44f6f91f0df",
-        chain: "sepolia"
+        address: "0x84b751c0ce2c7685b6b7d4c8f514980b84f8518a",
+        chain: "base_sepolia"
       }
     ]
   },
   {
-    collection: "the-double-fox",
-    name: "The Double Fox",
+    collection: "rainbow-style",
+    name: "Rainbow Style",
     description: "",
     image_url:
-      "https://i.seadn.io/s/raw/files/46fbea93525b24b4f1523bc7f37f6353.webp?w=500&auto=format",
+      "https://i.seadn.io/s/raw/files/4791c75cdb95641f69d99c0de2532345.jpg?w=500&auto=format",
     banner_image_url: "",
-    owner: "0xc98190a90f2a7ae25f8b84aab0e309cf2b532494",
+    owner: "0x0b95ec21579aee6ef7b712976bd86689d68b5a08",
     safelist_status: "not_requested",
     category: "",
     is_disabled: false,
     is_nsfw: false,
     trait_offers_enabled: false,
     collection_offers_enabled: true,
-    opensea_url: "https://testnets.opensea.io/collection/the-double-fox",
+    opensea_url: "https://testnets.opensea.io/collection/rainbow-style",
     project_url: "",
     wiki_url: "",
     discord_url: "",
@@ -612,1403 +526,8 @@ export const openseaSepoliaCollection = [
     instagram_username: "",
     contracts: [
       {
-        address: "0x2165dd0db9a3e9f6eb6901d109934e5fac3c1179",
-        chain: "sepolia"
-      }
-    ]
-  },
-  {
-    collection: "pushrockstarstagingv2",
-    name: "PushRockstarStagingV2",
-    description: "",
-    image_url:
-      "https://i.seadn.io/s/raw/files/cb3719de19ebea772c0498464fb8b1d6.jpg?w=500&auto=format",
-    banner_image_url: "",
-    owner: "0x1af9c19a1513b9d05a7e5caad9f9239ef54fe2b1",
-    safelist_status: "not_requested",
-    category: "",
-    is_disabled: false,
-    is_nsfw: false,
-    trait_offers_enabled: false,
-    collection_offers_enabled: true,
-    opensea_url: "https://testnets.opensea.io/collection/pushrockstarstagingv2",
-    project_url: "",
-    wiki_url: "",
-    discord_url: "",
-    telegram_url: "",
-    twitter_username: "",
-    instagram_username: "",
-    contracts: [
-      {
-        address: "0x70c007011cf17f0c12ca3e56cc326d4fa8a65175",
-        chain: "sepolia"
-      }
-    ]
-  },
-  {
-    collection: "pushrockstarstaging",
-    name: "PushRockstarStaging",
-    description: "",
-    image_url:
-      "https://i.seadn.io/s/raw/files/cb3719de19ebea772c0498464fb8b1d6.jpg?w=500&auto=format",
-    banner_image_url: "",
-    owner: "0x1af9c19a1513b9d05a7e5caad9f9239ef54fe2b1",
-    safelist_status: "not_requested",
-    category: "",
-    is_disabled: false,
-    is_nsfw: false,
-    trait_offers_enabled: false,
-    collection_offers_enabled: true,
-    opensea_url: "https://testnets.opensea.io/collection/pushrockstarstaging",
-    project_url: "",
-    wiki_url: "",
-    discord_url: "",
-    telegram_url: "",
-    twitter_username: "",
-    instagram_username: "",
-    contracts: [
-      {
-        address: "0xc40134787d1236ffc58d02c3e8b853db04349a36",
-        chain: "sepolia"
-      }
-    ]
-  },
-  {
-    collection: "alioqui-pecto",
-    name: "Alioqui Pecto",
-    description: "Amet aveho terminatio abbas ver subito aequus.",
-    image_url:
-      "https://i.seadn.io/s/raw/files/a483573ae03e46ebae1f6c58a8c7fa72.png?w=500&auto=format",
-    banner_image_url: "",
-    owner: "0x3d3d7a1c2262b27f1f20ec9cf48e946837bc924f",
-    safelist_status: "not_requested",
-    category: "",
-    is_disabled: false,
-    is_nsfw: false,
-    trait_offers_enabled: false,
-    collection_offers_enabled: true,
-    opensea_url: "https://testnets.opensea.io/collection/alioqui-pecto",
-    project_url: "",
-    wiki_url: "",
-    discord_url: "",
-    telegram_url: "",
-    twitter_username: "",
-    instagram_username: "",
-    contracts: [
-      {
-        address: "0xb7598c97f8fa4f1e82505d3530d2330df2f10cb6",
-        chain: "sepolia"
-      }
-    ]
-  },
-  {
-    collection: "bunft-12",
-    name: "BUnft",
-    description: "",
-    image_url:
-      "https://i.seadn.io/s/raw/files/26f4b6c0aa9914535da4fe07f7f51cae.jpg?w=500&auto=format",
-    banner_image_url: "",
-    owner: "0x4eb27920552a4d66a16c710d1d8158e573aa7901",
-    safelist_status: "not_requested",
-    category: "",
-    is_disabled: false,
-    is_nsfw: false,
-    trait_offers_enabled: false,
-    collection_offers_enabled: true,
-    opensea_url: "https://testnets.opensea.io/collection/bunft-12",
-    project_url: "",
-    wiki_url: "",
-    discord_url: "",
-    telegram_url: "",
-    twitter_username: "",
-    instagram_username: "",
-    contracts: [
-      {
-        address: "0x328723e1b29536851181978897322151e98df2df",
-        chain: "sepolia"
-      }
-    ]
-  },
-  {
-    collection: "cypher-citizen",
-    name: "Cypher Citizen",
-    description: "",
-    image_url:
-      "https://i.seadn.io/s/raw/files/6e8416c953b0dafabf6f455fa09cc40b.png?w=500&auto=format",
-    banner_image_url: "",
-    owner: "0x97d189a3f556a146c835dbd4af5fca3fc209fef9",
-    safelist_status: "not_requested",
-    category: "",
-    is_disabled: false,
-    is_nsfw: false,
-    trait_offers_enabled: false,
-    collection_offers_enabled: true,
-    opensea_url: "https://testnets.opensea.io/collection/cypher-citizen",
-    project_url: "",
-    wiki_url: "",
-    discord_url: "",
-    telegram_url: "",
-    twitter_username: "",
-    instagram_username: "",
-    contracts: [
-      {
-        address: "0x424c01cecd3ec97ab072540e8d1fda32cf393dd6",
-        chain: "sepolia"
-      }
-    ]
-  },
-  {
-    collection: "bunft-11",
-    name: "BUnft",
-    description: "",
-    image_url:
-      "https://i.seadn.io/s/raw/files/26f4b6c0aa9914535da4fe07f7f51cae.jpg?w=500&auto=format",
-    banner_image_url: "",
-    owner: "0x4eb27920552a4d66a16c710d1d8158e573aa7901",
-    safelist_status: "not_requested",
-    category: "",
-    is_disabled: false,
-    is_nsfw: false,
-    trait_offers_enabled: false,
-    collection_offers_enabled: true,
-    opensea_url: "https://testnets.opensea.io/collection/bunft-11",
-    project_url: "",
-    wiki_url: "",
-    discord_url: "",
-    telegram_url: "",
-    twitter_username: "",
-    instagram_username: "",
-    contracts: [
-      {
-        address: "0xd621f85bb2c77979ef525c2d8bde55f0db75d374",
-        chain: "sepolia"
-      }
-    ]
-  },
-  {
-    collection: "bunft-10",
-    name: "BUnft",
-    description: "",
-    image_url:
-      "https://i.seadn.io/s/raw/files/26f4b6c0aa9914535da4fe07f7f51cae.jpg?w=500&auto=format",
-    banner_image_url: "",
-    owner: "0x5068a7153f456f5084905cf8e22f59d66de36608",
-    safelist_status: "not_requested",
-    category: "",
-    is_disabled: false,
-    is_nsfw: false,
-    trait_offers_enabled: false,
-    collection_offers_enabled: true,
-    opensea_url: "https://testnets.opensea.io/collection/bunft-10",
-    project_url: "",
-    wiki_url: "",
-    discord_url: "",
-    telegram_url: "",
-    twitter_username: "",
-    instagram_username: "",
-    contracts: [
-      {
-        address: "0xb4832d7fca1c5a5db2598a84d0646657de466471",
-        chain: "sepolia"
-      }
-    ]
-  },
-  {
-    collection: "canyoudance",
-    name: "CanYouDance?",
-    description: "",
-    image_url:
-      "https://i.seadn.io/s/raw/files/e750e7ea2426ebcdbc01e8483088ca5b.jpg?w=500&auto=format",
-    banner_image_url: "",
-    owner: "0xb8af741b1a6ef5e1c0a9d626a067efdc3d6b5a79",
-    safelist_status: "not_requested",
-    category: "",
-    is_disabled: false,
-    is_nsfw: false,
-    trait_offers_enabled: false,
-    collection_offers_enabled: true,
-    opensea_url: "https://testnets.opensea.io/collection/canyoudance",
-    project_url: "",
-    wiki_url: "",
-    discord_url: "",
-    telegram_url: "",
-    twitter_username: "",
-    instagram_username: "",
-    contracts: [
-      {
-        address: "0x2d3b515d2013cac16aee980adcb6e9be54e28506",
-        chain: "sepolia"
-      }
-    ]
-  },
-  {
-    collection: "adstringo-harum",
-    name: "Adstringo Harum",
-    description:
-      "Deleo acerbitas reprehenderit corona thermae conservo sufficio advoco nemo comitatus.",
-    image_url:
-      "https://i.seadn.io/s/raw/files/a483573ae03e46ebae1f6c58a8c7fa72.png?w=500&auto=format",
-    banner_image_url: "",
-    owner: "0x3d3d7a1c2262b27f1f20ec9cf48e946837bc924f",
-    safelist_status: "not_requested",
-    category: "",
-    is_disabled: false,
-    is_nsfw: false,
-    trait_offers_enabled: false,
-    collection_offers_enabled: true,
-    opensea_url: "https://testnets.opensea.io/collection/adstringo-harum",
-    project_url: "",
-    wiki_url: "",
-    discord_url: "",
-    telegram_url: "",
-    twitter_username: "",
-    instagram_username: "",
-    contracts: [
-      {
-        address: "0x15e19bdeb3216b074bb455ad7d250dd172319108",
-        chain: "sepolia"
-      }
-    ]
-  },
-  {
-    collection: "test-15311",
-    name: "TEST",
-    description: "",
-    image_url:
-      "https://raw.seadn.io/files/2ea1f61bb87bdd584263f767bb5e9417.svg",
-    banner_image_url: "",
-    owner: "0x8385ae71bc9aa60ebfa288c2128b41743e160817",
-    safelist_status: "not_requested",
-    category: "",
-    is_disabled: false,
-    is_nsfw: false,
-    trait_offers_enabled: false,
-    collection_offers_enabled: true,
-    opensea_url: "https://testnets.opensea.io/collection/test-15311",
-    project_url: "",
-    wiki_url: "",
-    discord_url: "",
-    telegram_url: "",
-    twitter_username: "",
-    instagram_username: "",
-    contracts: [
-      {
-        address: "0xd236adebd7c47f5a043edae639e89f6f8ad13682",
-        chain: "sepolia"
-      }
-    ]
-  },
-  {
-    collection: "catmember",
-    name: "CatMember",
-    description: "",
-    image_url:
-      "https://i.seadn.io/s/raw/files/723c905bb374cc5af2fccee00d67ed6b.jpg?w=500&auto=format",
-    banner_image_url: "",
-    owner: "0xb8af741b1a6ef5e1c0a9d626a067efdc3d6b5a79",
-    safelist_status: "not_requested",
-    category: "",
-    is_disabled: false,
-    is_nsfw: false,
-    trait_offers_enabled: false,
-    collection_offers_enabled: true,
-    opensea_url: "https://testnets.opensea.io/collection/catmember",
-    project_url: "",
-    wiki_url: "",
-    discord_url: "",
-    telegram_url: "",
-    twitter_username: "",
-    instagram_username: "",
-    contracts: [
-      {
-        address: "0x6e7b55ce23a8a54735b0d894862926254d31d32c",
-        chain: "sepolia"
-      }
-    ]
-  },
-  {
-    collection: "sculpture-arts",
-    name: "Sculpture Arts",
-    description: "",
-    image_url:
-      "https://i.seadn.io/s/raw/files/0881a29f47228fcc46f2ae09f03552ad.png?w=500&auto=format",
-    banner_image_url: "",
-    owner: "0x392bc4f156127c1f0f6e57f6f778838dfc432379",
-    safelist_status: "not_requested",
-    category: "",
-    is_disabled: false,
-    is_nsfw: false,
-    trait_offers_enabled: false,
-    collection_offers_enabled: true,
-    opensea_url: "https://testnets.opensea.io/collection/sculpture-arts",
-    project_url: "",
-    wiki_url: "",
-    discord_url: "",
-    telegram_url: "",
-    twitter_username: "",
-    instagram_username: "",
-    contracts: [
-      {
-        address: "0x759f24b6710e19416c43c3f15105aec065532ea5",
-        chain: "sepolia"
-      }
-    ]
-  },
-  {
-    collection: "nftdrop2-2",
-    name: "nftdrop2",
-    description: "",
-    image_url:
-      "https://i.seadn.io/s/raw/files/16523b6e3c5bd8df2c42cd80d787691e.jpg?w=500&auto=format",
-    banner_image_url: "",
-    owner: "0x97d189a3f556a146c835dbd4af5fca3fc209fef9",
-    safelist_status: "not_requested",
-    category: "",
-    is_disabled: false,
-    is_nsfw: false,
-    trait_offers_enabled: false,
-    collection_offers_enabled: true,
-    opensea_url: "https://testnets.opensea.io/collection/nftdrop2-2",
-    project_url: "",
-    wiki_url: "",
-    discord_url: "",
-    telegram_url: "",
-    twitter_username: "",
-    instagram_username: "",
-    contracts: [
-      {
-        address: "0x9ab9dca64a427d0411f8aec2a970b62d76444257",
-        chain: "sepolia"
-      }
-    ]
-  },
-  {
-    collection: "testnft-8141",
-    name: "TestNFT",
-    description: "",
-    image_url:
-      "https://i.seadn.io/s/raw/files/73039003b8c241516ca4359c66ccc343.jpg?w=500&auto=format",
-    banner_image_url: "",
-    owner: "0x1abe718ef04159b320cc1ca1d87b38fdc1506a82",
-    safelist_status: "not_requested",
-    category: "",
-    is_disabled: false,
-    is_nsfw: false,
-    trait_offers_enabled: false,
-    collection_offers_enabled: true,
-    opensea_url: "https://testnets.opensea.io/collection/testnft-8141",
-    project_url: "",
-    wiki_url: "",
-    discord_url: "",
-    telegram_url: "",
-    twitter_username: "",
-    instagram_username: "",
-    contracts: [
-      {
-        address: "0xef8bc492d54fe76f0d8d95a9aadab1ea264b5037",
-        chain: "sepolia"
-      }
-    ]
-  },
-  {
-    collection: "test-vt-23-2",
-    name: "test-vt-23",
-    description: "",
-    image_url:
-      "https://i.seadn.io/s/raw/files/89b8d7aede13a11c0bf9f3477a3f5617.jpg?w=500&auto=format",
-    banner_image_url: "",
-    owner: "0xaccb26ce1771e418fb4afae1b4ea297cbb5bd4fa",
-    safelist_status: "not_requested",
-    category: "",
-    is_disabled: false,
-    is_nsfw: false,
-    trait_offers_enabled: false,
-    collection_offers_enabled: true,
-    opensea_url: "https://testnets.opensea.io/collection/test-vt-23-2",
-    project_url: "",
-    wiki_url: "",
-    discord_url: "",
-    telegram_url: "",
-    twitter_username: "",
-    instagram_username: "",
-    contracts: [
-      {
-        address: "0x45770ca3b4ef18a744fcbd2706fb9f6cd5739378",
-        chain: "sepolia"
-      }
-    ]
-  },
-  {
-    collection: "svgnft-35",
-    name: "SVGnft",
-    description: "",
-    image_url:
-      "https://raw.seadn.io/files/8988154e62520c74c741dffc9803a799.svg",
-    banner_image_url: "",
-    owner: "0x8842dcb43184d68ddab619220170a7459a4bcb20",
-    safelist_status: "not_requested",
-    category: "",
-    is_disabled: false,
-    is_nsfw: false,
-    trait_offers_enabled: false,
-    collection_offers_enabled: true,
-    opensea_url: "https://testnets.opensea.io/collection/svgnft-35",
-    project_url: "",
-    wiki_url: "",
-    discord_url: "",
-    telegram_url: "",
-    twitter_username: "",
-    instagram_username: "",
-    contracts: [
-      {
-        address: "0x30b01b2fb2cf4a5e45934e1730e8b7f1d6b985db",
-        chain: "sepolia"
-      }
-    ]
-  },
-  {
-    collection: "robert-9",
-    name: "Robert",
-    description: "",
-    image_url:
-      "https://i.seadn.io/s/raw/files/9c46660d9f210489b6bd0822bd9070c6.png?w=500&auto=format",
-    banner_image_url: "",
-    owner: "0x96e09efe3d9cd5848aef01cc4674d6528fb0c6b3",
-    safelist_status: "not_requested",
-    category: "",
-    is_disabled: false,
-    is_nsfw: false,
-    trait_offers_enabled: false,
-    collection_offers_enabled: true,
-    opensea_url: "https://testnets.opensea.io/collection/robert-9",
-    project_url: "",
-    wiki_url: "",
-    discord_url: "",
-    telegram_url: "",
-    twitter_username: "",
-    instagram_username: "",
-    contracts: [
-      {
-        address: "0x7b607478c7b95a5390a2766b4d05f94824b4eba4",
-        chain: "sepolia"
-      }
-    ]
-  },
-  {
-    collection: "lady-based-punks",
-    name: "Lady Based Punks",
-    description: "",
-    image_url:
-      "https://i.seadn.io/s/raw/files/6d859809c8668023b0009f05b29e20a4.png?w=500&auto=format",
-    banner_image_url:
-      "https://i.seadn.io/s/primary-drops/0xfca3c0e3daeca991393f79d65aab14f13a839cc1/3489593:about:media:00759ebb-09a4-4c2b-a800-72dbb2e5279e.png?w=500&auto=format",
-    owner: "0xd743ddb947063bca83dd239d034ccbce1cd2bb9a",
-    safelist_status: "not_requested",
-    category: "",
-    is_disabled: false,
-    is_nsfw: false,
-    trait_offers_enabled: false,
-    collection_offers_enabled: true,
-    opensea_url: "https://testnets.opensea.io/collection/lady-based-punks",
-    project_url: "",
-    wiki_url: "",
-    discord_url: "",
-    telegram_url: "",
-    twitter_username: "",
-    instagram_username: "",
-    contracts: [
-      {
-        address: "0xfca3c0e3daeca991393f79d65aab14f13a839cc1",
-        chain: "sepolia"
-      }
-    ]
-  },
-  {
-    collection: "soniumbtc",
-    name: "soniumbtc",
-    description: "",
-    image_url:
-      "https://i.seadn.io/s/raw/files/0a35d3af1b97bc25a463e6222f369bfc.jpg?w=500&auto=format",
-    banner_image_url: "",
-    owner: "0x890a58562a117c8884e30139afe7d77fa86e4831",
-    safelist_status: "not_requested",
-    category: "",
-    is_disabled: false,
-    is_nsfw: false,
-    trait_offers_enabled: false,
-    collection_offers_enabled: true,
-    opensea_url: "https://testnets.opensea.io/collection/soniumbtc",
-    project_url: "",
-    wiki_url: "",
-    discord_url: "",
-    telegram_url: "",
-    twitter_username: "",
-    instagram_username: "",
-    contracts: [
-      {
-        address: "0x80679932d18ca612308ef3c8c85c01f843250cf9",
-        chain: "sepolia"
-      }
-    ]
-  },
-  {
-    collection: "testsprint17-offer-task",
-    name: "testsprint17 offer task",
-    description: "",
-    image_url:
-      "https://i.seadn.io/s/raw/files/9a7f202e9a93a13de9285e266a63030f.jpg?w=500&auto=format",
-    banner_image_url: "",
-    owner: "0xfac7f1ecde707e1f8844af4cfdaeabc7f46e1618",
-    safelist_status: "not_requested",
-    category: "",
-    is_disabled: false,
-    is_nsfw: false,
-    trait_offers_enabled: false,
-    collection_offers_enabled: true,
-    opensea_url:
-      "https://testnets.opensea.io/collection/testsprint17-offer-task",
-    project_url: "",
-    wiki_url: "",
-    discord_url: "",
-    telegram_url: "",
-    twitter_username: "",
-    instagram_username: "",
-    contracts: [
-      {
-        address: "0x3aa009f1e78eae01e9ae1e9f4558b0bc8f0af723",
-        chain: "sepolia"
-      }
-    ]
-  },
-  {
-    collection: "adipiscor-perferendis-suasoria",
-    name: "Adipiscor Perferendis Suasoria",
-    description: "Voco angulus voco defungo aegre voco cotidie ait.",
-    image_url:
-      "https://i.seadn.io/s/raw/files/a483573ae03e46ebae1f6c58a8c7fa72.png?w=500&auto=format",
-    banner_image_url: "",
-    owner: "0x3d3d7a1c2262b27f1f20ec9cf48e946837bc924f",
-    safelist_status: "not_requested",
-    category: "",
-    is_disabled: false,
-    is_nsfw: false,
-    trait_offers_enabled: false,
-    collection_offers_enabled: true,
-    opensea_url:
-      "https://testnets.opensea.io/collection/adipiscor-perferendis-suasoria",
-    project_url: "",
-    wiki_url: "",
-    discord_url: "",
-    telegram_url: "",
-    twitter_username: "",
-    instagram_username: "",
-    contracts: [
-      {
-        address: "0x05f61f275dc029e891ae298deffd6364d7938755",
-        chain: "sepolia"
-      }
-    ]
-  },
-  {
-    collection: "test-collection-10-5",
-    name: "Test Collection 10",
-    description: "",
-    image_url:
-      "https://i.seadn.io/s/raw/files/2e6c8338d8264978daf6a857c1b49f6c.png?w=500&auto=format",
-    banner_image_url: "",
-    owner: "0xf9209b6f49bb9fd73422ba834f4cd444ae7ceace",
-    safelist_status: "not_requested",
-    category: "",
-    is_disabled: false,
-    is_nsfw: false,
-    trait_offers_enabled: false,
-    collection_offers_enabled: true,
-    opensea_url: "https://testnets.opensea.io/collection/test-collection-10-5",
-    project_url: "",
-    wiki_url: "",
-    discord_url: "",
-    telegram_url: "",
-    twitter_username: "",
-    instagram_username: "",
-    contracts: [
-      {
-        address: "0x4b94fd8fd832e7fb314e27f809b94e8c98655f0f",
-        chain: "sepolia"
-      }
-    ]
-  },
-  {
-    collection: "todtjd",
-    name: "todtjd",
-    description: "",
-    image_url:
-      "https://i.seadn.io/s/raw/files/c3494f8f1bc28ed75278b5a7a17956b1.png?w=500&auto=format",
-    banner_image_url: "",
-    owner: "0x19983c879bacd7d2773edfefaf0ecc3d74300268",
-    safelist_status: "not_requested",
-    category: "",
-    is_disabled: false,
-    is_nsfw: false,
-    trait_offers_enabled: false,
-    collection_offers_enabled: true,
-    opensea_url: "https://testnets.opensea.io/collection/todtjd",
-    project_url: "",
-    wiki_url: "",
-    discord_url: "",
-    telegram_url: "",
-    twitter_username: "",
-    instagram_username: "",
-    contracts: [
-      {
-        address: "0xce09ba80e009d82d25798a64f4f9b0230c690eb9",
-        chain: "sepolia"
-      }
-    ]
-  },
-  {
-    collection: "unidentified-contract-39be0af7-6025-4e9a-9286-c727",
-    name: "Unidentified contract 39be0af7-6025-4e9a-9286-c72730dfa73a",
-    description: "",
-    image_url:
-      "https://i.seadn.io/s/raw/files/49ae11aa7d448fac32dd25303b13b1cf.jpg?w=500&auto=format",
-    banner_image_url: "",
-    owner: "0xfa7810f7da0648b12a1e58c425e3593d31aae4ac",
-    safelist_status: "not_requested",
-    category: "",
-    is_disabled: false,
-    is_nsfw: false,
-    trait_offers_enabled: false,
-    collection_offers_enabled: true,
-    opensea_url:
-      "https://testnets.opensea.io/collection/unidentified-contract-39be0af7-6025-4e9a-9286-c727",
-    project_url: "",
-    wiki_url: "",
-    discord_url: "",
-    telegram_url: "",
-    twitter_username: "",
-    instagram_username: "",
-    contracts: [
-      {
-        address: "0x082597b9f160d7f13d7e6eb7c4d7ac2fab40e666",
-        chain: "sepolia"
-      }
-    ]
-  },
-  {
-    collection: "ocwebsite-12",
-    name: "OCWebsite",
-    description: "",
-    image_url:
-      "https://raw.seadn.io/files/df5ccccb44e7057aefad7f7190d420dd.svg",
-    banner_image_url: "",
-    owner: "0xaafa7e1fbe681de12d41ef9a5d5206a96963390e",
-    safelist_status: "not_requested",
-    category: "",
-    is_disabled: false,
-    is_nsfw: false,
-    trait_offers_enabled: false,
-    collection_offers_enabled: true,
-    opensea_url: "https://testnets.opensea.io/collection/ocwebsite-12",
-    project_url: "",
-    wiki_url: "",
-    discord_url: "",
-    telegram_url: "",
-    twitter_username: "",
-    instagram_username: "",
-    contracts: [
-      {
-        address: "0x9c567f5cd13984b3fc50ac500af898b4b014e20d",
-        chain: "sepolia"
-      }
-    ]
-  },
-  {
-    collection: "coleccionsantiagong",
-    name: "ColeccionSantiagoNG",
-    description: "",
-    image_url:
-      "https://i.seadn.io/s/raw/files/7ce9153f8922d6f965bcfe6e8e53b87d.png?w=500&auto=format",
-    banner_image_url: "",
-    owner: "0xdad3586e6cf586bd42a54c7e436b2a889632c809",
-    safelist_status: "not_requested",
-    category: "",
-    is_disabled: false,
-    is_nsfw: false,
-    trait_offers_enabled: false,
-    collection_offers_enabled: true,
-    opensea_url: "https://testnets.opensea.io/collection/coleccionsantiagong",
-    project_url: "",
-    wiki_url: "",
-    discord_url: "",
-    telegram_url: "",
-    twitter_username: "",
-    instagram_username: "",
-    contracts: [
-      {
-        address: "0xdff8483b6eda8570d265751f823a6040641c623f",
-        chain: "sepolia"
-      }
-    ]
-  },
-  {
-    collection: "testnet-collection1",
-    name: "testnet Collection1",
-    description: "testnet Collection1",
-    image_url:
-      "https://i.seadn.io/s/raw/files/782d232a0fcfcb67d40fb2ab8d6c1b72.png?w=500&auto=format",
-    banner_image_url: "",
-    owner: "0x0742e054a0fa1ada7c53edd0af42ce090653ff26",
-    safelist_status: "not_requested",
-    category: "",
-    is_disabled: false,
-    is_nsfw: false,
-    trait_offers_enabled: false,
-    collection_offers_enabled: true,
-    opensea_url: "https://testnets.opensea.io/collection/testnet-collection1",
-    project_url: "",
-    wiki_url: "",
-    discord_url: "",
-    telegram_url: "",
-    twitter_username: "",
-    instagram_username: "",
-    contracts: [
-      {
-        address: "0xa21c6b54bc68f460553f20a762b7fc2aa6ee6152",
-        chain: "sepolia"
-      }
-    ]
-  },
-  {
-    collection: "s4006973-nfts-1",
-    name: "s4006973 NFTS",
-    description:
-      "Gather a range of Soccer / Football NFTs to ramp up your collection!! Made with [NFTs2Me.com](https://nfts2me.com/)",
-    image_url:
-      "https://i.seadn.io/s/raw/files/d8a8f083c59465aea48361d78706c3e3.jpg?w=500&auto=format",
-    banner_image_url:
-      "https://i.seadn.io/s/raw/files/53e999f3b4afca0dfe877e4f2606ae5a.webp?w=500&auto=format",
-    owner: "0xd590114208972a13058384fb4e4bf509605cfe10",
-    safelist_status: "not_requested",
-    category: "",
-    is_disabled: false,
-    is_nsfw: false,
-    trait_offers_enabled: false,
-    collection_offers_enabled: true,
-    opensea_url: "https://testnets.opensea.io/collection/s4006973-nfts-1",
-    project_url: "",
-    wiki_url: "",
-    discord_url: "",
-    telegram_url: "",
-    twitter_username: "",
-    instagram_username: "",
-    contracts: [
-      {
-        address: "0x946be1e90f56f89747c6997d5f9111426fd2bcb9",
-        chain: "sepolia"
-      }
-    ]
-  },
-  {
-    collection: "tero-deprecator-studio-carus",
-    name: "Tero Deprecator Studio Carus",
-    description:
-      "Aspernatur abundans substantia assumenda dolor aetas tremo catena.",
-    image_url:
-      "https://i.seadn.io/s/raw/files/a483573ae03e46ebae1f6c58a8c7fa72.png?w=500&auto=format",
-    banner_image_url: "",
-    owner: "0x3d3d7a1c2262b27f1f20ec9cf48e946837bc924f",
-    safelist_status: "not_requested",
-    category: "",
-    is_disabled: false,
-    is_nsfw: false,
-    trait_offers_enabled: false,
-    collection_offers_enabled: true,
-    opensea_url:
-      "https://testnets.opensea.io/collection/tero-deprecator-studio-carus",
-    project_url: "",
-    wiki_url: "",
-    discord_url: "",
-    telegram_url: "",
-    twitter_username: "",
-    instagram_username: "",
-    contracts: [
-      {
-        address: "0xb0cfc91e5e5ee9ac78c0aae412a69e742fb0757f",
-        chain: "sepolia"
-      }
-    ]
-  },
-  {
-    collection: "mytoken-10949",
-    name: "MyToken",
-    description: "",
-    image_url:
-      "https://i.seadn.io/s/raw/files/cbd4582e6f9058261e439aaaab107a4a.jpg?w=500&auto=format",
-    banner_image_url: "",
-    owner: "0xce7e5bd5f20044368f6060f7c050e93a1fc80562",
-    safelist_status: "not_requested",
-    category: "",
-    is_disabled: false,
-    is_nsfw: false,
-    trait_offers_enabled: false,
-    collection_offers_enabled: true,
-    opensea_url: "https://testnets.opensea.io/collection/mytoken-10949",
-    project_url: "",
-    wiki_url: "",
-    discord_url: "",
-    telegram_url: "",
-    twitter_username: "",
-    instagram_username: "",
-    contracts: [
-      {
-        address: "0x09a6d0e0cba312e2a989e6bdc3ff35d8808341c5",
-        chain: "sepolia"
-      }
-    ]
-  },
-  {
-    collection: "tigercoin-1",
-    name: "TestTigerCoin",
-    description: "",
-    image_url:
-      "https://i.seadn.io/s/raw/files/03b4d4ebe79801db311c5dd7feed0160.jpg?w=500&auto=format",
-    banner_image_url: "",
-    owner: "0xde592c3966adcb6007daca1ae3ccbf3b4d8abbf1",
-    safelist_status: "not_requested",
-    category: "",
-    is_disabled: false,
-    is_nsfw: false,
-    trait_offers_enabled: false,
-    collection_offers_enabled: true,
-    opensea_url: "https://testnets.opensea.io/collection/tigercoin-1",
-    project_url: "",
-    wiki_url: "",
-    discord_url: "",
-    telegram_url: "",
-    twitter_username: "",
-    instagram_username: "",
-    contracts: [
-      {
-        address: "0x8e23ea00aa4154099005e7bd0c50b2b82b22f5d2",
-        chain: "sepolia"
-      }
-    ]
-  },
-  {
-    collection: "nl-batman-6",
-    name: "NL Batman 6",
-    description: "",
-    image_url:
-      "https://i.seadn.io/s/raw/files/c194937a873a5a2ff53bf6ad1a8e540a.jpg?w=500&auto=format",
-    banner_image_url: "",
-    owner: "0xe8b4685a0b742d8a446d748984b61d1bfb344857",
-    safelist_status: "not_requested",
-    category: "",
-    is_disabled: false,
-    is_nsfw: false,
-    trait_offers_enabled: false,
-    collection_offers_enabled: true,
-    opensea_url: "https://testnets.opensea.io/collection/nl-batman-6",
-    project_url: "",
-    wiki_url: "",
-    discord_url: "",
-    telegram_url: "",
-    twitter_username: "",
-    instagram_username: "",
-    contracts: [
-      {
-        address: "0x10f9e1e87e4c67fe53efc9071a197234ce395ab6",
-        chain: "sepolia"
-      }
-    ]
-  },
-  {
-    collection: "s4006973-nfts",
-    name: "s4006973 NFTS",
-    description: "",
-    image_url:
-      "https://i.seadn.io/s/raw/files/9b256790a3142cc470ee2601877bf1f6.jpg?w=500&auto=format",
-    banner_image_url: "",
-    owner: "0xd590114208972a13058384fb4e4bf509605cfe10",
-    safelist_status: "not_requested",
-    category: "",
-    is_disabled: false,
-    is_nsfw: false,
-    trait_offers_enabled: false,
-    collection_offers_enabled: true,
-    opensea_url: "https://testnets.opensea.io/collection/s4006973-nfts",
-    project_url: "",
-    wiki_url: "",
-    discord_url: "",
-    telegram_url: "",
-    twitter_username: "",
-    instagram_username: "",
-    contracts: [
-      {
-        address: "0x2819514c73a01f83449fb3a2fecafe722eee2e95",
-        chain: "sepolia"
-      }
-    ]
-  },
-  {
-    collection: "hello-742",
-    name: "Hello",
-    description: "",
-    image_url:
-      "https://i.seadn.io/s/raw/files/cbdd11c3ecf60bee29167486d9a79420.png?w=500&auto=format",
-    banner_image_url: "",
-    owner: "0x055ed06de817cfa825e3d4415890f2be01589e3e",
-    safelist_status: "not_requested",
-    category: "",
-    is_disabled: false,
-    is_nsfw: false,
-    trait_offers_enabled: false,
-    collection_offers_enabled: true,
-    opensea_url: "https://testnets.opensea.io/collection/hello-742",
-    project_url: "",
-    wiki_url: "",
-    discord_url: "",
-    telegram_url: "",
-    twitter_username: "",
-    instagram_username: "",
-    contracts: [
-      {
-        address: "0xe35c0b0feb5600f2b8180c3f2b2f27051df7741f",
-        chain: "sepolia"
-      }
-    ]
-  },
-  {
-    collection: "collection-test-1-17",
-    name: "collection test-1",
-    description: "collection test-1",
-    image_url:
-      "https://i.seadn.io/s/raw/files/98b191b02b29ecdd571dc312de78e44b.jpg?w=500&auto=format",
-    banner_image_url: "",
-    owner: "0x0742e054a0fa1ada7c53edd0af42ce090653ff26",
-    safelist_status: "not_requested",
-    category: "",
-    is_disabled: false,
-    is_nsfw: false,
-    trait_offers_enabled: false,
-    collection_offers_enabled: true,
-    opensea_url: "https://testnets.opensea.io/collection/collection-test-1-17",
-    project_url: "",
-    wiki_url: "",
-    discord_url: "",
-    telegram_url: "",
-    twitter_username: "",
-    instagram_username: "",
-    contracts: [
-      {
-        address: "0x32b515de17c7b564046827f2b764b511536e1db4",
-        chain: "sepolia"
-      }
-    ]
-  },
-  {
-    collection: "dappnft-3",
-    name: "DappNFT",
-    description: "",
-    image_url:
-      "https://i.seadn.io/s/raw/files/ba567c8541649d3888b77af1d2727f22.jpg?w=500&auto=format",
-    banner_image_url: "",
-    owner: "0xbbba2546b844a2e4e65617891d3570a88696f503",
-    safelist_status: "not_requested",
-    category: "",
-    is_disabled: false,
-    is_nsfw: false,
-    trait_offers_enabled: false,
-    collection_offers_enabled: true,
-    opensea_url: "https://testnets.opensea.io/collection/dappnft-3",
-    project_url: "",
-    wiki_url: "",
-    discord_url: "",
-    telegram_url: "",
-    twitter_username: "",
-    instagram_username: "",
-    contracts: [
-      {
-        address: "0x7fa25c8f53eb12488f2d159c8ab2fa2e5402e4c6",
-        chain: "sepolia"
-      }
-    ]
-  },
-  {
-    collection: "testtesttestt",
-    name: "testtesttestt",
-    description: "",
-    image_url:
-      "https://i.seadn.io/s/raw/files/07b10342223daae7effb55700fe08b3f.jpg?w=500&auto=format",
-    banner_image_url: "",
-    owner: "0x76f9328d7eaf3b3a2b0cb11530b73360d9b079b2",
-    safelist_status: "not_requested",
-    category: "",
-    is_disabled: false,
-    is_nsfw: false,
-    trait_offers_enabled: false,
-    collection_offers_enabled: true,
-    opensea_url: "https://testnets.opensea.io/collection/testtesttestt",
-    project_url: "",
-    wiki_url: "",
-    discord_url: "",
-    telegram_url: "",
-    twitter_username: "",
-    instagram_username: "",
-    contracts: [
-      {
-        address: "0x1e00ada72096020a3fe814de2489bc7fb7f3a340",
-        chain: "sepolia"
-      }
-    ]
-  },
-  {
-    collection: "vista-primiera",
-    name: "Vista Primiera",
-    description: "",
-    image_url:
-      "https://i.seadn.io/s/raw/files/4e99a25c2a409a6221146c1c4878d9ee.png?w=500&auto=format",
-    banner_image_url: "",
-    owner: "0xcf5bd200303b212170996a7c9e987e6ee226b70b",
-    safelist_status: "not_requested",
-    category: "",
-    is_disabled: false,
-    is_nsfw: false,
-    trait_offers_enabled: false,
-    collection_offers_enabled: true,
-    opensea_url: "https://testnets.opensea.io/collection/vista-primiera",
-    project_url: "",
-    wiki_url: "",
-    discord_url: "",
-    telegram_url: "",
-    twitter_username: "",
-    instagram_username: "",
-    contracts: [
-      {
-        address: "0x378fe9211b8510642ee0baa1d2c1f8f1d03a87ed",
-        chain: "sepolia"
-      }
-    ]
-  },
-  {
-    collection: "cosmos2",
-    name: "COSMOS2",
-    description: "",
-    image_url:
-      "https://i.seadn.io/s/raw/files/93e1ded6fee16a1c1b375bd125648f57.jpg?w=500&auto=format",
-    banner_image_url: "",
-    owner: "0xebd16e0f2338a0aea42109db1323827de4be306f",
-    safelist_status: "not_requested",
-    category: "",
-    is_disabled: false,
-    is_nsfw: false,
-    trait_offers_enabled: false,
-    collection_offers_enabled: true,
-    opensea_url: "https://testnets.opensea.io/collection/cosmos2",
-    project_url: "",
-    wiki_url: "",
-    discord_url: "",
-    telegram_url: "",
-    twitter_username: "",
-    instagram_username: "",
-    contracts: [
-      {
-        address: "0xd25a4bbae10f8c75596c31a1662bbf9dce55d9bf",
-        chain: "sepolia"
-      }
-    ]
-  },
-  {
-    collection: "collection-test-one1",
-    name: "collection test one1",
-    description: "collection test one1",
-    image_url:
-      "https://i.seadn.io/s/raw/files/3f6f088658ef66709afac955fc0e08c4.jpg?w=500&auto=format",
-    banner_image_url: "",
-    owner: "0x0742e054a0fa1ada7c53edd0af42ce090653ff26",
-    safelist_status: "not_requested",
-    category: "",
-    is_disabled: false,
-    is_nsfw: false,
-    trait_offers_enabled: false,
-    collection_offers_enabled: true,
-    opensea_url: "https://testnets.opensea.io/collection/collection-test-one1",
-    project_url: "",
-    wiki_url: "",
-    discord_url: "",
-    telegram_url: "",
-    twitter_username: "",
-    instagram_username: "",
-    contracts: [
-      {
-        address: "0x48bd6dce2671e46e6d6c21664925d6ff9938bcc6",
-        chain: "sepolia"
-      }
-    ]
-  },
-  {
-    collection: "cosmos-31",
-    name: "Cosmos",
-    description: "",
-    image_url:
-      "https://i.seadn.io/s/raw/files/d6217a07ca04ba07f59ee8f429bcaf8f.jpg?w=500&auto=format",
-    banner_image_url: "",
-    owner: "0xebd16e0f2338a0aea42109db1323827de4be306f",
-    safelist_status: "not_requested",
-    category: "",
-    is_disabled: false,
-    is_nsfw: false,
-    trait_offers_enabled: false,
-    collection_offers_enabled: true,
-    opensea_url: "https://testnets.opensea.io/collection/cosmos-31",
-    project_url: "",
-    wiki_url: "",
-    discord_url: "",
-    telegram_url: "",
-    twitter_username: "",
-    instagram_username: "",
-    contracts: [
-      {
-        address: "0xd9c37abe7e22f2aae6e7b9ecea2f423b6e40e9b7",
-        chain: "sepolia"
-      }
-    ]
-  },
-  {
-    collection: "creber-undique",
-    name: "Creber Undique",
-    description: "Tego basium sordeo abscido comedo depono cariosus acies.",
-    image_url:
-      "https://i.seadn.io/s/raw/files/a483573ae03e46ebae1f6c58a8c7fa72.png?w=500&auto=format",
-    banner_image_url: "",
-    owner: "0x3d3d7a1c2262b27f1f20ec9cf48e946837bc924f",
-    safelist_status: "not_requested",
-    category: "",
-    is_disabled: false,
-    is_nsfw: false,
-    trait_offers_enabled: false,
-    collection_offers_enabled: true,
-    opensea_url: "https://testnets.opensea.io/collection/creber-undique",
-    project_url: "",
-    wiki_url: "",
-    discord_url: "",
-    telegram_url: "",
-    twitter_username: "",
-    instagram_username: "",
-    contracts: [
-      {
-        address: "0xdc41d8144f9bd44beef06e51ab68a332a7a8af51",
-        chain: "sepolia"
-      }
-    ]
-  },
-  {
-    collection: "sushi-project",
-    name: "Sushi Project",
-    description:
-      "This is the Sushi Project Made with [NFTs2Me.com](https://nfts2me.com/)",
-    image_url:
-      "https://i.seadn.io/s/raw/files/bd0df98ffa11158f3ea957b5faa29f2d.jpg?w=500&auto=format",
-    banner_image_url:
-      "https://i.seadn.io/s/raw/files/bd0df98ffa11158f3ea957b5faa29f2d.jpg?w=500&auto=format",
-    owner: "0xe3e6eca5c86301972ed14f20e1be7fd46ee1b084",
-    safelist_status: "not_requested",
-    category: "",
-    is_disabled: false,
-    is_nsfw: false,
-    trait_offers_enabled: false,
-    collection_offers_enabled: true,
-    opensea_url: "https://testnets.opensea.io/collection/sushi-project",
-    project_url: "",
-    wiki_url: "",
-    discord_url: "",
-    telegram_url: "",
-    twitter_username: "",
-    instagram_username: "",
-    contracts: [
-      {
-        address: "0xa49807a8b19280f6c8f8085bf931c45291b1bc08",
-        chain: "sepolia"
-      }
-    ]
-  },
-  {
-    collection: "raze-1",
-    name: "Raze",
-    description: "Flashy Made with [NFTs2Me.com](https://nfts2me.com/)",
-    image_url:
-      "https://i.seadn.io/s/raw/files/5fbb08617de864da75e4333fc9c52806.jpg?w=500&auto=format",
-    banner_image_url:
-      "https://i.seadn.io/s/raw/files/21d70490312dbf7bc6fa5fe4a41bdb29.webp?w=500&auto=format",
-    owner: "0xb7badc4b5204e35cbd2e4e2ac9bbeffbceeb2af2",
-    safelist_status: "not_requested",
-    category: "",
-    is_disabled: false,
-    is_nsfw: false,
-    trait_offers_enabled: false,
-    collection_offers_enabled: true,
-    opensea_url: "https://testnets.opensea.io/collection/raze-1",
-    project_url: "",
-    wiki_url: "",
-    discord_url: "",
-    telegram_url: "",
-    twitter_username: "",
-    instagram_username: "",
-    contracts: [
-      {
-        address: "0x8853e9ea834bbf31f41ed37e35d3f111711ff2be",
-        chain: "sepolia"
-      }
-    ]
-  },
-  {
-    collection: "test2keefedrop-s2-2024",
-    name: "Test2KeefeDrop S2_2024",
-    description:
-      "Testing 2 Keefe Drop 2024s2 Made with [NFTs2Me.com](https://nfts2me.com/)",
-    image_url:
-      "https://i.seadn.io/s/raw/files/946d9085c799f9cfb2c59b474f4b347c.png?w=500&auto=format",
-    banner_image_url:
-      "https://i.seadn.io/s/raw/files/8aa5b36f243d424fb09ff190badd99b5.webp?w=500&auto=format",
-    owner: "0x123eac40aab3cbbec6c9d1053fe27801e42f8538",
-    safelist_status: "not_requested",
-    category: "",
-    is_disabled: false,
-    is_nsfw: false,
-    trait_offers_enabled: false,
-    collection_offers_enabled: true,
-    opensea_url:
-      "https://testnets.opensea.io/collection/test2keefedrop-s2-2024",
-    project_url: "",
-    wiki_url: "",
-    discord_url: "",
-    telegram_url: "",
-    twitter_username: "",
-    instagram_username: "",
-    contracts: [
-      {
-        address: "0x49ea2705f855caf9917ef99e0caa8f32d13667b6",
-        chain: "sepolia"
-      }
-    ]
-  },
-  {
-    collection: "genshin-impact-memes",
-    name: "Genshin impact memes",
-    description:
-      "just goofy-a faces Made with [NFTs2Me.com](https://nfts2me.com/)",
-    image_url:
-      "https://i.seadn.io/s/raw/files/d48c153757997fd61a87f6ae59d8b3c0.webp?w=500&auto=format",
-    banner_image_url:
-      "https://i.seadn.io/s/raw/files/becf4d5176fe3704700506c7e58bcacc.webp?w=500&auto=format",
-    owner: "0xd4c6d8468b42b5df161f45db54bbe7b8adabe31a",
-    safelist_status: "not_requested",
-    category: "",
-    is_disabled: false,
-    is_nsfw: false,
-    trait_offers_enabled: false,
-    collection_offers_enabled: true,
-    opensea_url: "https://testnets.opensea.io/collection/genshin-impact-memes",
-    project_url: "",
-    wiki_url: "",
-    discord_url: "",
-    telegram_url: "",
-    twitter_username: "",
-    instagram_username: "",
-    contracts: [
-      {
-        address: "0xb30cef0ff417bb832ee61a404f88ef1daae71c70",
-        chain: "sepolia"
-      }
-    ]
-  },
-  {
-    collection: "bluebird-6",
-    name: "BlueBird$",
-    description:
-      "Blue Bird coin (RMIT project) Made with [NFTs2Me.com](https://nfts2me.com/)",
-    image_url:
-      "https://i.seadn.io/s/raw/files/33bc706c907bb14baa27d26bd1a20873.jpg?w=500&auto=format",
-    banner_image_url:
-      "https://i.seadn.io/s/raw/files/a55c148f5578ea17aeedc708a7c5d7c6.webp?w=500&auto=format",
-    owner: "0x76e93fc29012d2da38eb685eb7e3b0a62c85c567",
-    safelist_status: "not_requested",
-    category: "",
-    is_disabled: false,
-    is_nsfw: false,
-    trait_offers_enabled: false,
-    collection_offers_enabled: true,
-    opensea_url: "https://testnets.opensea.io/collection/bluebird-6",
-    project_url: "",
-    wiki_url: "",
-    discord_url: "",
-    telegram_url: "",
-    twitter_username: "",
-    instagram_username: "",
-    contracts: [
-      {
-        address: "0xc7c4f9cf5632f8e66e13aef856e873d9df39e552",
-        chain: "sepolia"
-      }
-    ]
-  },
-  {
-    collection: "palworld",
-    name: "Palworld",
-    description:
-      "Pets in Palworld Made with [NFTs2Me.com](https://nfts2me.com/)",
-    image_url:
-      "https://i.seadn.io/s/raw/files/11d93d8b4ce8216d58a63a25a6cad66c.jpg?w=500&auto=format",
-    banner_image_url:
-      "https://i.seadn.io/s/raw/files/34b47d4497d823b593c2bacb679a3c36.webp?w=500&auto=format",
-    owner: "0xd848cc6e141b1c45aed6710f0c3b45405f3bb22d",
-    safelist_status: "not_requested",
-    category: "",
-    is_disabled: false,
-    is_nsfw: false,
-    trait_offers_enabled: false,
-    collection_offers_enabled: true,
-    opensea_url: "https://testnets.opensea.io/collection/palworld",
-    project_url: "",
-    wiki_url: "",
-    discord_url: "",
-    telegram_url: "",
-    twitter_username: "",
-    instagram_username: "",
-    contracts: [
-      {
-        address: "0x364eb67f13dcc5435a0a14985f834a133900a4ac",
-        chain: "sepolia"
-      }
-    ]
-  },
-  {
-    collection: "hwids",
-    name: "HWIDS",
-    description:
-      "MINI CUTE FLOWERS Made with [NFTs2Me.com](https://nfts2me.com/)",
-    image_url:
-      "https://i.seadn.io/s/raw/files/18d5d3fa605d098183dd39ee1c36fe70.png?w=500&auto=format",
-    banner_image_url:
-      "https://i.seadn.io/s/raw/files/26d54fd21607225afd651e595564ae29.webp?w=500&auto=format",
-    owner: "0x5b8104bba5099f56488410dd19cb6f07edf2dfba",
-    safelist_status: "not_requested",
-    category: "",
-    is_disabled: false,
-    is_nsfw: false,
-    trait_offers_enabled: false,
-    collection_offers_enabled: true,
-    opensea_url: "https://testnets.opensea.io/collection/hwids",
-    project_url: "",
-    wiki_url: "",
-    discord_url: "",
-    telegram_url: "",
-    twitter_username: "",
-    instagram_username: "",
-    contracts: [
-      {
-        address: "0x907ce13eae57a9eb00745ce872f90b46b3673774",
-        chain: "sepolia"
+        address: "0x22db24f87ec711278d2a5d020a92365f87c32e3b",
+        chain: "base_sepolia"
       }
     ]
   }
