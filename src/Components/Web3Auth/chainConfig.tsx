@@ -5,13 +5,16 @@ export const chainLogos = {
   base: "https://strapi.mewapi.io/uploads/large_Base_Symbol_Blue_ee3f3fb0a5.png",
   optimism: "https://cryptologos.cc/logos/optimism-ethereum-op-logo.png",
   polygon: "https://cryptologos.cc/logos/polygon-matic-logo.png",
-  arbitrum: "https://cryptologos.cc/logos/arbitrum-arb-logo.png"
+  arbitrum: "https://cryptologos.cc/logos/arbitrum-arb-logo.png",
+  spicy:
+    "https://raw.githubusercontent.com/kewlexchange/assets/main/chiliz/tokens/0x721ef6871f1c4efe730dce047d40d1743b886946/logo.svg"
 };
 
 export const arbLogo = chainLogos["arbitrum"];
 export const optimismLogo = chainLogos["optimism"];
 export const baseLogo = chainLogos["base"];
 export const ethereumLogo = chainLogos["ethereum"];
+export const spicyLogo = chainLogos["spicy"];
 
 export const openSeaChainConfig: { [key: number]: string } = {
   [sepolia.id]: "sepolia",
@@ -43,7 +46,7 @@ const networks = [
   },
   {
     name: "Spicy",
-    logo: ethereumLogo,
+    logo: spicyLogo,
     id: spicy.id
   }
 ];

@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
-import { useReadContract } from "wagmi";
+import { useAccount, useReadContract } from "wagmi";
 import ERC721ABI from "../../abi/erc721.json";
 import { useStateContext } from "../../context";
+import { ONFT } from "../../constants/contract";
 
 // Styled components
 const Container = styled.div`
@@ -89,6 +90,7 @@ const HomePage = () => {
   const { communityId } = useParams<{
     communityId: string;
   }>();
+  const account = useAccount();
   const { getOwnersForContract } = useStateContext();
 
   useEffect(() => {
@@ -108,7 +110,7 @@ const HomePage = () => {
 
   const communityMembersCount: any = useReadContract({
     abi: ERC721ABI,
-    address: "0xc97139659d6Ee90A76027E68cd318821956d90dF",
+    address: ONFT[account.chainId!],
     functionName: "getCommunityCount",
     args: [communityId!]
   });

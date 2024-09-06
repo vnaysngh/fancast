@@ -8,7 +8,7 @@ import { config } from "../main";
 import axios from "axios";
 import { openSeaChainConfig } from "../components/Web3Auth/chainConfig";
 import Web3 from "web3";
-import { dstIds, OAPP } from "../constants/contract";
+import { dstIds, OAPP, ONFT } from "../constants/contract";
 import Paywall from "@unlock-protocol/paywall";
 import networks, { sepolia } from "@unlock-protocol/networks";
 
@@ -190,10 +190,11 @@ export const StateContextProvider = ({ children }: { children: any }) => {
 
   const userInfo: any = useReadContract({
     abi: ERC721ABI,
-    address: "0xc97139659d6Ee90A76027E68cd318821956d90dF",
+    address: ONFT[account.chainId!],
     functionName: "getUserInfo",
     args: [address]
   });
+
   const isUserFCHolder =
     userInfo.data && userInfo.data?.joinedCommunities?.length;
 
@@ -227,12 +228,14 @@ export const StateContextProvider = ({ children }: { children: any }) => {
   }, [userNFTs, userInfo.data, address, account.chainId]);
 
   const handleMint = async (nftAddress: string) => {
+    if (!account || !account.chainId) return;
+
     try {
       return await writeContract(config, {
         abi: ERC721ABI,
-        address: "0xc97139659d6Ee90A76027E68cd318821956d90dF",
+        address: ONFT[account.chainId],
         functionName: "mintNFTAndJoinCommunity",
-        args: [address, nftAddress]
+        args: [nftAddress]
       })
         .then((res) => res)
         .catch((err) => err);
@@ -241,18 +244,47 @@ export const StateContextProvider = ({ children }: { children: any }) => {
     }
   };
 
-  const joinAdditionalCommunity = async (nftAddress: string) => {
+  const updateDataAcrossChains = async () => {
+    if (!account || !account.chainId) return;
+
+    if (!account || !account.chainId) return;
+    const quote = await simulateContract(config, {
+      abi: ERC721ABI,
+      address: ONFT[account.chainId],
+      functionName: "quote",
+      args: [dstIds[account.chainId]]
+    }).catch((err) => err);
+
+    const nativeFee = quote?.result?.nativeFee.toString();
+
     try {
       return await writeContract(config, {
         abi: ERC721ABI,
-        address: "0xc97139659d6Ee90A76027E68cd318821956d90dF",
+        address: ONFT[account.chainId],
+        functionName: "updateDataAcrossChains",
+        args: [dstIds[account.chainId]],
+        value: nativeFee!
+      })
+        .then((res) => res)
+        .catch((err) => err);
+    } catch (error) {
+      console.error("updating data across chains failed:", error);
+    }
+  };
+
+  const joinAdditionalCommunity = async (nftAddress: string) => {
+    if (!account || !account.chainId) return;
+    try {
+      return await writeContract(config, {
+        abi: ERC721ABI,
+        address: ONFT[account.chainId],
         functionName: "joinAdditionalCommunity",
         args: [address, nftAddress]
       })
         .then((res) => res)
         .catch((err) => err);
     } catch (error) {
-      console.error("Minting failed:", error);
+      console.error("adding to community failed:", error);
     }
   };
 
@@ -312,6 +344,7 @@ export const StateContextProvider = ({ children }: { children: any }) => {
         subscribed,
         isUserFCHolder,
         membersMetadata,
+        updateDataAcrossChains,
         getOwnersForContract,
         tipAuthor,
         collections,

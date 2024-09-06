@@ -108,7 +108,7 @@ const HeaderComponent = () => {
   const account = useAccount();
   const { chains, switchChain } = useSwitchChain();
 
-  // Placeholder for checking if the user holds the platform NFT
+  // // Placeholder for checking if the user holds the platform NFT
   const [hasPlatformNFT, setHasPlatformNFT] = useState(false);
 
   useEffect(() => {
@@ -125,11 +125,7 @@ const HeaderComponent = () => {
     }
   }, [account]);
 
-  // Placeholder function for NFT check
-  const checkUserHasNFT = (address: string): boolean => {
-    // Implement the actual logic to check if the user holds the NFT
-    return true; // Placeholder value
-  };
+  console.log(selectedNetwork);
 
   return (
     <Header>

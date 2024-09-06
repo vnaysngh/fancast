@@ -17,8 +17,8 @@ import {
   alchemyChainConfig,
   openSeaChainConfig
 } from "../../components/Web3Auth/chainConfig";
-import { useAccount } from "wagmi";
-
+import { useAccount, useSwitchChain } from "wagmi";
+import { useBalance } from "wagmi";
 // Styled Components
 const PageContainer = styled.div`
   padding: 20px;
@@ -253,7 +253,7 @@ const Collections = () => {
     isUserFCHolder,
     joinAdditionalCommunity,
     userInfo,
-    collections
+    updateDataAcrossChains
   } = useStateContext();
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const [selectedCommunity, setSelectedCommunity] = useState<any>(null);
@@ -265,6 +265,19 @@ const Collections = () => {
   const { data: userCreatedCommunities } = useQuery(locksOwnedByLockManager, {
     variables: { deployer: address }
   });
+
+  const { switchChainAsync } = useSwitchChain();
+
+  const nativeTokenBalance = useBalance({
+    address
+  });
+
+  const checkAndSwitchToChiliz = async () => {
+    if (account.chainId !== spicy.id) {
+      const response = await switchChainAsync({ chainId: spicy.id });
+      // if (response.id === spicy.id) handleAccess(contractAddress);
+    }
+  };
 
   const handleAccess = async (contractAddress: any) => {
     if (!contractAddress) return;
@@ -395,6 +408,10 @@ const Collections = () => {
       })
     : userNFTs?.nfts;
 
+  const filtered = stampSubscribedFromUnSubscribed.filter(
+    (nft) => nft !== undefined
+  );
+
   // const filteredCollection = collections?.collections?.length
   //   ? collections?.collections?.filter(
   //       (collection: any) =>
@@ -450,45 +467,47 @@ const Collections = () => {
       case "fanTokens":
         return (
           <FanTokensGrid>
-            {fanTokens.map((fan) => (
-              <FanItemCard
-                key={fan.symbol}
-                onClick={() => handleAccess(fan.token_address)}
-              >
-                <FanItemImage
-                  src={fan.tokenDetails.logoURI}
-                  alt={fan.name ?? ""}
-                />
-                <FanItemInfo>
-                  <FanItemTitle>{fan.name}</FanItemTitle>
+            <FanItemCard key={"CHZ"} onClick={checkAndSwitchToChiliz}>
+              <FanItemImage
+                src={
+                  "https://raw.githubusercontent.com/kewlexchange/assets/main/chiliz/tokens/0x721ef6871f1c4efe730dce047d40d1743b886946/logo.svg"
+                }
+                alt="Chiliz logo"
+              />
+              <FanItemInfo>
+                <FanItemTitle>Chiliz (CHZ)</FanItemTitle>
+                {account.chainId === spicy.id && (
                   <BalanceContainer>
                     <span>Balance:</span>
-                    <img width={16} src={fan.tokenDetails.logoURI} />
+                    <img
+                      width={16}
+                      src={
+                        "https://raw.githubusercontent.com/kewlexchange/assets/main/chiliz/tokens/0x721ef6871f1c4efe730dce047d40d1743b886946/logo.svg"
+                      }
+                    />
                     <span>
-                      {" "}
-                      {fan.balance_formatted
-                        ? fan.balance_formatted
-                        : fan.balance}
+                      {nativeTokenBalance && nativeTokenBalance.data?.formatted
+                        ? Number(nativeTokenBalance.data?.formatted).toFixed(4)
+                        : 0}
                     </span>
                   </BalanceContainer>
-                </FanItemInfo>
-              </FanItemCard>
-            ))}
+                )}
+              </FanItemInfo>
+            </FanItemCard>
           </FanTokensGrid>
         );
       case "mynfts":
         return (
           <NewItemsGrid>
-            {stampSubscribedFromUnSubscribed &&
-            stampSubscribedFromUnSubscribed.length ? (
-              stampSubscribedFromUnSubscribed?.map((nft: any) => (
-                <NewItemCard key={nft.collection} subscribed={nft.subscribed}>
+            {filtered && filtered.length ? (
+              filtered?.map((nft: any) => (
+                <NewItemCard key={nft.collection}>
                   <ImageContainer
                     onClick={() =>
                       handleOpenPopup(alchemyChainConfig[account.chainId!], nft)
                     }
                   >
-                    {nft.subscribed && <Badge>Subscribed</Badge>}
+                    {/* {nft.subscribed && <Badge>Subscribed</Badge>} */}
                     <Image
                       src={
                         nft.display_image_url
@@ -502,12 +521,6 @@ const Collections = () => {
                   </ImageContainer>
                   <ItemInfo>
                     <ItemTitle>{nft.name ?? nft.collection}</ItemTitle>
-                    {/*   <JoinButton
-                      disabled={nft.subscribed}
-                      subscribed={nft.subscribed}
-                    >
-                      {nft.subscribed ? "Subscribed" : "Join Now"}
-                    </JoinButton> */}
                   </ItemInfo>
                 </NewItemCard>
               ))
