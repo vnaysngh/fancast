@@ -1,29 +1,44 @@
 import { useContext, createContext, useMemo, useEffect, useState } from "react";
-import { ethers } from "ethers";
+import { ethers, Signer } from "ethers";
 import { useAccount, useReadContract } from "wagmi";
-import { writeContract, simulateContract } from "@wagmi/core";
+import { writeContract, simulateContract, watchAccount } from "@wagmi/core";
 import abi from "../abi/abi.json";
 import ERC721ABI from "../abi/erc721.json";
-import ERC20ABI from "../abi/erc20.json";
 import { config } from "../main";
-import { optimismSepolia, sepolia, spicy } from "viem/chains";
 import axios from "axios";
 import { openSeaChainConfig } from "../components/Web3Auth/chainConfig";
-import { erc20Abi, getContract } from "viem";
 import Web3 from "web3";
 import { dstIds, OAPP } from "../constants/contract";
+import Paywall from "@unlock-protocol/paywall";
+import networks, { sepolia } from "@unlock-protocol/networks";
+
+const paywallConfig = {
+  pessimistic: true,
+  locks: {
+    "0xc704ebd9eabd9c618ea9b95e74ba80450b4c4007": {
+      network: 11_155_111
+    }
+  },
+  icon: "https://raw.githubusercontent.com/unlock-protocol/unlock/master/design/brand/1808-Unlock-Identity_Unlock-WordMark.svg",
+  callToAction: {
+    default: `Get an Unlock membership to access our Discord, blog comments and more! No xDAI to pay for gas? Click the Claim button.`
+  }
+};
+
 const web3 = new Web3(Web3.givenProvider || "ws://localhost:8545");
 const StateContext = createContext<any>({});
 const windowObj: any = window;
 
 export const StateContextProvider = ({ children }: { children: any }) => {
-  const [signer, setSigner] = useState<any>();
-  const [address, setAddress] = useState<string>("");
+  const [signer, setSigner] = useState<Signer>();
   const [userNFTs, setUserNFTs] = useState<any>({ nfts: [] });
   const [subscribed, setSubscribed] = useState([]);
   const [membersMetadata, setMembersMetadata] = useState({});
+  const [collections, setCollections] = useState([]);
   const [chilizFanTokens, setChilizFanTokens] = useState<any>([]);
+  const [provider, setProvider] = useState<any>();
   const account = useAccount();
+  const { address } = account;
 
   /* useEffect(() => {
     const fetchUserCHZTokenBalances = async () => {
@@ -49,14 +64,13 @@ export const StateContextProvider = ({ children }: { children: any }) => {
 
   useEffect(() => {
     const connectWallet = async () => {
-      if (typeof windowObj.ethereum !== undefined) {
+      if (typeof windowObj.ethereum !== undefined && account.address) {
         try {
           const provider = new ethers.BrowserProvider(windowObj.ethereum);
           web3.setProvider(windowObj.ethereum);
           const signer = await provider.getSigner();
-          const address = await signer.getAddress();
+          setProvider(provider);
           setSigner(signer);
-          setAddress(address);
         } catch (error) {
           console.error("User rejected request", error);
         }
@@ -66,7 +80,40 @@ export const StateContextProvider = ({ children }: { children: any }) => {
     };
 
     if (account.address) connectWallet();
-  }, [account.isConnected]);
+  }, [account.isConnected, account.chainId]);
+
+  useEffect(() => {
+    const fetchCollections = () => {
+      try {
+        const options = {
+          method: "GET",
+          headers: {
+            accept: "application/json",
+            "x-api-key": import.meta.env.VITE_OPENSEA_SEPOLIA_KEY
+          }
+        };
+
+        const chain = openSeaChainConfig[account.chainId!];
+
+        if (!chain) return;
+        axios
+          .get(
+            `https://testnets-api.opensea.io/api/v2/collections?chain=${chain}`,
+            options
+          )
+          .then((response) => {
+            setCollections(response.data);
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
+    if (account.chainId) fetchCollections();
+  }, [account.chainId]);
 
   useEffect(() => {
     const fetchUserNFTs = () => {
@@ -98,8 +145,8 @@ export const StateContextProvider = ({ children }: { children: any }) => {
       }
     };
 
-    if (account.address && account.chainId) fetchUserNFTs();
-  }, [account.isConnected, account.chainId]);
+    if (address && account.chainId) fetchUserNFTs();
+  }, [account.chainId, address]);
 
   const lookupUserByVerification = async (addresses: string) => {
     const url = `https://api.neynar.com/v2/farcaster/user/bulk-by-address?addresses=${addresses}`;
@@ -177,7 +224,7 @@ export const StateContextProvider = ({ children }: { children: any }) => {
     };
 
     getUserSubscribedCommunities();
-  }, [userNFTs, userInfo.data]);
+  }, [userNFTs, userInfo.data, address, account.chainId]);
 
   const handleMint = async (nftAddress: string) => {
     try {
@@ -244,6 +291,13 @@ export const StateContextProvider = ({ children }: { children: any }) => {
       .catch((err) => err);
   };
 
+  const buyMembership = async () => {
+    if (!signer || !provider) return;
+    const paywall = new Paywall(paywallConfig, networks, provider);
+    const result = await paywall.loadCheckoutModal(paywallConfig);
+    return result;
+  };
+
   return (
     <StateContext.Provider
       value={{
@@ -259,7 +313,9 @@ export const StateContextProvider = ({ children }: { children: any }) => {
         isUserFCHolder,
         membersMetadata,
         getOwnersForContract,
-        tipAuthor
+        tipAuthor,
+        collections,
+        buyMembership
       }}
     >
       {children}

@@ -12,7 +12,12 @@ import { useQuery } from "@apollo/client";
 import { config } from "../../main";
 import CreateCommunityModal from "../../components/CreateCommunity";
 import Popup from "./mint";
-import { FaUsers, FaEthereum, FaCrown } from "react-icons/fa";
+import { FaUsers, FaEthereum, FaFileContract } from "react-icons/fa";
+import {
+  alchemyChainConfig,
+  openSeaChainConfig
+} from "../../components/Web3Auth/chainConfig";
+import { useAccount } from "wagmi";
 
 // Styled Components
 const PageContainer = styled.div`
@@ -63,12 +68,13 @@ const NewItemsGrid = styled.div`
 
 const FanTokensGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
 `;
 
 const NewItemCard = styled.div<{ subscribed?: boolean }>`
-  border-radius: 0;
+  padding: 10px;
+  border-radius: 8px;
   cursor: pointer;
   pointer-events: ${(props) => (props.subscribed ? "none" : "auto")};
   border: solid 2px #888;
@@ -135,6 +141,7 @@ const JoinButton = styled.button<{ subscribed?: boolean }>`
   margin-top: 10px;
   font-weight: bold;
   text-align: center;
+  border-radius: 4px;
 
   &:hover {
     background-color: #fff;
@@ -161,11 +168,11 @@ const CreateButton = styled(JoinButton)`
 `;
 
 const LockItem = styled.div`
-  border: 1px solid #ddd;
   padding: 16px;
   border: solid 2px #888;
   box-shadow: 6px 6px 0px 0px rgba(0, 0, 0, 0.09);
   cursor: pointer;
+  border-radius: 8px;
 `;
 
 const Title = styled.h3`
@@ -177,19 +184,20 @@ const LockDetails = styled.div`
   display: flex;
   align-items: center;
   gap: 0.25rem;
-  font-size: 1rem;
+  font-size: 1.5rem;
 `;
 
 const IconContainer = styled.div`
   display: flex;
-  justify-content: space-between;
+  // justify-content: space-between;
   margin-top: 10px;
   align-items: center;
+  gap: 2rem;
 `;
 
 const Icon = styled.img`
-  height: 1rem;
-  width: 1rem;
+  height: 1.5rem;
+  width: 1.5rem;
   cursor: pointer;
 `;
 
@@ -245,19 +253,16 @@ const Collections = () => {
     isUserFCHolder,
     joinAdditionalCommunity,
     userInfo,
-    chilizFanTokens
+    collections
   } = useStateContext();
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const [selectedCommunity, setSelectedCommunity] = useState<any>(null);
   const [isMinting, setIsMinting] = useState(false);
   const [txHash, setTxHash] = useState<string>("");
   const [contractAddress, setContractAddress] = useState("");
+  const account = useAccount();
 
-  const {
-    loading,
-    error: apolloError,
-    data: userCreatedCommunities
-  } = useQuery(locksOwnedByLockManager, {
+  const { data: userCreatedCommunities } = useQuery(locksOwnedByLockManager, {
     variables: { deployer: address }
   });
 
@@ -390,31 +395,56 @@ const Collections = () => {
       })
     : userNFTs?.nfts;
 
+  const filteredCollection = collections?.collections?.length
+    ? collections?.collections?.filter(
+        (collection: any) =>
+          collection.owner.toLowerCase() ===
+            "0x0B95ec21579aee6Ef7b712976bD86689D68b5A08".toLowerCase() &&
+          (collection.image_url || collection.display_image_url)
+      )
+    : [];
+
   const renderContent = () => {
     switch (activeTab) {
       case "explore":
         return (
           <NewItemsGrid>
-            {openseaSepoliaCollection.map((nft) => (
-              <NewItemCard
-                key={nft.collection}
-                onClick={() => handleOpenPopup("eth-sepolia", nft)}
-              >
-                {/* <ItemImage src={nft.image_url} alt={nft.name ?? ""} /> */}
-                <ImageContainer>
-                  <Image src={nft.image_url} alt={nft.name ?? ""} />
-                </ImageContainer>
-                <ItemInfo>
-                  <ItemTitle>{nft.name}</ItemTitle>
-                  <TagsContainer>
-                    <Tag>#Gaming</Tag>
-                    <Tag>#Art</Tag>
-                    <Tag>#DeFi</Tag>
-                  </TagsContainer>
-                  <JoinButton>Join Now</JoinButton>
-                </ItemInfo>
-              </NewItemCard>
-            ))}
+            {filteredCollection && filteredCollection.length
+              ? filteredCollection.map((nft: any) => (
+                  <NewItemCard key={nft.collection}>
+                    {/* <ItemImage src={nft.image_url} alt={nft.name ?? ""} /> */}
+                    <ImageContainer
+                      onClick={() =>
+                        handleOpenPopup(
+                          alchemyChainConfig[account.chainId!],
+                          nft
+                        )
+                      }
+                    >
+                      <Image src={nft.image_url} alt={nft.name ?? ""} />
+                    </ImageContainer>
+                    <ItemInfo>
+                      <ItemTitle>{nft.name}</ItemTitle>
+                      <IconContainer>
+                        <EtherscanLink
+                          href={nft.opensea_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <Icon
+                            src=" https://opensea.io/static/images/logos/opensea-logo.svg"
+                            alt="Etherscan"
+                          />
+                        </EtherscanLink>
+                        <LockDetails>
+                          <FaFileContract />
+                          {/* {lock.price > 0 ? parseFloat(lock.price) / 1e18 : "Free"} */}
+                        </LockDetails>
+                      </IconContainer>
+                    </ItemInfo>
+                  </NewItemCard>
+                ))
+              : "No Collections Found"}
           </NewItemsGrid>
         );
       case "fanTokens":
@@ -452,12 +482,12 @@ const Collections = () => {
             {stampSubscribedFromUnSubscribed &&
             stampSubscribedFromUnSubscribed.length ? (
               stampSubscribedFromUnSubscribed?.map((nft: any) => (
-                <NewItemCard
-                  key={nft.collection}
-                  onClick={() => handleOpenPopup("eth-sepolia", nft)}
-                  subscribed={nft.subscribed}
-                >
-                  <ImageContainer>
+                <NewItemCard key={nft.collection} subscribed={nft.subscribed}>
+                  <ImageContainer
+                    onClick={() =>
+                      handleOpenPopup(alchemyChainConfig[account.chainId!], nft)
+                    }
+                  >
                     {nft.subscribed && <Badge>Subscribed</Badge>}
                     <Image
                       src={
@@ -472,12 +502,12 @@ const Collections = () => {
                   </ImageContainer>
                   <ItemInfo>
                     <ItemTitle>{nft.name ?? nft.collection}</ItemTitle>
-                    <JoinButton
+                    {/*   <JoinButton
                       disabled={nft.subscribed}
                       subscribed={nft.subscribed}
                     >
                       {nft.subscribed ? "Subscribed" : "Join Now"}
-                    </JoinButton>
+                    </JoinButton> */}
                   </ItemInfo>
                 </NewItemCard>
               ))
@@ -556,7 +586,7 @@ const Collections = () => {
                   </ImageContainer>
                   <ItemInfo>
                     <ItemTitle>{nft.name}</ItemTitle>
-                    <JoinButton>Enter</JoinButton>
+                    {/* <JoinButton>Enter</JoinButton> */}
                   </ItemInfo>
                 </NewItemCard>
               ))
@@ -621,7 +651,7 @@ const Collections = () => {
               active={activeTab === "myCommunities"}
               onClick={() => setActiveTab("myCommunities")}
             >
-              My Communities
+              Membership
             </TabButton>
             <TabButton
               active={activeTab === "subscribed"}

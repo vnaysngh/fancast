@@ -51,6 +51,9 @@ const Title = styled.h2`
 `;
 
 const Message = styled.p`
+  font-family: "DM Sans", sans-serif;
+  font-weight: 700;
+  font-size: 20px;
   margin-bottom: 20px;
   text-align: center;
   color: #555;

@@ -201,7 +201,7 @@ const CreateCommunityModal: React.FC<CreateCommunityModalProps> = ({
         ) : txHash ? (
           <Title>
             The transaction you submitted has been completed. Kindly revisit the
-            'My communities' section at a later time.
+            'Membership' section at a later time.
           </Title>
         ) : error ? (
           <Title>Something went wrong</Title>

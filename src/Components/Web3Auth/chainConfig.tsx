@@ -19,6 +19,12 @@ export const openSeaChainConfig: { [key: number]: string } = {
   [baseSepolia.id]: "base_sepolia"
 };
 
+export const alchemyChainConfig: { [key: number]: string } = {
+  [sepolia.id]: "eth-sepolia",
+  [optimismSepolia.id]: "opt-sepolia",
+  [baseSepolia.id]: "base-sepolia"
+};
+
 const networks = [
   {
     name: "Op Sepolia",
