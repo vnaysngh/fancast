@@ -51,11 +51,9 @@ const Input = styled.input`
   font-family: "DM Sans", sans-serif;
   padding: 0.5rem;
   margin-top: 0.25rem;
-  font-weight: bold;
   font-size: 1rem;
-  border-radius: 0px;
-  border: solid 2px #888;
-  box-shadow: 6px 6px 0px 0px rgba(0, 0, 0, 0.09);
+  border-radius: 8px;
+  border: solid 1px #888;
 `;
 
 const Select = styled.select`

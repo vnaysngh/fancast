@@ -11,6 +11,7 @@ const WhatIf = lazy(() => import("../../pages/Community/Activities/WhatIf"));
 const Members = lazy(() => import("../../pages/Community/Members"));
 const Casts = lazy(() => import("../../pages/Community/Farcaster"));
 const UFC = lazy(() => import("../../pages/Community/UFC"));
+const Chiliz = lazy(() => import("../../pages/Community/Chiliz"));
 
 const RoutesContainer = styled.div`
   max-width: 80%;
@@ -49,6 +50,7 @@ export const Router = () => {
               path="/community/:communityId/inbox/:memberId"
               element={<Inbox />}
             />
+            <Route path="/community/chiliz" element={<Chiliz />} />
           </Routes>
         </Suspense>
       </RoutesContainer>

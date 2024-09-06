@@ -125,8 +125,6 @@ const HeaderComponent = () => {
     }
   }, [account]);
 
-  console.log(selectedNetwork);
-
   return (
     <Header>
       <PageTitle onClick={() => navigate("/")}>Fancast</PageTitle>

@@ -4,6 +4,7 @@ import { useAccount, useReadContract } from "wagmi";
 import { writeContract, simulateContract, watchAccount } from "@wagmi/core";
 import abi from "../abi/abi.json";
 import ERC721ABI from "../abi/erc721.json";
+import ChilizABI from "../abi/chiliz.json";
 import { config } from "../main";
 import axios from "axios";
 import { openSeaChainConfig } from "../components/Web3Auth/chainConfig";
@@ -244,6 +245,58 @@ export const StateContextProvider = ({ children }: { children: any }) => {
     }
   };
 
+  const createPost = async (name: string, description: string, url: string) => {
+    if (!account || !account.chainId) return;
+
+    try {
+      return await writeContract(config, {
+        abi: ChilizABI,
+        address: "0x9B691a757e9D91Cc138f125f4f386546D5F7fD76",
+        functionName: "createPost",
+        args: [name, description, url]
+      })
+        .then((res) => res)
+        .catch((err) => err);
+    } catch (error) {
+      console.error("updating data across chains failed:", error);
+    }
+  };
+
+  const onUpvote = async (id: number) => {
+    console.log(id);
+    if (!account || !account.chainId) return;
+
+    try {
+      return await writeContract(config, {
+        abi: ChilizABI,
+        address: "0x9B691a757e9D91Cc138f125f4f386546D5F7fD76",
+        functionName: "upvotePost",
+        args: [id]
+      })
+        .then((res) => res)
+        .catch((err) => err);
+    } catch (error) {
+      console.error("updating data across chains failed:", error);
+    }
+  };
+
+  const onComment = async (id: number, message: string) => {
+    if (!account || !account.chainId) return;
+
+    try {
+      return await writeContract(config, {
+        abi: ChilizABI,
+        address: "0x9B691a757e9D91Cc138f125f4f386546D5F7fD76",
+        functionName: "commentOnPost",
+        args: [id, message]
+      })
+        .then((res) => res)
+        .catch((err) => err);
+    } catch (error) {
+      console.error("updating data across chains failed:", error);
+    }
+  };
+
   const updateDataAcrossChains = async () => {
     if (!account || !account.chainId) return;
 
@@ -334,6 +387,7 @@ export const StateContextProvider = ({ children }: { children: any }) => {
     <StateContext.Provider
       value={{
         signer,
+        createPost,
         userInfo,
         address,
         createStory,
@@ -348,7 +402,9 @@ export const StateContextProvider = ({ children }: { children: any }) => {
         getOwnersForContract,
         tipAuthor,
         collections,
-        buyMembership
+        buyMembership,
+        onUpvote,
+        onComment
       }}
     >
       {children}
