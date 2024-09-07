@@ -7,8 +7,8 @@ export const OAPP: { [key: number]: `0x${string}` } = {
 };
 
 export const ONFT: { [key: number]: `0x${string}` } = {
-  [optimismSepolia.id]: "0xB8D10e9aDf89465b34D894Cf6C92f9384b4e7473",
-  [baseSepolia.id]: "0x168E20065B6309B3205412C014770978ABF779EB"
+  [optimismSepolia.id]: "0xe56674d22D029A5cb90F1F5619F67A32900b3F57",
+  [baseSepolia.id]: "0x28eD13A790600096e9A45A5Ac7238638A751fc39"
   // [baseSepolia.id]: "0xFf3d395AcaCC791c3a3eF1710ceEC69A3e153dB2"
 };
 

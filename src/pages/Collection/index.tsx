@@ -13,12 +13,11 @@ import { config } from "../../main";
 import CreateCommunityModal from "../../components/CreateCommunity";
 import Popup from "./mint";
 import { FaUsers, FaEthereum, FaFileContract } from "react-icons/fa";
-import {
-  alchemyChainConfig,
-  openSeaChainConfig
-} from "../../components/Web3Auth/chainConfig";
+import { alchemyChainConfig } from "../../components/Web3Auth/chainConfig";
 import { useAccount, useSwitchChain } from "wagmi";
 import { useBalance } from "wagmi";
+import MintTransactionModal from "../../components/Transaction";
+
 // Styled Components
 const PageContainer = styled.div`
   padding: 20px;
@@ -243,7 +242,8 @@ const Collections = () => {
   const [activeTab, setActiveTab] = useState("explore");
   const [isLoading, setIsLoading] = useState(false);
   const [isEligible, setIsEligible] = useState<any>(undefined);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isCreateCommunityPopupOpen, setIsCreateCommunityPopupOpen] =
+    useState(false);
   const [error, setError] = useState<any>(false);
   const {
     address,
@@ -253,15 +253,19 @@ const Collections = () => {
     isUserFCHolder,
     joinAdditionalCommunity,
     userInfo,
-    updateDataAcrossChains
+    updateDataAcrossChains,
+    createAttestation
   } = useStateContext();
-  const [isPopupVisible, setIsPopupVisible] = useState(false);
+  const [isMintTxPopupOpen, setIsMintTxPopupOpen] = useState(false);
   const [selectedCommunity, setSelectedCommunity] = useState<any>(null);
   const [isMinting, setIsMinting] = useState(false);
+  const [isAttestationLoading, setIsAttestationLoading] = useState(false);
   const [txHash, setTxHash] = useState<string>("");
   const [contractAddress, setContractAddress] = useState("");
   const account = useAccount();
-
+  const [step, setStep] = useState(0);
+  const [mintingTxHash, setMintingTxHash] = useState<boolean>(false);
+  const [attestationTxHash, setAttestationTxHash] = useState<boolean>(false);
   const { data: userCreatedCommunities } = useQuery(locksOwnedByLockManager, {
     variables: { deployer: address }
   });
@@ -345,38 +349,60 @@ const Collections = () => {
   };
 
   const handleCloseModal = () => {
-    setIsOpen(false);
-  };
-
-  const handleSubmit = () => {
-    setIsOpen(false);
+    setIsCreateCommunityPopupOpen(false);
   };
 
   const handleOpenPopup = (network: string, community: any) => {
-    setSelectedCommunity({
-      network,
-      community
-    });
-    setIsPopupVisible(true);
+    if (userInfo.data?.joinedCommunities?.length) {
+      setMintingTxHash(true);
+      setIsMintTxPopupOpen(true);
+      setStep(2);
+      handleAttestation();
+    } else {
+      setSelectedCommunity({
+        network,
+        community
+      });
+    }
   };
 
   const handleClosePopup = () => {
     setIsLoading(false);
     setError(false);
-    setIsPopupVisible(false);
+    setIsMintTxPopupOpen(false);
     setSelectedCommunity(null);
     setIsEligible(undefined);
   };
 
   const mintNFT = async () => {
+    const _contractAddress = selectedCommunity?.community?.contract;
+    if (!_contractAddress) return;
     // Implement your NFT minting logic here
+    setStep(1);
     setIsMinting(true);
-    const response = await handleMint(contractAddress);
+    const response = await handleMint(_contractAddress);
     if (typeof response === "string") {
-      setTxHash(response);
+      setMintingTxHash(true);
+      setStep(2);
+      handleAttestation();
     } else {
       setError(true);
     }
+    setIsMinting(false);
+  };
+
+  const handleAttestation = async () => {
+    setIsMinting(true);
+    try {
+      const response = await createAttestation();
+      console.log(response);
+      if (typeof response === "string") {
+        setAttestationTxHash(true);
+      }
+    } catch (err) {
+      setIsMinting(false);
+    }
+    setIsMinting(false);
   };
 
   const handleJoinMoreCommunities = async () => {
@@ -532,7 +558,7 @@ const Collections = () => {
           </NewItemsGrid>
         );
 
-      case "myCommunities":
+      /*  case "myCommunities":
         return (
           <FanTokensGrid>
             {userCreatedCommunities?.locks?.length ? (
@@ -577,7 +603,7 @@ const Collections = () => {
             )}
           </FanTokensGrid>
         );
-
+ */
       case "subscribed":
         return (
           <NewItemsGrid>
@@ -585,7 +611,9 @@ const Collections = () => {
               subscribed?.map((nft: any) => (
                 <NewItemCard
                   key={nft.collection}
-                  onClick={() => handleNavigate(nft.contract)}
+                  onClick={() =>
+                    handleOpenPopup(alchemyChainConfig[account.chainId!], nft)
+                  }
                 >
                   <ImageContainer>
                     <Image
@@ -614,12 +642,26 @@ const Collections = () => {
         return null;
     }
   };
-
   return (
     <PageContainer>
-      {isOpen && <CreateCommunityModal onClose={handleCloseModal} />}
+      {/* <CreateAttestation /> */}
+      {isMintTxPopupOpen && (
+        <MintTransactionModal
+          step={step}
+          community={selectedCommunity}
+          isMinting={isMinting}
+          error={error}
+          onClose={handleClosePopup}
+          txHash={mintingTxHash}
+          mintNFT={mintNFT}
+          attestationTxHash={attestationTxHash}
+        />
+      )}
+      {isCreateCommunityPopupOpen && (
+        <CreateCommunityModal onClose={handleCloseModal} />
+      )}
 
-      {isPopupVisible && (
+      {/* {isMintTxPopupOpen && (
         <Popup
           isUserFCHolder={isUserFCHolder}
           isMinting={isMinting}
@@ -633,7 +675,7 @@ const Collections = () => {
           isHolderOfNFTContract={isHolderOfNFTContract}
           txHash={txHash}
         />
-      )}
+      )} */}
       <Section>
         <SectionTitle>
           Unlock the Power of Community with Your Token
@@ -660,12 +702,12 @@ const Collections = () => {
             >
               My NFTs
             </TabButton>
-            <TabButton
+            {/*  <TabButton
               active={activeTab === "myCommunities"}
               onClick={() => setActiveTab("myCommunities")}
             >
               Membership
-            </TabButton>
+            </TabButton> */}
             <TabButton
               active={activeTab === "subscribed"}
               onClick={() => setActiveTab("subscribed")}
@@ -673,7 +715,9 @@ const Collections = () => {
               Subscribed
             </TabButton>
           </Tabs>
-          <CreateButton onClick={() => setIsOpen(true)}>Create</CreateButton>
+          <CreateButton onClick={() => setIsCreateCommunityPopupOpen(true)}>
+            Create
+          </CreateButton>
         </TabsContainer>
         {renderContent()}
       </Section>

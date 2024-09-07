@@ -41,7 +41,7 @@ export const config = createConfig({
       showQrModal: true
     }),
     coinbaseWallet({ appName: "wagmi" }),
-    Web3AuthConnectorInstance([optimismSepolia, baseSepolia, sepolia, spicy])
+    Web3AuthConnectorInstance([baseSepolia, optimismSepolia, sepolia, spicy])
   ]
 });
 

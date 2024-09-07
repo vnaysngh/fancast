@@ -12,6 +12,7 @@ import Web3 from "web3";
 import { dstIds, OAPP, ONFT } from "../constants/contract";
 import Paywall from "@unlock-protocol/paywall";
 import networks, { sepolia } from "@unlock-protocol/networks";
+import { signClient } from "../signprotocol/client";
 
 const paywallConfig = {
   pessimistic: true,
@@ -116,6 +117,25 @@ export const StateContextProvider = ({ children }: { children: any }) => {
     if (account.chainId) fetchCollections();
   }, [account.chainId]); */
 
+  const createAttestation = async () => {
+    if (!address || !account.chainId) return;
+    const data = ethers.AbiCoder.defaultAbiCoder().encode(
+      ["string"],
+      [address]
+    );
+
+    return await writeContract(config, {
+      abi: ERC721ABI,
+      address: ONFT[account.chainId],
+      functionName: "createAttestation",
+      args: [data]
+    });
+  };
+
+  const getAttestation = async (attestationId: string) => {
+    const attestation = await signClient.getAttestation(attestationId);
+  };
+
   useEffect(() => {
     const fetchUserNFTs = () => {
       try {
@@ -193,7 +213,8 @@ export const StateContextProvider = ({ children }: { children: any }) => {
     abi: ERC721ABI,
     address: ONFT[account.chainId!],
     functionName: "getUserInfo",
-    args: [address]
+    args: [account.address!],
+    blockTag: "pending"
   });
 
   const isUserFCHolder =
@@ -230,7 +251,6 @@ export const StateContextProvider = ({ children }: { children: any }) => {
 
   const handleMint = async (nftAddress: string) => {
     if (!account || !account.chainId) return;
-
     try {
       return await writeContract(config, {
         abi: ERC721ABI,
@@ -382,7 +402,7 @@ export const StateContextProvider = ({ children }: { children: any }) => {
     const result = await paywall.loadCheckoutModal(paywallConfig);
     return result;
   };
-
+  console.log(userInfo?.data, account?.chainId, "userInfo");
   return (
     <StateContext.Provider
       value={{
@@ -404,6 +424,7 @@ export const StateContextProvider = ({ children }: { children: any }) => {
         collections,
         buyMembership,
         onUpvote,
+        createAttestation,
         onComment
       }}
     >
