@@ -6,8 +6,9 @@ import { useAccount, useReadContract } from "wagmi";
 import { useNavigate, useParams } from "react-router-dom";
 import { sepolia } from "wagmi/chains";
 import EventForm from "./CreateEvent";
-import EventsFeed from "./EventFeed";
+import Posts from "./Posts";
 import CreateEvent from "./CreateEvent";
+import EventsFeed from "./Events";
 
 interface StoryProps {
   userName: string;
@@ -120,7 +121,8 @@ const Story: React.FC<StoryProps> = () => {
 
       <MainContainer>
         {/* <EventForm /> */}
-        {activeTab === "explore" && <EventsFeed />}
+        {activeTab === "explore" && <Posts />}
+        {activeTab === "events" && <EventsFeed />}
         {activeTab === "create" && <CreateEvent />}
       </MainContainer>
     </>

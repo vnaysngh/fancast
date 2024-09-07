@@ -30,12 +30,53 @@
         "type": "string"
       },
       {
+        "internalType": "uint256",
+        "name": "_date",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "_venueLink",
+        "type": "string"
+      }
+    ],
+    "name": "createEvent",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "_title",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_description",
+        "type": "string"
+      },
+      {
         "internalType": "string",
         "name": "_imageUrl",
         "type": "string"
       }
     ],
     "name": "createPost",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_eventId",
+        "type": "uint256"
+      }
+    ],
+    "name": "rsvpForEvent",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -115,6 +156,137 @@
   },
   {
     "inputs": [],
+    "name": "eventCount",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "eventRSVPs",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "eventId",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "events",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "organizer",
+        "type": "address"
+      },
+      {
+        "internalType": "string",
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "description",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "date",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "venueLink",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "rsvpCount",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getAllEvents",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "id",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "organizer",
+            "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "title",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "description",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "date",
+            "type": "uint256"
+          },
+          {
+            "internalType": "string",
+            "name": "venueLink",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "rsvpCount",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct FeedContract.Event[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "getAllPosts",
     "outputs": [
       {
@@ -187,6 +359,11 @@
           {
             "internalType": "uint256",
             "name": "commentCount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "eventCount",
             "type": "uint256"
           }
         ],
@@ -268,6 +445,81 @@
           }
         ],
         "internalType": "struct FeedContract.Comment[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_eventId",
+        "type": "uint256"
+      }
+    ],
+    "name": "getEventRSVPs",
+    "outputs": [
+      {
+        "internalType": "address[]",
+        "name": "",
+        "type": "address[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_userAddress",
+        "type": "address"
+      }
+    ],
+    "name": "getEventsForUser",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "id",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "organizer",
+            "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "title",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "description",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "date",
+            "type": "uint256"
+          },
+          {
+            "internalType": "string",
+            "name": "venueLink",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "rsvpCount",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct FeedContract.Event[]",
         "name": "",
         "type": "tuple[]"
       }
@@ -362,11 +614,40 @@
             "internalType": "uint256",
             "name": "commentCount",
             "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "eventCount",
+            "type": "uint256"
           }
         ],
         "internalType": "struct FeedContract.User",
         "name": "",
         "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_eventId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      }
+    ],
+    "name": "isUserRSVPed",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
       }
     ],
     "stateMutability": "view",
@@ -445,6 +726,30 @@
         "internalType": "address",
         "name": "",
         "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "userEvents",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
       }
     ],
     "name": "users",
@@ -462,6 +767,11 @@
       {
         "internalType": "uint256",
         "name": "commentCount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "eventCount",
         "type": "uint256"
       }
     ],

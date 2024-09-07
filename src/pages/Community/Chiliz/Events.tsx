@@ -83,10 +83,10 @@ const EventsFeed: React.FC = () => {
   const [isCommentsOpen, setIsCommentsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const posts: any = useReadContract({
+  const events: any = useReadContract({
     abi,
-    address: "0x195228BEF654211C061a9B4b522641FFa5349d0b",
-    functionName: "getAllPosts"
+    address: "0x34525DA6ee8Ca1394d7a12e83BB15B2516802bF1",
+    functionName: "getAllEvents"
   });
 
   const openComments = (post: any) => {
@@ -111,6 +111,8 @@ const EventsFeed: React.FC = () => {
     setIsLoading(false);
   };
 
+  console.log(events);
+
   return (
     <EventsFeedWrapper>
       {isCommentsOpen && post && post?.id && (
@@ -122,12 +124,12 @@ const EventsFeed: React.FC = () => {
         />
       )}
       {/* <h2>Events Feed</h2> */}
-      {posts?.data?.map((post: any) => (
+      {events?.data?.map((post: any) => (
         <EventCard key={post.id}>
           <EventInfo>
             <EventTitle>Title: {post.title}</EventTitle>
             <EventDetails>Description: {post.description}</EventDetails>
-            <ButtonsContainer>
+            {/*  <ButtonsContainer>
               <PostMetaDataContainer>
                 <Button onClick={() => upvotePost(post.id)}>
                   <FiThumbsUp /> {post.upvotes.toString()}
@@ -142,7 +144,7 @@ const EventsFeed: React.FC = () => {
                   alt="chiliz icon"
                 />
               </Button>
-            </ButtonsContainer>
+            </ButtonsContainer> */}
           </EventInfo>
           <EventImage src={post.imageUrl} alt="Event Image" />
         </EventCard>
