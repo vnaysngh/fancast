@@ -1,6 +1,7 @@
 import styled, { keyframes } from "styled-components";
 import { FaHourglass } from "react-icons/fa";
 import { useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 // Define the keyframes for the spin animation
 const spin = keyframes`
@@ -117,7 +118,7 @@ const Message = styled.p`
   font-size: 18px;
   margin-bottom: 20px;
   text-align: center;
-  color: #b9bbbe;
+  color: #333;
 `;
 
 const CloseButton = styled.button`
@@ -136,15 +137,10 @@ const CloseButton = styled.button`
 `;
 
 export default function MintTransactionModal({
-  step,
-  community,
-  isMinting,
-  error,
-  onClose,
-  txHash,
-  attestationTxHash,
-  mintNFT
+  isRequiredBalance,
+  onClose
 }: any) {
+  const navigate = useNavigate();
   const popupRef = useRef<HTMLDivElement>(null);
 
   const handleClickOutside = (event: MouseEvent) => {
@@ -168,62 +164,22 @@ export default function MintTransactionModal({
     <ModalBackground>
       <ModalContainer ref={popupRef}>
         <CloseButton onClick={onClose}>×</CloseButton>
-        {step === 0 ? (
+        {isRequiredBalance ? (
           <>
             <Message>
-              To join, you need to mint a platform NFT. This NFT will give you
-              access to the community and verify your membership. Click 'Mint'
-              to proceed.
+              Great news! You’ve got enough balance to join the community.
             </Message>
             <ButtonContainer>
-              <Button onClick={mintNFT} disabled={isMinting}>
-                {isMinting
-                  ? "Please confirm the transaction in your wallet..."
-                  : "Mint"}
+              <Button onClick={() => navigate("/community/chiliz")}>
+                Step Inside
               </Button>
             </ButtonContainer>
           </>
-        ) : step === 1 || step === 2 ? (
-          <>
-            <StepTitle>Confirm Transactions</StepTitle>
-            <StepStatus>
-              {(step === 1 && txHash) ||
-                (step === 2 && (
-                  <CheckIcon>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                      <path d="M9 16.2l-4.2-4.2-1.4 1.4 5.6 5.6 12-12-1.4-1.4L9 16.2z" />
-                    </svg>
-                  </CheckIcon>
-                ))}
-
-              {step === 1 && !txHash && <LoadingIcon />}
-
-              <StepDescription>Minting your NFT</StepDescription>
-            </StepStatus>
-            <StepStatus>
-              {step === 1 && !txHash && (
-                <FaHourglass
-                  style={{ fontSize: "1.25rem", color: "#f6f8fa" }}
-                />
-              )}
-
-              {step === 2 && attestationTxHash && (
-                <CheckIcon>
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path d="M9 16.2l-4.2-4.2-1.4 1.4 5.6 5.6 12-12-1.4-1.4L9 16.2z" />
-                  </svg>
-                </CheckIcon>
-              )}
-
-              {step === 2 && !attestationTxHash && <LoadingIcon />}
-              <StepDescription>
-                Attesting your transaction onchain
-              </StepDescription>
-            </StepStatus>
-          </>
-        ) : txHash && attestationTxHash ? (
-          <Message>Congratulations! You can now enter the community.</Message>
-        ) : null}
+        ) : (
+          <Message>
+            Oops! You need at least 10 CHZ to enter this community.
+          </Message>
+        )}
       </ModalContainer>
     </ModalBackground>
   );

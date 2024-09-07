@@ -134,7 +134,7 @@ const CommentPopup: React.FC<CommentPopupProps> = ({
   const [newComment, setNewComment] = useState("");
   const comments: any = useReadContract({
     abi,
-    address: "0x9B691a757e9D91Cc138f125f4f386546D5F7fD76",
+    address: "0x195228BEF654211C061a9B4b522641FFa5349d0b",
     functionName: "getCommentsForPost",
     args: [Number(post.id)]
   });

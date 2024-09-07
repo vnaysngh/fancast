@@ -271,7 +271,7 @@ export const StateContextProvider = ({ children }: { children: any }) => {
     try {
       return await writeContract(config, {
         abi: ChilizABI,
-        address: "0x9B691a757e9D91Cc138f125f4f386546D5F7fD76",
+        address: "0x195228BEF654211C061a9B4b522641FFa5349d0b",
         functionName: "createPost",
         args: [name, description, url]
       })
@@ -289,7 +289,7 @@ export const StateContextProvider = ({ children }: { children: any }) => {
     try {
       return await writeContract(config, {
         abi: ChilizABI,
-        address: "0x9B691a757e9D91Cc138f125f4f386546D5F7fD76",
+        address: "0x195228BEF654211C061a9B4b522641FFa5349d0b",
         functionName: "upvotePost",
         args: [id]
       })
@@ -306,7 +306,7 @@ export const StateContextProvider = ({ children }: { children: any }) => {
     try {
       return await writeContract(config, {
         abi: ChilizABI,
-        address: "0x9B691a757e9D91Cc138f125f4f386546D5F7fD76",
+        address: "0x195228BEF654211C061a9B4b522641FFa5349d0b",
         functionName: "commentOnPost",
         args: [id, message]
       })
@@ -346,13 +346,13 @@ export const StateContextProvider = ({ children }: { children: any }) => {
   };
 
   const joinAdditionalCommunity = async (nftAddress: string) => {
-    if (!account || !account.chainId) return;
+    if (!account || !account.chainId || !nftAddress) return;
     try {
       return await writeContract(config, {
         abi: ERC721ABI,
         address: ONFT[account.chainId],
         functionName: "joinAdditionalCommunity",
-        args: [address, nftAddress]
+        args: [nftAddress]
       })
         .then((res) => res)
         .catch((err) => err);

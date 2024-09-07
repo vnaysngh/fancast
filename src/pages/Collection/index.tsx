@@ -17,6 +17,7 @@ import { alchemyChainConfig } from "../../components/Web3Auth/chainConfig";
 import { useAccount, useSwitchChain } from "wagmi";
 import { useBalance } from "wagmi";
 import MintTransactionModal from "../../components/Transaction";
+import ChilizTxModal from "../../components/Transaction/ChilizModal";
 
 // Styled Components
 const PageContainer = styled.div`
@@ -260,12 +261,14 @@ const Collections = () => {
   const [selectedCommunity, setSelectedCommunity] = useState<any>(null);
   const [isMinting, setIsMinting] = useState(false);
   const [isAttestationLoading, setIsAttestationLoading] = useState(false);
-  const [txHash, setTxHash] = useState<string>("");
+  const [txHash, setTxHash] = useState<boolean>(false);
   const [contractAddress, setContractAddress] = useState("");
   const account = useAccount();
   const [step, setStep] = useState(0);
   const [mintingTxHash, setMintingTxHash] = useState<boolean>(false);
   const [attestationTxHash, setAttestationTxHash] = useState<boolean>(false);
+  const [isChilizModalOpen, setIsChilizModalOpen] = useState(false);
+  const [isRequiredBalance, setIsRequiredBalance] = useState(false);
   const { data: userCreatedCommunities } = useQuery(locksOwnedByLockManager, {
     variables: { deployer: address }
   });
@@ -279,11 +282,25 @@ const Collections = () => {
   const checkAndSwitchToChiliz = async () => {
     if (account.chainId !== spicy.id) {
       const response = await switchChainAsync({ chainId: spicy.id });
-      // if (response.id === spicy.id) handleAccess(contractAddress);
+      if (response.id === spicy.id) {
+        setIsChilizModalOpen(true);
+        checkCHZBalance();
+      }
+    } else {
+      setIsChilizModalOpen(true);
+      checkCHZBalance();
     }
   };
 
-  const handleAccess = async (contractAddress: any) => {
+  const checkCHZBalance = () => {
+    if (Number(nativeTokenBalance.data?.formatted) > 10) {
+      setIsRequiredBalance(true);
+    } else {
+      setIsRequiredBalance(false);
+    }
+  };
+
+  const handleCheckAccess = async (contractAddress: any) => {
     if (!contractAddress) return;
     setIsLoading(true);
     try {
@@ -352,8 +369,13 @@ const Collections = () => {
     setIsCreateCommunityPopupOpen(false);
   };
 
-  const handleOpenPopup = (network: string, community: any) => {
-    if (userInfo.data?.joinedCommunities?.length) {
+  const handleAccess = (network: string, community: any) => {
+    const holder = userInfo.data;
+    if (holder?.attestationId) {
+      const _contractAddress = community?.contract;
+      if (!_contractAddress) return;
+      handleJoinMoreCommunities(_contractAddress);
+    } else if (holder?.joinedCommunities?.length && !holder.attestationId) {
       setMintingTxHash(true);
       setIsMintTxPopupOpen(true);
       setStep(2);
@@ -363,12 +385,18 @@ const Collections = () => {
         network,
         community
       });
+      setIsMintTxPopupOpen(true);
     }
   };
 
   const handleClosePopup = () => {
+    setStep(0);
     setIsLoading(false);
     setError(false);
+    setTxHash(false);
+    setMintingTxHash(false);
+    setAttestationTxHash(false);
+    setIsMinting(false);
     setIsMintTxPopupOpen(false);
     setSelectedCommunity(null);
     setIsEligible(undefined);
@@ -405,12 +433,12 @@ const Collections = () => {
     setIsMinting(false);
   };
 
-  const handleJoinMoreCommunities = async () => {
+  const handleJoinMoreCommunities = async (_contractAddress: string) => {
     // Implement your NFT minting logic here
     setIsMinting(true);
-    const response = await joinAdditionalCommunity(contractAddress);
+    const response = await joinAdditionalCommunity(_contractAddress);
     if (typeof response === "string") {
-      setTxHash(response);
+      setTxHash(true);
     } else {
       setError(true);
     }
@@ -456,14 +484,7 @@ const Collections = () => {
               ? openseaSepoliaCollection.map((nft: any) => (
                   <NewItemCard key={nft.collection}>
                     {/* <ItemImage src={nft.image_url} alt={nft.name ?? ""} /> */}
-                    <ImageContainer
-                      onClick={() =>
-                        handleOpenPopup(
-                          alchemyChainConfig[account.chainId!],
-                          nft
-                        )
-                      }
-                    >
+                    <ImageContainer>
                       <Image src={nft.image_url} alt={nft.name ?? ""} />
                     </ImageContainer>
                     <ItemInfo>
@@ -502,22 +523,31 @@ const Collections = () => {
               />
               <FanItemInfo>
                 <FanItemTitle>Chiliz (CHZ)</FanItemTitle>
-                {account.chainId === spicy.id && (
-                  <BalanceContainer>
-                    <span>Balance:</span>
-                    <img
-                      width={16}
-                      src={
-                        "https://raw.githubusercontent.com/kewlexchange/assets/main/chiliz/tokens/0x721ef6871f1c4efe730dce047d40d1743b886946/logo.svg"
-                      }
-                    />
-                    <span>
-                      {nativeTokenBalance && nativeTokenBalance.data?.formatted
-                        ? Number(nativeTokenBalance.data?.formatted).toFixed(4)
-                        : 0}
-                    </span>
-                  </BalanceContainer>
-                )}
+
+                <BalanceContainer>
+                  {account.chainId === spicy.id ? (
+                    <>
+                      {" "}
+                      <span>Balance:</span>
+                      <img
+                        width={16}
+                        src={
+                          "https://raw.githubusercontent.com/kewlexchange/assets/main/chiliz/tokens/0x721ef6871f1c4efe730dce047d40d1743b886946/logo.svg"
+                        }
+                      />
+                      <span>
+                        {nativeTokenBalance &&
+                        nativeTokenBalance.data?.formatted
+                          ? Number(nativeTokenBalance.data?.formatted).toFixed(
+                              4
+                            )
+                          : 0}
+                      </span>
+                    </>
+                  ) : (
+                    "Change network"
+                  )}
+                </BalanceContainer>
               </FanItemInfo>
             </FanItemCard>
           </FanTokensGrid>
@@ -530,7 +560,7 @@ const Collections = () => {
                 <NewItemCard key={nft.collection}>
                   <ImageContainer
                     onClick={() =>
-                      handleOpenPopup(alchemyChainConfig[account.chainId!], nft)
+                      handleAccess(alchemyChainConfig[account.chainId!], nft)
                     }
                   >
                     {/* {nft.subscribed && <Badge>Subscribed</Badge>} */}
@@ -611,9 +641,7 @@ const Collections = () => {
               subscribed?.map((nft: any) => (
                 <NewItemCard
                   key={nft.collection}
-                  onClick={() =>
-                    handleOpenPopup(alchemyChainConfig[account.chainId!], nft)
-                  }
+                  onClick={() => handleNavigate(nft.contract)}
                 >
                   <ImageContainer>
                     <Image
@@ -657,10 +685,17 @@ const Collections = () => {
           attestationTxHash={attestationTxHash}
         />
       )}
+
+      {isChilizModalOpen && (
+        <ChilizTxModal
+          isRequiredBalance={isRequiredBalance}
+          onClose={() => setIsChilizModalOpen(false)}
+        />
+      )}
+
       {isCreateCommunityPopupOpen && (
         <CreateCommunityModal onClose={handleCloseModal} />
       )}
-
       {/* {isMintTxPopupOpen && (
         <Popup
           isUserFCHolder={isUserFCHolder}
