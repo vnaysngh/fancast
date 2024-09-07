@@ -23,15 +23,108 @@ contract FeedContract {
         address userAddress;
         uint256 postCount;
         uint256 commentCount;
+        uint256 eventCount;
+    }
+
+    struct Event {
+        uint256 id;
+        address organizer;
+        string title;
+        string description;
+        uint256 date;
+        string venueLink;
+        uint256 rsvpCount;
+    }
+
+    struct EventRSVP {
+        uint256 eventId;
+        address[] attendees;
     }
 
     mapping(uint256 => Post) public posts;
     mapping(uint256 => mapping(uint256 => Comment)) public comments;
     mapping(address => User) public users;
+      mapping(uint256 => Event) public events;
+    mapping(uint256 => EventRSVP) public eventRSVPs;
+    mapping(address => uint256[]) public userEvents;
 
     uint256 public postCount;
     uint256 public commentCount;
+    uint256 public eventCount;
     address[] private userAddresses;
+
+     function createEvent(string memory _title, string memory _description, uint256 _date, string memory _venueLink) public {
+        eventCount++;
+        events[eventCount] = Event({
+            id: eventCount,
+            organizer: msg.sender,
+            title: _title,
+            description: _description,
+            date: _date,
+            venueLink: _venueLink,
+            rsvpCount: 0
+        });
+        
+        userEvents[msg.sender].push(eventCount);
+
+        if (users[msg.sender].userAddress == address(0)) {
+            users[msg.sender] = User({
+                userAddress: msg.sender,
+                postCount: 0,
+                commentCount: 0,
+                eventCount: 1
+            });
+            userAddresses.push(msg.sender);
+        } else {
+            users[msg.sender].eventCount++;
+        }
+    }
+
+    function getAllEvents() public view returns (Event[] memory) {
+        Event[] memory allEvents = new Event[](eventCount);
+        for (uint256 i = 1; i <= eventCount; i++) {
+            allEvents[i - 1] = events[i];
+        }
+        return allEvents;
+    }
+
+    function getEventsForUser(address _userAddress) public view returns (Event[] memory) {
+        uint256[] memory userEventIds = userEvents[_userAddress];
+        Event[] memory userEventList = new Event[](userEventIds.length);
+        
+        for (uint256 i = 0; i < userEventIds.length; i++) {
+            userEventList[i] = events[userEventIds[i]];
+        }
+        
+        return userEventList;
+    }
+
+    function rsvpForEvent(uint256 _eventId) public {
+        require(_eventId > 0 && _eventId <= eventCount, "Invalid event ID");
+        require(!isUserRSVPed(_eventId, msg.sender), "User already RSVPed");
+
+        Event storage eventItem = events[_eventId];
+        eventItem.rsvpCount++;
+
+        EventRSVP storage rsvp = eventRSVPs[_eventId];
+        rsvp.attendees.push(msg.sender);
+
+    }
+
+    function isUserRSVPed(uint256 _eventId, address _user) public view returns (bool) {
+        EventRSVP storage rsvp = eventRSVPs[_eventId];
+        for (uint256 i = 0; i < rsvp.attendees.length; i++) {
+            if (rsvp.attendees[i] == _user) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function getEventRSVPs(uint256 _eventId) public view returns (address[] memory) {
+        require(_eventId > 0 && _eventId <= eventCount, "Invalid event ID");
+        return eventRSVPs[_eventId].attendees;
+    }
 
     // event PostCreated(uint256 indexed postId, address indexed author, string title);
     // event PostUpvoted(uint256 indexed postId, address indexed voter);
@@ -55,7 +148,8 @@ contract FeedContract {
             users[msg.sender] = User({
                 userAddress: msg.sender,
                 postCount: 1,
-                commentCount: 0
+                commentCount: 0,
+                eventCount: 0
             });
             userAddresses.push(msg.sender);
         } else {
@@ -100,7 +194,8 @@ contract FeedContract {
             users[msg.sender] = User({
                 userAddress: msg.sender,
                 postCount: 0,
-                commentCount: 1
+                commentCount: 1,
+                eventCount: 0
             });
             userAddresses.push(msg.sender);
         } else {

@@ -7,6 +7,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { sepolia } from "wagmi/chains";
 import EventForm from "./CreateEvent";
 import EventsFeed from "./EventFeed";
+import CreateEvent from "./CreateEvent";
 
 interface StoryProps {
   userName: string;
@@ -79,7 +80,7 @@ const CommunityTitle = styled.h1`
 `;
 
 const Story: React.FC<StoryProps> = () => {
-  const [activeTab, setActiveTab] = useState("explore");
+  const [activeTab, setActiveTab] = useState("create");
   const navigate = useNavigate();
 
   // Utility function for navigation
@@ -100,17 +101,27 @@ const Story: React.FC<StoryProps> = () => {
             Feed
           </TabButton>
           <TabButton
-            active={activeTab === "fanTokens"}
-            onClick={() => setActiveTab("fanTokens")}
+            active={activeTab === "events"}
+            onClick={() => setActiveTab("events")}
           >
             Events
           </TabButton>
+          <TabButton
+            active={activeTab === "marketplace"}
+            onClick={() => setActiveTab("marketplace")}
+          >
+            Marketplace
+          </TabButton>
         </Tabs>
+        <CreateButton onClick={() => setActiveTab("create")}>
+          Create
+        </CreateButton>
       </TabsContainer>
 
       <MainContainer>
         {/* <EventForm /> */}
         {activeTab === "explore" && <EventsFeed />}
+        {activeTab === "create" && <CreateEvent />}
       </MainContainer>
     </>
   );
