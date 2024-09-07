@@ -70,6 +70,14 @@ const CreateButton = styled.button`
   }
 `;
 
+const CommunityTitle = styled.h1`
+  background: #ddd;
+  width: fit-content;
+  padding: 0 10px;
+  color: #fe1156;
+  font-family: "DM Sans";
+`;
+
 const Story: React.FC<StoryProps> = () => {
   const [activeTab, setActiveTab] = useState("explore");
   const navigate = useNavigate();
@@ -81,6 +89,7 @@ const Story: React.FC<StoryProps> = () => {
 
   return (
     <>
+      <CommunityTitle>/Chiliz</CommunityTitle>
       <TabsContainer>
         <Tabs>
           <TabButton

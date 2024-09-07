@@ -83,7 +83,7 @@ const EventsFeed: React.FC = () => {
   const [isCommentsOpen, setIsCommentsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const posts = useReadContract({
+  const posts: any = useReadContract({
     abi,
     address: "0x9B691a757e9D91Cc138f125f4f386546D5F7fD76",
     functionName: "getAllPosts"

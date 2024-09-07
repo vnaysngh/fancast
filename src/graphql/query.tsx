@@ -1,7 +1,7 @@
 import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
 
 const APIURL =
-  "https://api.studio.thegraph.com/query/65299/unlock-protocol-sepolia/version/latest";
+  "https://api.studio.thegraph.com/query/65299/unlock-protocol-base-sepolia/version/latest";
 
 export const locksOwnedByLockManager = gql`
   query locksByDeployer($deployer: String!) {
