@@ -4,8 +4,13 @@ import { useReadContract } from "wagmi";
 import abi from "../../../abi/chiliz.json";
 import { FiThumbsUp } from "react-icons/fi";
 import { useStateContext } from "../../../context";
-import { FaRegCommentAlt } from "react-icons/fa";
-import CommentPopup from "./Comments";
+import {
+  FaInfoCircle,
+  FaMapMarkerAlt,
+  FaRegCommentAlt,
+  FaUser
+} from "react-icons/fa";
+import { MdEventAvailable } from "react-icons/md";
 
 const EventsFeedWrapper = styled.div`
   font-family: "DM Sans", sans-serif;
@@ -24,7 +29,7 @@ const EventCard = styled.div`
 `;
 
 const EventInfo = styled.div`
-  width: 70%;
+  width: 100%;
 `;
 
 const EventImage = styled.img`
@@ -38,9 +43,11 @@ const EventTitle = styled.h3`
   font-size: 20px;
 `;
 
-const EventDetails = styled.p`
-  margin: 5px 0;
-  font-size: 16px;
+const Organiser = styled.p`
+  color: #333;
+  margin: 0;
+  font-weight: 500;
+  font-size: 14px;
 `;
 
 const ButtonsContainer = styled.div`
@@ -76,77 +83,92 @@ const Button = styled.button`
   }
 `;
 
-const EventsFeed: React.FC = () => {
-  const { onUpvote, onComment } = useStateContext();
-  const [txHash, setTxHash] = useState(null);
-  const [post, setPost] = useState<any>();
-  const [isCommentsOpen, setIsCommentsOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+const EventDetails = styled.div`
+  display: flex;
+  align-items: center;
+  margin: 5px 0;
+  font-size: 14px;
+  color: #666;
+`;
 
+const Icon = styled.span`
+  margin-right: 8px;
+  color: #fe1156;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+`;
+
+const EventDescription = styled.p`
+  font-size: 1rem;
+  color: #333;
+  margin: 10px 0;
+`;
+
+const RSVPButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 8px;
+  margin-top: 10px;
+  border-radius: 4px;
+  border-radius: #fe1156;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+
+  &:hover {
+    background-color: #e0004e;
+  }
+`;
+
+const EventsFeed: React.FC = () => {
   const events: any = useReadContract({
     abi,
     address: "0x34525DA6ee8Ca1394d7a12e83BB15B2516802bF1",
     functionName: "getAllEvents"
   });
 
-  const openComments = (post: any) => {
-    setIsCommentsOpen(true);
-    setPost(post);
-  };
-
-  const upvotePost = async (id: any) => {
-    const response = onUpvote(Number(id));
-    if (response) {
-      setTxHash(response);
-    }
-  };
-
-  const commentPost = async (message: string) => {
-    if (!post || !post.id) return;
-    setIsLoading(true);
-    const response = onComment(Number(post?.id), message);
-    if (response) {
-      setTxHash(response);
-    }
-    setIsLoading(false);
+  // Function to truncate text
+  const truncateText = (text: string, maxLength: number) => {
+    if (text.length <= maxLength) return text;
+    return text.substring(0, maxLength) + "...";
   };
 
   console.log(events);
 
   return (
     <EventsFeedWrapper>
-      {isCommentsOpen && post && post?.id && (
-        <CommentPopup
-          isLoading={isLoading}
-          post={post}
-          onClose={() => setIsCommentsOpen(false)}
-          onComment={commentPost}
-        />
-      )}
+      <h2>Trending Events</h2>
       {/* <h2>Events Feed</h2> */}
-      {events?.data?.map((post: any) => (
-        <EventCard key={post.id}>
+      {events?.data?.map((event: any) => (
+        <EventCard key={event.id}>
           <EventInfo>
-            <EventTitle>Title: {post.title}</EventTitle>
-            <EventDetails>Description: {post.description}</EventDetails>
-            {/*  <ButtonsContainer>
-              <PostMetaDataContainer>
-                <Button onClick={() => upvotePost(post.id)}>
-                  <FiThumbsUp /> {post.upvotes.toString()}
-                </Button>
-                <Button onClick={() => openComments(post)}>
-                  <FaRegCommentAlt /> {post.commentCount.toString()}
-                </Button>
-              </PostMetaDataContainer>
-              <Button>
-                <img
-                  src="https://raw.githubusercontent.com/kewlexchange/assets/main/chiliz/tokens/0x721ef6871f1c4efe730dce047d40d1743b886946/logo.svg"
-                  alt="chiliz icon"
-                />
-              </Button>
-            </ButtonsContainer> */}
+            <EventTitle>{event.title}</EventTitle>
+            <EventDescription>
+              {truncateText(event.description, 80)}
+            </EventDescription>
+            <EventDetails>
+              <Icon>
+                <FaUser />
+              </Icon>
+              {event.organizer.slice(0, 6)}...{event.organizer.slice(-4)}
+            </EventDetails>
+            <EventDetails>
+              <Icon>
+                <FaMapMarkerAlt />
+              </Icon>
+              {event.venueLink}
+            </EventDetails>
+            <RSVPButton>
+              <Icon style={{ height: "1.5rem", width: "1.5rem" }}>
+                <img src="https://raw.githubusercontent.com/kewlexchange/assets/main/chiliz/tokens/0x721ef6871f1c4efe730dce047d40d1743b886946/logo.svg" />
+              </Icon>
+              RSVP with CHZ
+            </RSVPButton>
           </EventInfo>
-          <EventImage src={post.imageUrl} alt="Event Image" />
         </EventCard>
       ))}
     </EventsFeedWrapper>

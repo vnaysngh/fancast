@@ -22,7 +22,6 @@ interface StoryProps {
 }
 
 const TabsContainer = styled.div`
-  margin-top: 1rem;
   display: flex;
   justify-content: space-between;
 `;
@@ -80,8 +79,22 @@ const CommunityTitle = styled.h1`
   font-family: "DM Sans";
 `;
 
+const PageContainer = styled.div`
+  display: flex;
+  width: 100%;
+`;
+
+const MainContentContainer = styled.div`
+  width: 70%; // 2/3 of the total width
+  padding-right: 20px; // Add some spacing between main content and EventsFeed
+`;
+
+const EventsFeedContainer = styled.div`
+  width: 30%; // 1/3 of the total width
+`;
+
 const Story: React.FC<StoryProps> = () => {
-  const [activeTab, setActiveTab] = useState("create");
+  const [activeTab, setActiveTab] = useState("explore");
   const navigate = useNavigate();
 
   // Utility function for navigation
@@ -92,39 +105,45 @@ const Story: React.FC<StoryProps> = () => {
   return (
     <>
       <CommunityTitle>/Chiliz</CommunityTitle>
-      <TabsContainer>
-        <Tabs>
-          <TabButton
-            firstTab
-            active={activeTab === "explore"}
-            onClick={() => setActiveTab("explore")}
-          >
-            Feed
-          </TabButton>
-          <TabButton
-            active={activeTab === "events"}
-            onClick={() => setActiveTab("events")}
-          >
-            Events
-          </TabButton>
-          <TabButton
-            active={activeTab === "marketplace"}
-            onClick={() => setActiveTab("marketplace")}
-          >
-            Marketplace
-          </TabButton>
-        </Tabs>
-        <CreateButton onClick={() => setActiveTab("create")}>
-          Create
-        </CreateButton>
-      </TabsContainer>
+      <PageContainer>
+        <MainContentContainer>
+          <TabsContainer>
+            <Tabs>
+              <TabButton
+                firstTab
+                active={activeTab === "explore"}
+                onClick={() => setActiveTab("explore")}
+              >
+                Feed
+              </TabButton>
+              <TabButton
+                active={activeTab === "events"}
+                onClick={() => setActiveTab("events")}
+              >
+                Events
+              </TabButton>
+              <TabButton
+                active={activeTab === "marketplace"}
+                onClick={() => setActiveTab("marketplace")}
+              >
+                Marketplace
+              </TabButton>
+            </Tabs>
+            {/* <CreateButton onClick={() => setActiveTab("create")}>
+              Create
+            </CreateButton> */}
+          </TabsContainer>
 
-      <MainContainer>
-        {/* <EventForm /> */}
-        {activeTab === "explore" && <Posts />}
-        {activeTab === "events" && <EventsFeed />}
-        {activeTab === "create" && <CreateEvent />}
-      </MainContainer>
+          <MainContainer>
+            {/* <EventForm /> */}
+            {activeTab === "explore" && <Posts />}
+            {activeTab === "create" && <CreateEvent />}
+          </MainContainer>
+        </MainContentContainer>
+        <EventsFeedContainer>
+          <EventsFeed />
+        </EventsFeedContainer>
+      </PageContainer>
     </>
   );
 };
