@@ -260,7 +260,8 @@ const Collections = () => {
     joinAdditionalCommunity,
     userInfo,
     updateDataAcrossChains,
-    createAttestation
+    createAttestation,
+    buyMembership
   } = useStateContext();
   const [isMintTxPopupOpen, setIsMintTxPopupOpen] = useState(false);
   const [selectedCommunity, setSelectedCommunity] = useState<any>(null);
@@ -604,7 +605,7 @@ const Collections = () => {
           </NewItemsGrid>
         );
 
-      /*  case "myCommunities":
+      case "myCommunities":
         return (
           <FanTokensGrid>
             {userCreatedCommunities?.locks?.length ? (
@@ -638,6 +639,10 @@ const Collections = () => {
                           ? parseFloat(lock.price) / 1e18
                           : "Free"}
                       </LockDetails>
+
+                      <LockDetails>
+                        <FaShareAlt onClick={buyMembership} />
+                      </LockDetails>
                     </IconContainer>
                   </LockItem>
                 );
@@ -649,7 +654,7 @@ const Collections = () => {
             )}
           </FanTokensGrid>
         );
- */
+
       case "subscribed":
         return (
           <NewItemsGrid>
@@ -764,12 +769,12 @@ const Collections = () => {
             >
               My NFTs
             </TabButton>
-            {/*  <TabButton
+            <TabButton
               active={activeTab === "myCommunities"}
               onClick={() => setActiveTab("myCommunities")}
             >
               Membership
-            </TabButton> */}
+            </TabButton>
             <TabButton
               active={activeTab === "subscribed"}
               onClick={() => setActiveTab("subscribed")}
