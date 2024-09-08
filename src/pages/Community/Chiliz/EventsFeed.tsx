@@ -7,6 +7,7 @@ import { useStateContext } from "../../../context";
 import { FaRegCommentAlt } from "react-icons/fa";
 import CommentPopup from "./Comments";
 import TipModal from "./Tip";
+import { SpicyContract } from "../../../constants/contract";
 
 const PostsWrapper = styled.div`
   font-family: "DM Sans", sans-serif;
@@ -87,7 +88,7 @@ const EventsFeed: React.FC = () => {
   const [txHash, setTxHash] = useState(null);
   const events: any = useReadContract({
     abi,
-    address: "0xFf3d395AcaCC791c3a3eF1710ceEC69A3e153dB2",
+    address: SpicyContract,
     functionName: "getAllEvents"
   });
 

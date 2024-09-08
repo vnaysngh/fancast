@@ -224,8 +224,8 @@ const Story: React.FC<StoryProps> = () => {
   };
 
   return (
-    <TokenGate>
-      <TipModal
+    <>
+      {/*  <TipModal
         isOpen={openTipModal}
         onClose={handleCloseTipModal}
         onTip={onTip}
@@ -233,7 +233,7 @@ const Story: React.FC<StoryProps> = () => {
         setTipAmount={setTipAmount}
         tipAmount={tipAmount}
         txHash={txHash}
-      />
+      /> */}
 
       <TabsContainer>
         <Tabs>
@@ -299,7 +299,7 @@ const Story: React.FC<StoryProps> = () => {
           )}
         </ContentWrapper>
       </MainContainer>
-    </TokenGate>
+    </>
   );
 };
 

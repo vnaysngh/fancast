@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import abi from "../../../abi/chiliz.json";
 import { useReadContract } from "wagmi";
+import { SpicyContract } from "../../../constants/contract";
 
 interface Comment {
   id: number;
@@ -134,7 +135,7 @@ const CommentPopup: React.FC<CommentPopupProps> = ({
   const [newComment, setNewComment] = useState("");
   const comments: any = useReadContract({
     abi,
-    address: "0xFf3d395AcaCC791c3a3eF1710ceEC69A3e153dB2",
+    address: SpicyContract,
     functionName: "getCommentsForPost",
     args: [Number(post.id)]
   });

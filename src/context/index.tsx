@@ -9,7 +9,7 @@ import { config } from "../main";
 import axios from "axios";
 import { openSeaChainConfig } from "../components/Web3Auth/chainConfig";
 import Web3 from "web3";
-import { dstIds, OAPP, ONFT } from "../constants/contract";
+import { dstIds, OAPP, ONFT, SpicyContract } from "../constants/contract";
 import Paywall from "@unlock-protocol/paywall";
 import networks, { sepolia } from "@unlock-protocol/networks";
 import { signClient } from "../Signprotocol/SignClient";
@@ -273,7 +273,7 @@ export const StateContextProvider = ({ children }: { children: any }) => {
     try {
       return await writeContract(config, {
         abi: ChilizABI,
-        address: "0xFf3d395AcaCC791c3a3eF1710ceEC69A3e153dB2",
+        address: SpicyContract,
         functionName: "createPost",
         args: [name, description, url]
       })
@@ -291,7 +291,7 @@ export const StateContextProvider = ({ children }: { children: any }) => {
     try {
       return await writeContract(config, {
         abi: ChilizABI,
-        address: "0xFf3d395AcaCC791c3a3eF1710ceEC69A3e153dB2",
+        address: SpicyContract,
         functionName: "upvotePost",
         args: [id]
       })
@@ -308,7 +308,7 @@ export const StateContextProvider = ({ children }: { children: any }) => {
     try {
       return await writeContract(config, {
         abi: ChilizABI,
-        address: "0xFf3d395AcaCC791c3a3eF1710ceEC69A3e153dB2",
+        address: SpicyContract,
         functionName: "commentOnPost",
         args: [id, message]
       })

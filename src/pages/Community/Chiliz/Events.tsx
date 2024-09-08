@@ -11,6 +11,7 @@ import {
   FaUser
 } from "react-icons/fa";
 import { MdEventAvailable } from "react-icons/md";
+import { SpicyContract } from "../../../constants/contract";
 
 const EventsFeedWrapper = styled.div`
   font-family: "DM Sans", sans-serif;
@@ -132,7 +133,7 @@ const handleLinkRedirect = (link: string) => {
 const HighlightedEvents: React.FC = () => {
   const events: any = useReadContract({
     abi,
-    address: "0xFf3d395AcaCC791c3a3eF1710ceEC69A3e153dB2",
+    address: SpicyContract,
     functionName: "getAllEvents"
   });
 
