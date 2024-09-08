@@ -85,7 +85,7 @@ const EventsFeed: React.FC = () => {
 
   const posts: any = useReadContract({
     abi,
-    address: "0x34525DA6ee8Ca1394d7a12e83BB15B2516802bF1",
+    address: "0xFf3d395AcaCC791c3a3eF1710ceEC69A3e153dB2",
     functionName: "getAllPosts"
   });
 

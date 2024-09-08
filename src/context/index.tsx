@@ -273,7 +273,7 @@ export const StateContextProvider = ({ children }: { children: any }) => {
     try {
       return await writeContract(config, {
         abi: ChilizABI,
-        address: "0x34525DA6ee8Ca1394d7a12e83BB15B2516802bF1",
+        address: "0xFf3d395AcaCC791c3a3eF1710ceEC69A3e153dB2",
         functionName: "createPost",
         args: [name, description, url]
       })
@@ -291,7 +291,7 @@ export const StateContextProvider = ({ children }: { children: any }) => {
     try {
       return await writeContract(config, {
         abi: ChilizABI,
-        address: "0x34525DA6ee8Ca1394d7a12e83BB15B2516802bF1",
+        address: "0xFf3d395AcaCC791c3a3eF1710ceEC69A3e153dB2",
         functionName: "upvotePost",
         args: [id]
       })
@@ -308,7 +308,7 @@ export const StateContextProvider = ({ children }: { children: any }) => {
     try {
       return await writeContract(config, {
         abi: ChilizABI,
-        address: "0x34525DA6ee8Ca1394d7a12e83BB15B2516802bF1",
+        address: "0xFf3d395AcaCC791c3a3eF1710ceEC69A3e153dB2",
         functionName: "commentOnPost",
         args: [id, message]
       })

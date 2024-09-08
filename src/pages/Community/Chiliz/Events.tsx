@@ -121,10 +121,18 @@ const RSVPButton = styled.button`
   transition: background-color 0.2s ease-in-out;
 `;
 
+const Venue = styled.div`
+  text-decoration: underline;
+`;
+
+const handleLinkRedirect = (link: string) => {
+  window.open(link, "_blank");
+};
+
 const EventsFeed: React.FC = () => {
   const events: any = useReadContract({
     abi,
-    address: "0x34525DA6ee8Ca1394d7a12e83BB15B2516802bF1",
+    address: "0xFf3d395AcaCC791c3a3eF1710ceEC69A3e153dB2",
     functionName: "getAllEvents"
   });
 
@@ -155,7 +163,9 @@ const EventsFeed: React.FC = () => {
               <Icon>
                 <FaMapMarkerAlt />
               </Icon>
-              {event.venueLink}
+              <Venue onClick={() => handleLinkRedirect(event.venueLink)}>
+                Check location
+              </Venue>
             </EventDetails>
             <RSVPButton>
               <Icon style={{ height: "1.5rem", width: "1.5rem" }}>
