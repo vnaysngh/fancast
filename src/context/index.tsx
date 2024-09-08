@@ -133,7 +133,7 @@ export const StateContextProvider = ({ children }: { children: any }) => {
   };
 
   const getAttestation = async (attestationId: string) => {
-    const attestation = await signClient.getAttestation(attestationId);
+    return await signClient.getAttestation(attestationId);
   };
 
   useEffect(() => {
@@ -423,6 +423,7 @@ export const StateContextProvider = ({ children }: { children: any }) => {
         collections,
         buyMembership,
         onUpvote,
+        getAttestation,
         createAttestation,
         onComment
       }}

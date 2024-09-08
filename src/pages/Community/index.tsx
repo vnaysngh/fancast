@@ -5,6 +5,7 @@ import { useAccount, useReadContract } from "wagmi";
 import ERC721ABI from "../../abi/erc721.json";
 import { useStateContext } from "../../context";
 import { ONFT } from "../../constants/contract";
+import { TokenGate } from "../../components/TokenGate/tokengate";
 
 // Styled components
 const Container = styled.div`
@@ -116,71 +117,67 @@ const HomePage = () => {
   });
 
   return (
-    <Container>
-      <Header>
-        <Title>NFT Community Hub</Title>
-        {/*  <Nav>
-          <NavItem href="#home">Home</NavItem>
-          <NavItem href="#members">Members</NavItem>
-          <NavItem href="#games">Games</NavItem>
-          <NavItem href="#profile">Profile</NavItem>
-        </Nav> */}
-      </Header>
+    <TokenGate>
+      <Container>
+        <Header>
+          <Title>NFT Community Hub</Title>
+        </Header>
 
-      <Grid>
-        <Card>
-          <CardTitle>Welcome, {username || "Loading..."}</CardTitle>
-          <CardContent>
-            <p>Glad to have you back in our exclusive NFT community!</p>
-            {/* <Button>Update Profile</Button> */}
-          </CardContent>
-        </Card>
+        <Grid>
+          <Card>
+            <CardTitle>Welcome, {username || "Loading..."}</CardTitle>
+            <CardContent>
+              <p>Glad to have you back in our exclusive NFT community!</p>
+              {/* <Button>Update Profile</Button> */}
+            </CardContent>
+          </Card>
 
-        <Card>
-          <CardTitle>Community Stats</CardTitle>
-          <CardContent>
-            <p>Members: {communityMembersCount.data?.toString()}</p>
-            {/* <p>Active Posts: {communityStats.activePosts}</p>
+          <Card>
+            <CardTitle>Community Stats</CardTitle>
+            <CardContent>
+              <p>Members: {communityMembersCount.data?.toString()}</p>
+              {/* <p>Active Posts: {communityStats.activePosts}</p>
             <p>Avg. Engagement: {communityStats.avgEngagement}</p> */}
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
 
-        <Card onClick={() => handleNavigation("members")}>
-          <CardTitle>Other Members</CardTitle>
-          <CardContent>
-            <p>Connect with fellow NFT enthusiasts:</p>
-            <Button>Browse Members</Button>
-          </CardContent>
-        </Card>
+          <Card onClick={() => handleNavigation("members")}>
+            <CardTitle>Other Members</CardTitle>
+            <CardContent>
+              <p>Connect with fellow NFT enthusiasts:</p>
+              <Button>Browse Members</Button>
+            </CardContent>
+          </Card>
 
-        <Card onClick={() => handleNavigation("casts")}>
-          <CardTitle>Farcaster Casts</CardTitle>
-          <CardContent>
-            <p>Farcaster casts tailored for community members</p>
-            <Button>View More</Button>
-          </CardContent>
-        </Card>
+          <Card onClick={() => handleNavigation("casts")}>
+            <CardTitle>Farcaster Casts</CardTitle>
+            <CardContent>
+              <p>Farcaster casts tailored for community members</p>
+              <Button>View More</Button>
+            </CardContent>
+          </Card>
 
-        <Card>
-          <CardTitle>Marketplace</CardTitle>
-          <CardContent>
-            <p>Trade exclusive NFTs in our community marketplace</p>
-            <Button>Play Now</Button>
-          </CardContent>
-        </Card>
+          <Card>
+            <CardTitle>Marketplace</CardTitle>
+            <CardContent>
+              <p>Trade exclusive NFTs in our community marketplace</p>
+              <Button>Play Now</Button>
+            </CardContent>
+          </Card>
 
-        <Card onClick={() => handleNavigation("what-if/feed")}>
-          <CardTitle>What If</CardTitle>
-          <CardContent>
-            <p>
-              Where sports fans explore alternate realities for their favorite
-              teams and players!
-            </p>
-            <Button>View</Button>
-          </CardContent>
-        </Card>
-      </Grid>
-    </Container>
+          <Card onClick={() => handleNavigation("what-if/feed")}>
+            <CardTitle>What If</CardTitle>
+            <CardContent>
+              <p>
+                Where sports fans explore alternate realities for their favorite
+                teams and players!
+              </p>
+              <Button>View</Button>
+            </CardContent>
+          </Card>
+        </Grid>
+      </Container>
+    </TokenGate>
   );
 };
 

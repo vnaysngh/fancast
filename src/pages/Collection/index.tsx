@@ -462,7 +462,7 @@ const Collections = () => {
       })
     : userNFTs?.nfts;
 
-  const filtered = stampSubscribedFromUnSubscribed.filter(
+  const filtered = stampSubscribedFromUnSubscribed?.filter(
     (nft) => nft !== undefined
   );
 

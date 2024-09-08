@@ -117,11 +117,8 @@ const RSVPButton = styled.button`
   font-size: 14px;
   font-weight: bold;
   cursor: pointer;
+  background: transparent;
   transition: background-color 0.2s ease-in-out;
-
-  &:hover {
-    background-color: #e0004e;
-  }
 `;
 
 const EventsFeed: React.FC = () => {
@@ -136,8 +133,6 @@ const EventsFeed: React.FC = () => {
     if (text.length <= maxLength) return text;
     return text.substring(0, maxLength) + "...";
   };
-
-  console.log(events);
 
   return (
     <EventsFeedWrapper>

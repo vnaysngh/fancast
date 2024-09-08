@@ -48,27 +48,21 @@ const TabButton = styled.button<{ active: boolean; firstTab?: boolean }>`
 
 // Main container that includes sidebar and content
 const MainContainer = styled.div`
-  display: flex;
+  // display: flex;
   margin: 1rem 0;
   // margin-left: 250px; /* This leaves space for the sidebar */
 `;
 
 const CreateButton = styled.button`
   font-family: "Bungee";
-  background: #333;
+  background: transparent;
   border: none;
-  color: white;
   padding: 10px 15px;
   cursor: pointer;
   font-weight: bold;
   text-align: center;
-
-  &:hover {
-    background-color: #fff;
-    color: #333;
-    box-shadow: 6px 6px 0px 0px rgba(0, 0, 0, 0.09);
-    border: 1px solid #333;
-  }
+  color: #333;
+  font-size: 1.25rem;
 `;
 
 const CommunityTitle = styled.h1`
@@ -129,9 +123,11 @@ const Story: React.FC<StoryProps> = () => {
                 Marketplace
               </TabButton>
             </Tabs>
-            {/* <CreateButton onClick={() => setActiveTab("create")}>
-              Create
-            </CreateButton> */}
+            {activeTab !== "create" && (
+              <CreateButton onClick={() => setActiveTab("create")}>
+                Create
+              </CreateButton>
+            )}
           </TabsContainer>
 
           <MainContainer>
@@ -140,9 +136,11 @@ const Story: React.FC<StoryProps> = () => {
             {activeTab === "create" && <CreateEvent />}
           </MainContainer>
         </MainContentContainer>
-        <EventsFeedContainer>
-          <EventsFeed />
-        </EventsFeedContainer>
+        {(activeTab === "explore" || activeTab === "events") && (
+          <EventsFeedContainer>
+            <EventsFeed />
+          </EventsFeedContainer>
+        )}
       </PageContainer>
     </>
   );

@@ -2,10 +2,36 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useStateContext } from "../../../context";
 import { useReadContract } from "wagmi";
+import CreatePost from "./CreatePost";
 
-const CreatePostContainer = styled.div`
+const CreateEventContainer = styled.div`
   max-width: 800px;
   font-family: "DM Sans", sans-serif;
+`;
+
+const TabsContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const Tabs = styled.div`
+  display: flex;
+  gap: 20px;
+`;
+
+const TabButton = styled.button<{ active: boolean; firstTab?: boolean }>`
+  font-family: "DM Sans", sans-serif;
+  color: ${(props) => (props.active ? "#333" : "#555")};
+  border: none;
+  background-color: transparent;
+  font-size: 1.25rem;
+  cursor: pointer;
+  border-bottom: ${(props) => (props.active ? "2px solid #333" : 0)};
+  font-weight: ${(props) => (props.active ? 900 : "normal")};
+  padding-left: ${(props) => (props.firstTab ? 0 : "inherit")};
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 `;
 
 const Header = styled.div`
@@ -79,9 +105,9 @@ const EventContainer = styled.div`
   gap: 2rem;
 `;
 
-const CreatePost: React.FC = () => {
-  const { createPost } = useStateContext();
-
+const CreateEvent: React.FC = () => {
+  const { CreateEvent } = useStateContext();
+  const [activeTab, setActiveTab] = useState("post");
   const [eventName, setEventName] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [gameDetails, setGameDetails] = useState("");
@@ -93,7 +119,7 @@ const CreatePost: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     // Handle form submission logic
-    const response = await createPost(eventName, gameDetails, imageUrl);
+    const response = await CreateEvent(eventName, gameDetails, imageUrl);
     if (response) {
       setEventName("");
       setImageUrl("");
@@ -103,68 +129,82 @@ const CreatePost: React.FC = () => {
   };
 
   return (
-    <CreatePostContainer>
-      <Header>
-        <Title>Create New Event</Title>
-      </Header>
-      <EventContainer>
-        <div>
-          <Form onSubmit={handleSubmit}>
-            <Label>Title</Label>
-            <Input
-              type="text"
-              value={eventName}
-              onChange={(e) => setEventName(e.target.value)}
-              placeholder="Enter event name..."
-              required
-            />
+    <>
+      <TabsContainer>
+        <Tabs>
+          <TabButton
+            firstTab
+            active={activeTab === "post"}
+            onClick={() => setActiveTab("post")}
+          >
+            Post
+          </TabButton>
+          <TabButton
+            active={activeTab === "event"}
+            onClick={() => setActiveTab("event")}
+          >
+            Event
+          </TabButton>
+        </Tabs>
+      </TabsContainer>
+      {activeTab === "event" ? (
+        <CreateEventContainer>
+          <Header>
+            <Title>Create New Event</Title>
+          </Header>
+          <EventContainer>
+            <div>
+              <Form onSubmit={handleSubmit}>
+                <Label>Title</Label>
+                <Input
+                  type="text"
+                  value={eventName}
+                  onChange={(e) => setEventName(e.target.value)}
+                  placeholder="Enter event name..."
+                  required
+                />
 
-            <Label>Description</Label>
-            <TextArea
-              value={gameDetails}
-              onChange={(e) => setGameDetails(e.target.value)}
-              placeholder="Enter game details..."
-              required
-            />
+                <Label>Description</Label>
+                <TextArea
+                  value={gameDetails}
+                  onChange={(e) => setGameDetails(e.target.value)}
+                  placeholder="Enter game details..."
+                  required
+                />
 
-            <Label htmlFor="link">Event Link</Label>
-            <Input
-              id="link"
-              type="url"
-              value={link}
-              onChange={(e) => setLink(e.target.value)}
-            />
+                <Label htmlFor="link">Event Link</Label>
+                <Input
+                  id="link"
+                  type="url"
+                  value={link}
+                  onChange={(e) => setLink(e.target.value)}
+                />
 
-            <ButtonContainer>
-              <Button type="submit" primary>
-                Create Event
-              </Button>
-            </ButtonContainer>
-          </Form>
-        </div>
-        <div>
-          <Form>
-            <Label htmlFor="remarks">Remarks</Label>
-            <TextArea
-              id="remarks"
-              rows={2}
-              value={remarks}
-              onChange={(e) => setRemarks(e.target.value)}
-            />
-            <Label htmlFor="tokenAmount">Fan Tokens Required to RSVP</Label>
-            <Input
-              id="tokenAmount"
-              type="number"
-              min="0"
-              value={tokenAmount}
-              onChange={(e) => setTokenAmount(e.target.value)}
-              required
-            />
-          </Form>
-        </div>
-      </EventContainer>
-    </CreatePostContainer>
+                <ButtonContainer>
+                  <Button type="submit" primary>
+                    Create Event
+                  </Button>
+                </ButtonContainer>
+              </Form>
+            </div>
+            <div>
+              <Form>
+                <Label htmlFor="remarks">Remarks</Label>
+                <TextArea
+                  id="remarks"
+                  rows={2}
+                  value={remarks}
+                  onChange={(e) => setRemarks(e.target.value)}
+                />
+              </Form>
+            </div>
+          </EventContainer>
+        </CreateEventContainer>
+      ) : (
+        <CreatePost />
+      )}
+    </>
   );
 };
 
-export default CreatePost;
+export default CreateEvent;
