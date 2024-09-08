@@ -1,4 +1,6 @@
 {
+  "name": "fancast",
+  "homepage": "https://fancast.xyz",
   "browserslist": {
     "development": [
       "last 1 chrome version",
@@ -96,7 +98,6 @@
       "react-app/jest"
     ]
   },
-  "name": "evm-modal-example",
   "overrides": {
     "typescript": "^5.0.4"
   },

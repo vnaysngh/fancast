@@ -12,12 +12,18 @@ import { useQuery } from "@apollo/client";
 import { config } from "../../main";
 import CreateCommunityModal from "../../components/CreateCommunity";
 import Popup from "./mint";
-import { FaUsers, FaEthereum, FaFileContract } from "react-icons/fa";
+import {
+  FaUsers,
+  FaEthereum,
+  FaFileContract,
+  FaShareAlt
+} from "react-icons/fa";
 import { alchemyChainConfig } from "../../components/Web3Auth/chainConfig";
 import { useAccount, useSwitchChain } from "wagmi";
 import { useBalance } from "wagmi";
 import MintTransactionModal from "../../components/Transaction";
 import ChilizTxModal from "../../components/Transaction/ChilizModal";
+import OminChainConfirmation from "../../components/Transaction/OminChainConfirmation";
 
 // Styled Components
 const PageContainer = styled.div`
@@ -98,7 +104,8 @@ const FanItemImage = styled(ItemImage)`
 
 const ItemInfo = styled.div`
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
   gap: 10px;
   padding: 15px;
 `;
@@ -118,7 +125,6 @@ const FanItemTitle = styled(ItemTitle)`
 `;
 
 const TagsContainer = styled.div`
-  margin-top: 10px;
   display: flex;
   gap: 5px;
 `;
@@ -190,7 +196,6 @@ const LockDetails = styled.div`
 const IconContainer = styled.div`
   display: flex;
   // justify-content: space-between;
-  margin-top: 10px;
   align-items: center;
   gap: 2rem;
 `;
@@ -269,6 +274,8 @@ const Collections = () => {
   const [attestationTxHash, setAttestationTxHash] = useState<boolean>(false);
   const [isChilizModalOpen, setIsChilizModalOpen] = useState(false);
   const [isRequiredBalance, setIsRequiredBalance] = useState(false);
+  const [IsOmniChainModalOpen, setIsOmniChainModalOpen] = useState(false);
+  const [isOmniChainConfirming, setIsOmniChainConfirming] = useState(false);
   const { data: userCreatedCommunities } = useQuery(locksOwnedByLockManager, {
     variables: { deployer: address }
   });
@@ -466,6 +473,15 @@ const Collections = () => {
     (nft) => nft !== undefined
   );
 
+  const handleUpdateDataAcrossChains = async () => {
+    setIsOmniChainConfirming(true);
+    const response = await updateDataAcrossChains();
+    if (response) {
+      setTxHash(true);
+    }
+    setIsOmniChainConfirming(false);
+  };
+
   // const filteredCollection = collections?.collections?.length
   //   ? collections?.collections?.filter(
   //       (collection: any) =>
@@ -639,11 +655,8 @@ const Collections = () => {
           <NewItemsGrid>
             {subscribed?.length ? (
               subscribed?.map((nft: any) => (
-                <NewItemCard
-                  key={nft.collection}
-                  onClick={() => handleNavigate(nft.contract)}
-                >
-                  <ImageContainer>
+                <NewItemCard key={nft.collection}>
+                  <ImageContainer onClick={() => handleNavigate(nft.contract)}>
                     <Image
                       src={
                         nft.display_image_url
@@ -656,6 +669,11 @@ const Collections = () => {
                   <ItemInfo>
                     <ItemTitle>{nft.name}</ItemTitle>
                     {/* <JoinButton>Enter</JoinButton> */}
+                    <ItemTitle>
+                      <FaShareAlt
+                        onClick={() => setIsOmniChainModalOpen(true)}
+                      />
+                    </ItemTitle>
                   </ItemInfo>
                 </NewItemCard>
               ))
@@ -683,6 +701,15 @@ const Collections = () => {
           txHash={mintingTxHash}
           mintNFT={mintNFT}
           attestationTxHash={attestationTxHash}
+        />
+      )}
+
+      {IsOmniChainModalOpen && (
+        <OminChainConfirmation
+          txHash={txHash}
+          onClose={() => setIsOmniChainModalOpen(false)}
+          isOmniChainConfirming={isOmniChainConfirming}
+          handleUpdateDataAcrossChains={handleUpdateDataAcrossChains}
         />
       )}
 

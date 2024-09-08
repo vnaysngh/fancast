@@ -322,22 +322,28 @@ export const StateContextProvider = ({ children }: { children: any }) => {
   const updateDataAcrossChains = async () => {
     if (!account || !account.chainId) return;
 
-    if (!account || !account.chainId) return;
     const quote = await simulateContract(config, {
       abi: ERC721ABI,
       address: ONFT[account.chainId],
       functionName: "quote",
-      args: [dstIds[account.chainId]]
+      args: [[40232]]
     }).catch((err) => err);
 
+    console.log(quote, "quote");
+
     const nativeFee = quote?.result?.nativeFee.toString();
+
+    if (!nativeFee) {
+      console.error("Failed to retrieve native fee");
+      return;
+    }
 
     try {
       return await writeContract(config, {
         abi: ERC721ABI,
         address: ONFT[account.chainId],
         functionName: "updateDataAcrossChains",
-        args: [dstIds[account.chainId]],
+        args: [[40232]],
         value: nativeFee!
       })
         .then((res) => res)
