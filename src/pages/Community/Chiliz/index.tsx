@@ -89,7 +89,7 @@ const EventsFeedContainer = styled.div`
   width: 30%; // 1/3 of the total width
 `;
 
-const Story: React.FC<StoryProps> = () => {
+const Story = () => {
   const [activeTab, setActiveTab] = useState("explore");
   const navigate = useNavigate();
 

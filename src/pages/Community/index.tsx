@@ -212,7 +212,7 @@ const HomePage = () => {
               </CardContent>
             </Card>
 
-            <Card>
+            <Card onClick={() => handleNavigation("discussions/feed")}>
               <CardTitle>Discussions</CardTitle>
               <CardContent>
                 <p>Engage with fellow NFT enthusiasts in lively discussions.</p>

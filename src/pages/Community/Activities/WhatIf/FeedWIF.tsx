@@ -183,7 +183,7 @@ const CreateButton = styled.button`
   }
 `;
 
-const Story: React.FC<StoryProps> = () => {
+const Story = () => {
   const { tipAuthor } = useStateContext();
   const [openTipModal, setOpenTipModal] = useState(false);
   const [activeTab, setActiveTab] = useState("explore");
@@ -202,7 +202,7 @@ const Story: React.FC<StoryProps> = () => {
 
   // Utility function for navigation
   const handleNavigation = (path: string) => {
-    navigate(`/community/${communityId}/what-if/${path}`);
+    navigate(`/community/${communityId}/discussions/${path}`);
   };
 
   const onTip = async () => {
@@ -243,12 +243,6 @@ const Story: React.FC<StoryProps> = () => {
             onClick={() => setActiveTab("explore")}
           >
             Explore
-          </TabButton>
-          <TabButton
-            active={activeTab === "fanTokens"}
-            onClick={() => setActiveTab("fanTokens")}
-          >
-            My Stories
           </TabButton>
         </Tabs>
         <CreateButton onClick={() => handleNavigation("create")}>

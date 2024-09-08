@@ -29,15 +29,15 @@ export const Router = () => {
             <Route path="/community/:communityId" element={<Community />} />
             <Route path="/community/:communityId/inbox" element={<Inbox />} />
             <Route
-              path="/community/:communityId/what-if"
+              path="/community/:communityId/discussions"
               element={<WhatIf />}
             />
             <Route
-              path="/community/:communityId/what-if/create"
+              path="/community/:communityId/discussions/create"
               element={<WhatIf />}
             />
             <Route
-              path="/community/:communityId/what-if/feed"
+              path="/community/:communityId/discussions/feed"
               element={<WhatIf />}
             />
             <Route path="/community/:communityId/casts" element={<Casts />} />
