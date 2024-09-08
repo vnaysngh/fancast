@@ -12,7 +12,7 @@ import Web3 from "web3";
 import { dstIds, OAPP, ONFT } from "../constants/contract";
 import Paywall from "@unlock-protocol/paywall";
 import networks, { sepolia } from "@unlock-protocol/networks";
-import { signClient } from "../signprotocol/client";
+import { signClient } from "../Signprotocol/SignClient";
 import { useParams } from "react-router-dom";
 
 const paywallConfig = {
@@ -397,8 +397,6 @@ export const StateContextProvider = ({ children }: { children: any }) => {
       .then((res) => res)
       .catch((err) => err);
   };
-
-  console.log(currentCommunity, "currentcomm");
 
   const buyMembership = async () => {
     if (!signer || !provider) return;

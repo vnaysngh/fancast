@@ -13,6 +13,7 @@ const MessagesContainer = styled.div`
 `;
 
 const Message = styled.div<{ fromMe: boolean }>`
+  font-family: "DM Sans";
   display: flex;
   justify-content: ${({ fromMe }) => (fromMe ? "flex-end" : "flex-start")};
   margin-bottom: 10px;

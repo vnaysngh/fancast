@@ -32,8 +32,8 @@ const MemberCard = styled.div<{ isActive: boolean }>`
   padding: 10px;
   margin-bottom: 1.5rem;
   cursor: pointer;
-  box-shadow: 6px 6px 0px 0px rgba(0, 0, 0, 0.09);
-  background: ${({ isActive }) => (isActive ? "#333" : "transparent")};
+  border-radius: 8px;
+  background: ${({ isActive }) => (isActive ? "#8363e2" : "transparent")};
   color: ${({ isActive }) => (isActive ? "#fff" : "default")};
 `;
 
@@ -176,50 +176,55 @@ const InboxPage: React.FC = () => {
   };
 
   return (
-    <PageContainer>
-      <Sidebar>
-        {conversations?.length &&
-          conversations.map((conversation) => (
-            <MemberCard
-              key={conversation.peerAddress}
-              isActive={memberId === conversation.peerAddress}
-              onClick={() => handleConversationSelect(conversation)}
-            >
-              {/* <ProfilePic src={conversation.profilePic} alt={conversation.name} /> */}
-              <MemberName>{`${conversation.peerAddress.slice(
-                0,
-                8
-              )}...${conversation.peerAddress.slice(-4)}`}</MemberName>
-            </MemberCard>
-          ))}
-      </Sidebar>
+    <>
+      <h2 style={{ textDecoration: "underline", fontFamily: "DM Sans" }}>
+        Inbox
+      </h2>
+      <PageContainer>
+        <Sidebar>
+          {conversations?.length &&
+            conversations.map((conversation) => (
+              <MemberCard
+                key={conversation.peerAddress}
+                isActive={memberId === conversation.peerAddress}
+                onClick={() => handleConversationSelect(conversation)}
+              >
+                {/* <ProfilePic src={conversation.profilePic} alt={conversation.name} /> */}
+                <MemberName>{`${conversation.peerAddress.slice(
+                  0,
+                  8
+                )}...${conversation.peerAddress.slice(-4)}`}</MemberName>
+              </MemberCard>
+            ))}
+        </Sidebar>
 
-      {isLoading ? (
-        <ChatWindow> Loading</ChatWindow>
-      ) : memberId && isOnNetwork && hasVerified ? (
-        <ChatWindow>
-          <ChatHeader>{memberId}</ChatHeader>
-          {conversation && client && (
-            <Conversation conversation={conversation} address={address} />
-          )}
-          <InputContainer>
-            <ChatInput
-              type="text"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              placeholder="Type your message..."
-            />
-            <SendButton onClick={handleStartConversation}>Send</SendButton>
-          </InputContainer>
-        </ChatWindow>
-      ) : (
-        <EmptyState>
-          <ChatHeader>
-            Select a conversation from the left panel to get started
-          </ChatHeader>
-        </EmptyState>
-      )}
-    </PageContainer>
+        {isLoading ? (
+          <ChatWindow> Loading</ChatWindow>
+        ) : memberId && isOnNetwork && hasVerified ? (
+          <ChatWindow>
+            <ChatHeader>{memberId}</ChatHeader>
+            {conversation && client && (
+              <Conversation conversation={conversation} address={address} />
+            )}
+            <InputContainer>
+              <ChatInput
+                type="text"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                placeholder="Type your message..."
+              />
+              <SendButton onClick={handleStartConversation}>Send</SendButton>
+            </InputContainer>
+          </ChatWindow>
+        ) : (
+          <EmptyState>
+            <ChatHeader>
+              Select a conversation from the left panel to get started
+            </ChatHeader>
+          </EmptyState>
+        )}
+      </PageContainer>
+    </>
   );
 };
 

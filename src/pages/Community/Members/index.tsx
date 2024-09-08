@@ -53,10 +53,29 @@ const Username = styled.span`
 `;
 
 const Bio = styled.p`
-  font-size: 12px;
+  font-family: "DM Sans";
+  font-size: 1rem;
   font-weight: 500;
   color: #999;
   margin-top: 5px;
+`;
+
+const EtherscanLink = styled.a`
+  color: #1e90ff;
+  text-decoration: none;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
+const Icon = styled.img`
+  height: 1.25rem;
+  width: 1.25rem;
+  cursor: pointer;
 `;
 
 const FeedData = () => {
@@ -87,12 +106,16 @@ const FeedData = () => {
     }
   }, [communityId, subscribed]);
 
+  console.log(currentCommunity, "curentcmmm");
+
   return (
     <TokenGate>
+      <h2>
+        {currentCommunity?.name} Members ({communityMembers.data?.length ?? ""})
+      </h2>
       <FeedContainer>
         {communityMembers && communityMembers.data?.length ? (
           communityMembers.data?.map((member: string) => {
-            console.log(member);
             return (
               <FeedItem key={member}>
                 <ProfilePic
@@ -101,15 +124,24 @@ const FeedData = () => {
                 />
                 <ContentContainer>
                   <Header>
-                    <Username>
-                      {member.slice(0, 6)}...{member.slice(-4)}
-                    </Username>
+                    <div style={{ display: "flex" }}>
+                      <Username>
+                        {member.slice(0, 6)}...{member.slice(-4)}
+                      </Username>
+                      <EtherscanLink
+                        href={currentCommunity?.opensea_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <Icon
+                          src=" https://opensea.io/static/images/logos/opensea-logo.svg"
+                          alt="Etherscan"
+                        />
+                      </EtherscanLink>
+                    </div>
                     <FaRegMessage onClick={() => handleNavigation(member)} />
                   </Header>
-                  <Bio>
-                    {currentCommunity?.name}: Token Id:{" "}
-                    {currentCommunity?.identifier}
-                  </Bio>
+                  <Bio>{currentCommunity?.name}</Bio>
                 </ContentContainer>
               </FeedItem>
             );

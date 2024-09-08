@@ -99,7 +99,7 @@ const Story: React.FC<StoryProps> = () => {
   };
 
   return (
-    <TokenGate>
+    <>
       <CommunityTitle>/Chiliz</CommunityTitle>
       <PageContainer>
         <MainContentContainer>
@@ -145,7 +145,7 @@ const Story: React.FC<StoryProps> = () => {
           </EventsFeedContainer>
         )}
       </PageContainer>
-    </TokenGate>
+    </>
   );
 };
 

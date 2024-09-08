@@ -68,6 +68,16 @@ const CardContent = styled.div`
   color: #666;
 `;
 
+const ContractDetails = styled.div`
+  display: flex;
+  margin-top: 1rem;
+  gap: 8px;
+`;
+
+const ContractAddress = styled.div`
+  text-decoration: underline;
+`;
+
 const Button = styled.button`
   font-family: "Bungee", sans-serif;
   background-color: #333;
@@ -83,6 +93,26 @@ const Button = styled.button`
     color: #333;
     box-shadow: 6px 6px 0px 0px rgba(0, 0, 0, 0.09);
   }
+`;
+
+const EtherscanLink = styled.a`
+  color: #1e90ff;
+  text-decoration: none;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+  text-decoration: underline;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
+const Icon = styled.img`
+  height: 1.25rem;
+  width: 1.25rem;
+  cursor: pointer;
 `;
 
 const HomePage = () => {
@@ -136,42 +166,60 @@ const HomePage = () => {
             <CardTitle>Welcome, {username || "Loading..."}</CardTitle>
             <CardContent>
               <p>Glad to have you back in our exclusive NFT community!</p>
+              <img src={currentCommunity?.display_image_url} />
+              <EtherscanLink
+                href={currentCommunity?.opensea_url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Opensea
+              </EtherscanLink>
+              <ContractDetails>
+                Contract:
+                <ContractAddress>
+                  {" "}
+                  {currentCommunity?.contract.slice(0, 10)}...
+                  {currentCommunity?.contract.slice(-4)}
+                </ContractAddress>
+              </ContractDetails>
               {/* <Button>Update Profile</Button> */}
             </CardContent>
           </Card>
 
-          <Card>
-            <CardTitle>Community Stats</CardTitle>
-            <CardContent>
-              <p>Members: {communityMembersCount.data?.toString()}</p>
-              {/* <p>Active Posts: {communityStats.activePosts}</p>
+          <div>
+            <Card>
+              <CardTitle>Community Stats</CardTitle>
+              <CardContent>
+                <p>Members: {communityMembersCount.data?.toString()}</p>
+                {/* <p>Active Posts: {communityStats.activePosts}</p>
             <p>Avg. Engagement: {communityStats.avgEngagement}</p> */}
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
 
-          <Card onClick={() => handleNavigation("members")}>
-            <CardTitle>Other Members</CardTitle>
-            <CardContent>
-              <p>Connect with fellow NFT enthusiasts:</p>
-              <Button>Browse Members</Button>
-            </CardContent>
-          </Card>
+            <Card onClick={() => handleNavigation("members")}>
+              <CardTitle>Other Members</CardTitle>
+              <CardContent>
+                <p>Connect with fellow NFT enthusiasts:</p>
+                <Button>Browse Members</Button>
+              </CardContent>
+            </Card>
 
-          <Card onClick={() => handleNavigation("casts")}>
-            <CardTitle>Farcaster Casts</CardTitle>
-            <CardContent>
-              <p>Farcaster casts tailored for community members</p>
-              <Button>View More</Button>
-            </CardContent>
-          </Card>
+            <Card onClick={() => handleNavigation("casts")}>
+              <CardTitle>Farcaster Casts</CardTitle>
+              <CardContent>
+                <p>Farcaster casts tailored for community members</p>
+                <Button>View More</Button>
+              </CardContent>
+            </Card>
 
-          <Card>
-            <CardTitle>Feed</CardTitle>
-            <CardContent>
-              <p>Trade exclusive NFTs in our community marketplace</p>
-              <Button>Play Now</Button>
-            </CardContent>
-          </Card>
+            <Card>
+              <CardTitle>Discussions</CardTitle>
+              <CardContent>
+                <p>Engage with fellow NFT enthusiasts in lively discussions.</p>
+                <Button>Check Feed</Button>
+              </CardContent>
+            </Card>
+          </div>
 
           {/*   <Card onClick={() => handleNavigation("what-if/feed")}>
             <CardTitle>What If</CardTitle>

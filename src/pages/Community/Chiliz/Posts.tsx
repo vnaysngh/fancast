@@ -165,7 +165,6 @@ const EventsFeed: React.FC = () => {
                 </Button>
               </PostMetaDataContainer>
               <TipButton onClick={() => setOpenTipModal(true)}>
-                5{" "}
                 <img
                   src="https://raw.githubusercontent.com/kewlexchange/assets/main/chiliz/tokens/0x721ef6871f1c4efe730dce047d40d1743b886946/logo.svg"
                   alt="chiliz icon"
