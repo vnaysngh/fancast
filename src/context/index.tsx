@@ -280,7 +280,7 @@ export const StateContextProvider = ({ children }: { children: any }) => {
         .then((res) => res)
         .catch((err) => err);
     } catch (error) {
-      console.error("updating data across chains failed:", error);
+      console.error("creating post failed:", error);
     }
   };
 

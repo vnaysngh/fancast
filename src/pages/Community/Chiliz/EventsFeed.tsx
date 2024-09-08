@@ -25,13 +25,7 @@ const EventCard = styled.div`
 `;
 
 const EventInfo = styled.div`
-  width: 70%;
-`;
-
-const EventImage = styled.img`
-  width: 30%;
-  border-radius: 8px;
-  object-fit: cover;
+  width: 100%;
 `;
 
 const EventTitle = styled.h3`
@@ -42,6 +36,11 @@ const EventTitle = styled.h3`
 const EventDetails = styled.p`
   margin: 5px 0;
   font-size: 16px;
+`;
+
+const Organizer = styled.p`
+  margin: 5px 0;
+  font-size: 14px;
 `;
 
 const ButtonsContainer = styled.div`
@@ -77,103 +76,63 @@ const Button = styled.button`
   }
 `;
 
-const TipButton = styled(Button)``;
-
 const EventsFeed: React.FC = () => {
   const { onUpvote, onComment, tipAuthor } = useStateContext();
   const [openTipModal, setOpenTipModal] = useState(false);
   const [activeTab, setActiveTab] = useState("1");
-  const [post, setPost] = useState<any>();
+  const [event, setPost] = useState<any>();
   const [isCommentsOpen, setIsCommentsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [tipping, setTipping] = useState(false);
   const [txHash, setTxHash] = useState(null);
-  const posts: any = useReadContract({
+  const events: any = useReadContract({
     abi,
     address: "0xFf3d395AcaCC791c3a3eF1710ceEC69A3e153dB2",
-    functionName: "getAllPosts"
+    functionName: "getAllEvents"
   });
 
-  const openComments = (post: any) => {
-    setIsCommentsOpen(true);
-    setPost(post);
-  };
+  const Venue = styled.div`
+    text-decoration: underline;
+  `;
 
-  const upvotePost = async (id: any) => {
-    const response = onUpvote(Number(id));
-    if (response) {
-      setTxHash(response);
-    }
-  };
-
-  const onTip = async () => {
-    setTipping(true);
-    const response = await tipAuthor(activeTab);
-    if (response && response.transactionHash) {
-      setTxHash(response.transactionHash);
-    }
-    setTipping(false);
-  };
-
-  const handleCloseTipModal = () => {
-    setOpenTipModal(false);
-  };
-
-  const commentPost = async (message: string) => {
-    if (!post || !post.id) return;
-    setIsLoading(true);
-    const response = onComment(Number(post?.id), message);
-    if (response) {
-      setTxHash(response);
-    }
-    setIsLoading(false);
+  const handleLinkRedirect = (link: string) => {
+    window.open(link, "_blank");
   };
 
   return (
     <PostsWrapper>
-      <TipModal
-        isOpen={openTipModal}
-        onClose={handleCloseTipModal}
-        onTip={onTip}
-        tipping={tipping}
-        txHash={txHash}
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-      />
-
-      {isCommentsOpen && post && post?.id && (
-        <CommentPopup
-          isLoading={isLoading}
-          post={post}
-          onClose={() => setIsCommentsOpen(false)}
-          onComment={commentPost}
-        />
-      )}
       {/* <h2>Events Feed</h2> */}
-      {posts?.data?.map((post: any) => (
-        <EventCard key={post.id}>
+      {events?.data?.map((event: any) => (
+        <EventCard key={event.id}>
           <EventInfo>
-            <EventTitle>Title: {post.title}</EventTitle>
-            <EventDetails>Description: {post.description}</EventDetails>
+            <Organizer>
+              By: {event.organizer.slice(0, 6)}...{event.organizer.slice(-4)}
+            </Organizer>
+            <EventTitle>Title: {event.title}</EventTitle>
+            <EventDetails>Description: {event.description}</EventDetails>
+            <EventDetails>Event Type: Meetup</EventDetails>
+
+            <Venue onClick={() => handleLinkRedirect(event.venueLink)}>
+              Location
+            </Venue>
             <ButtonsContainer>
               <PostMetaDataContainer>
-                <Button onClick={() => upvotePost(post.id)}>
-                  <FiThumbsUp /> {post.upvotes.toString()}
+                <Button>
+                  <FiThumbsUp />
                 </Button>
-                <Button onClick={() => openComments(post)}>
-                  <FaRegCommentAlt /> {post.commentCount.toString()}
+                <Button>
+                  <FaRegCommentAlt />
                 </Button>
               </PostMetaDataContainer>
-              <TipButton onClick={() => setOpenTipModal(true)}>
-                5{" "}
+              <Button onClick={() => setOpenTipModal(true)}>
+                RSVP{" "}
                 <img
                   src="https://raw.githubusercontent.com/kewlexchange/assets/main/chiliz/tokens/0x721ef6871f1c4efe730dce047d40d1743b886946/logo.svg"
                   alt="chiliz icon"
                 />
-              </TipButton>
+              </Button>
             </ButtonsContainer>
           </EventInfo>
-          <EventImage src={post.imageUrl} alt="Event Image" />
         </EventCard>
       ))}
     </PostsWrapper>

@@ -81,9 +81,11 @@ const CreatePost: React.FC = () => {
   const [imageUrl, setImageUrl] = useState("");
   const [gameDetails, setGameDetails] = useState("");
   const [txHash, setTxHash] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
     // Handle form submission logic
     const response = await createPost(eventName, gameDetails, imageUrl);
     if (response) {
@@ -92,12 +94,14 @@ const CreatePost: React.FC = () => {
       setGameDetails("");
       setTxHash(response);
     }
+
+    setIsLoading(false);
   };
 
   return (
     <CreatePostContainer>
       <Header>
-        <Title>Create New Event</Title>
+        <Title>Create New Post</Title>
       </Header>
       <Form onSubmit={handleSubmit}>
         <Label>Title</Label>
@@ -127,8 +131,8 @@ const CreatePost: React.FC = () => {
         />
 
         <ButtonContainer>
-          <Button type="submit" primary>
-            Create Post
+          <Button type="submit" primary disabled={isLoading}>
+            {isLoading ? "Please submit Tx in your wallet" : "Submit"}
           </Button>
         </ButtonContainer>
       </Form>

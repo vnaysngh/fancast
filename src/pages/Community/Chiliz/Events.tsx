@@ -129,7 +129,7 @@ const handleLinkRedirect = (link: string) => {
   window.open(link, "_blank");
 };
 
-const EventsFeed: React.FC = () => {
+const HighlightedEvents: React.FC = () => {
   const events: any = useReadContract({
     abi,
     address: "0xFf3d395AcaCC791c3a3eF1710ceEC69A3e153dB2",
@@ -180,4 +180,4 @@ const EventsFeed: React.FC = () => {
   );
 };
 
-export default EventsFeed;
+export default HighlightedEvents;

@@ -8,8 +8,9 @@ import { sepolia } from "wagmi/chains";
 import EventForm from "./CreateEvent";
 import Posts from "./Posts";
 import CreateEvent from "./CreateEvent";
-import EventsFeed from "./Events";
+import HighlightedEvents from "./Events";
 import { TokenGate } from "../../../components/TokenGate/tokengate";
+import EventsFeed from "./EventsFeed";
 
 interface StoryProps {
   userName: string;
@@ -135,11 +136,12 @@ const Story: React.FC<StoryProps> = () => {
             {/* <EventForm /> */}
             {activeTab === "explore" && <Posts />}
             {activeTab === "create" && <CreateEvent />}
+            {activeTab === "events" && <EventsFeed />}
           </MainContainer>
         </MainContentContainer>
         {(activeTab === "explore" || activeTab === "events") && (
           <EventsFeedContainer>
-            <EventsFeed />
+            <HighlightedEvents />
           </EventsFeedContainer>
         )}
       </PageContainer>
