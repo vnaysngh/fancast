@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useStateContext } from "../../../../context";
 import TransactionConfirmationPopup from "../../../../components/popups/whatIfTxPopup";
+import { TokenGate } from "../../../../components/TokenGate/tokengate";
 
 // Styled Components
 const Container = styled.div`
@@ -106,39 +107,41 @@ const WhatIfCommunity: React.FC = () => {
   };
 
   return (
-    <Container>
-      {isOpen && (
-        <TransactionConfirmationPopup
-          isLoading={isLoading}
-          onClose={handleCloseModal}
-          error={error}
-          txHash={txHash}
-        />
-      )}
+    <TokenGate>
+      <Container>
+        {isOpen && (
+          <TransactionConfirmationPopup
+            isLoading={isLoading}
+            onClose={handleCloseModal}
+            error={error}
+            txHash={txHash}
+          />
+        )}
 
-      <Title>Create WHAT IF</Title>
-      <Form onSubmit={handleFormSubmit}>
-        <FormGroup>
-          <Label>Story Title</Label>
-          <Input
-            type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            required
-          />
-        </FormGroup>
-        <FormGroup>
-          <Label>Description</Label>
-          <TextArea
-            rows={5}
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            required
-          />
-        </FormGroup>
-        <Button type="submit">Create Story</Button>
-      </Form>
-    </Container>
+        <Title>Create WHAT IF</Title>
+        <Form onSubmit={handleFormSubmit}>
+          <FormGroup>
+            <Label>Story Title</Label>
+            <Input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              required
+            />
+          </FormGroup>
+          <FormGroup>
+            <Label>Description</Label>
+            <TextArea
+              rows={5}
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              required
+            />
+          </FormGroup>
+          <Button type="submit">Create Story</Button>
+        </Form>
+      </Container>
+    </TokenGate>
   );
 };
 

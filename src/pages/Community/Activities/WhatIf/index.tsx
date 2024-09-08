@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { FaArrowRight } from "react-icons/fa";
 import CreateWIF from "./CreateWIF";
 import FeedWIF from "./FeedWIF";
+import { TokenGate } from "../../../../components/TokenGate/tokengate";
 
 // Styled components
 const Container = styled.div`
@@ -99,7 +100,7 @@ const HomePage = () => {
     );
   };
 
-  return <>{getPageContent()}</>;
+  return <TokenGate>{getPageContent()}</TokenGate>;
 };
 
 export default HomePage;

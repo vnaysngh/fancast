@@ -9,6 +9,7 @@ import EventForm from "./CreateEvent";
 import Posts from "./Posts";
 import CreateEvent from "./CreateEvent";
 import EventsFeed from "./Events";
+import { TokenGate } from "../../../components/TokenGate/tokengate";
 
 interface StoryProps {
   userName: string;
@@ -97,7 +98,7 @@ const Story: React.FC<StoryProps> = () => {
   };
 
   return (
-    <>
+    <TokenGate>
       <CommunityTitle>/Chiliz</CommunityTitle>
       <PageContainer>
         <MainContentContainer>
@@ -142,7 +143,7 @@ const Story: React.FC<StoryProps> = () => {
           </EventsFeedContainer>
         )}
       </PageContainer>
-    </>
+    </TokenGate>
   );
 };
 

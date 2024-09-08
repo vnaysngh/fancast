@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useStateContext } from "../../../context";
 import { FaRegMessage } from "react-icons/fa6";
 import { useNavigate, useParams } from "react-router-dom";
+import { TokenGate } from "../../../components/TokenGate/tokengate";
 
 const FeedContainer = styled.div`
   display: grid;
@@ -67,30 +68,32 @@ const FeedData = () => {
   };
 
   return (
-    <FeedContainer>
-      {membersMetadata && Object.keys(membersMetadata).length ? (
-        Object.keys(membersMetadata).map((member) => {
-          const memberData = membersMetadata[member][0];
-          return (
-            <FeedItem key={memberData.hash}>
-              <ProfilePic
-                src={memberData?.pfp_url}
-                alt={memberData?.username}
-              />
-              <ContentContainer>
-                <Header>
-                  <Username>{memberData?.username}</Username>
-                  <FaRegMessage onClick={() => handleNavigation(member)} />
-                </Header>
-                <Bio>{memberData?.profile.bio.text}</Bio>
-              </ContentContainer>
-            </FeedItem>
-          );
-        })
-      ) : (
-        <>fgfg</>
-      )}
-    </FeedContainer>
+    <TokenGate>
+      <FeedContainer>
+        {membersMetadata && Object.keys(membersMetadata).length ? (
+          Object.keys(membersMetadata).map((member) => {
+            const memberData = membersMetadata[member][0];
+            return (
+              <FeedItem key={memberData.hash}>
+                <ProfilePic
+                  src={memberData?.pfp_url}
+                  alt={memberData?.username}
+                />
+                <ContentContainer>
+                  <Header>
+                    <Username>{memberData?.username}</Username>
+                    <FaRegMessage onClick={() => handleNavigation(member)} />
+                  </Header>
+                  <Bio>{memberData?.profile.bio.text}</Bio>
+                </ContentContainer>
+              </FeedItem>
+            );
+          })
+        ) : (
+          <>fgfg</>
+        )}
+      </FeedContainer>
+    </TokenGate>
   );
 };
 

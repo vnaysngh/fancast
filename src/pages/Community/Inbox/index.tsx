@@ -6,6 +6,7 @@ import { loadKeys, storeKeys } from "../../../utils/xmtpUtils";
 import InboxPage from "./CreateConversation";
 import { useStateContext } from "../../../context";
 import { useAccount } from "wagmi";
+import { TokenGate } from "../../../components/TokenGate/tokengate";
 
 const XMPTConnect = () => {
   const { client, error, isLoading, initialize } = useClient();
@@ -54,7 +55,11 @@ const XMPTConnect = () => {
     );
   }
 
-  return <InboxPage />;
+  return (
+    <TokenGate>
+      <InboxPage />
+    </TokenGate>
+  );
 };
 
 export default XMPTConnect;

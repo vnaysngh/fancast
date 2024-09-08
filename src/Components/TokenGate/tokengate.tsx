@@ -33,7 +33,7 @@ export const TokenGate: React.FC<TokenGateProps> = ({ children }) => {
 
   if (!userInfo.data?.attestationId) return <div>User is not authorized</div>;
 
-  if (loading) return <div>Loading..</div>;
+  if (loading) return <div>Authenticating. Please wait...</div>;
 
   if (!authorized && !loading) {
     navigate("/");

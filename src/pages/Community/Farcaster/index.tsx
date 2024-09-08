@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import { client } from "../../../neynarClient";
 import { FeedType, FilterType } from "@neynar/nodejs-sdk";
 import { FeedResponse } from "@neynar/nodejs-sdk/build/neynar-api/v2";
+import { TokenGate } from "../../../components/TokenGate/tokengate";
 
 const FeedContainer = styled.div`
   margin: 0 auto;
@@ -149,62 +150,67 @@ const FeedData = ({ feed }: any) => {
   };
 
   return (
-    <FeedContainer>
-      <h2>BAYC Casts ({feeds?.casts?.length ?? ""})</h2>
-      {feeds?.casts?.map((item: any) => (
-        <FeedItem key={item.hash}>
-          <ProfilePic src={item?.author.pfp_url} alt={item?.author.username} />
-          <ContentContainer>
-            <Header>
-              <Username>{item?.author.username}</Username>
-              <DisplayName>{item?.author.display_name}</DisplayName>
-            </Header>
-            <Bio>{item?.author.profile.bio.text}</Bio>
-            <PostText>{item.text}</PostText>
-            <Timestamp>{new Date(item.timestamp).toLocaleString()}</Timestamp>
-            {/* <ChannelInfo>
+    <TokenGate>
+      <FeedContainer>
+        <h2>BAYC Casts ({feeds?.casts?.length ?? ""})</h2>
+        {feeds?.casts?.map((item: any) => (
+          <FeedItem key={item.hash}>
+            <ProfilePic
+              src={item?.author.pfp_url}
+              alt={item?.author.username}
+            />
+            <ContentContainer>
+              <Header>
+                <Username>{item?.author.username}</Username>
+                <DisplayName>{item?.author.display_name}</DisplayName>
+              </Header>
+              <Bio>{item?.author.profile.bio.text}</Bio>
+              <PostText>{item.text}</PostText>
+              <Timestamp>{new Date(item.timestamp).toLocaleString()}</Timestamp>
+              {/* <ChannelInfo>
               <ChannelImage
                 src={item.channel?.image_url}
                 alt={item.channel?.name}
               />
               <ChannelName>{item.channel?.name}</ChannelName>
             </ChannelInfo> */}
-            <Reactions>
-              ❤️ {item.reactions?.likes_count} • 🔁{" "}
-              {item.reactions?.recasts_count} • 💬 {item.replies?.count}
-            </Reactions>
-          </ContentContainer>
-        </FeedItem>
-      ))}
-
-      {/* Pagination Controls */}
-      <PaginationContainer>
-        <PageButton
-          disabled={currentPage === 1}
-          onClick={() => handlePageChange(currentPage - 1)}
-        >
-          Previous
-        </PageButton>
-
-        {/* Dynamically render page numbers */}
-        {Array.from({ length: totalPages }, (_, index) => (
-          <PageButton
-            key={index + 1}
-            active={currentPage === index + 1}
-            onClick={() => handlePageChange(index + 1)}
-          >
-            {index + 1}
-          </PageButton>
+              <Reactions>
+                ❤️ {item.reactions?.likes_count} • 🔁{" "}
+                {item.reactions?.recasts_count} • 💬 {item.replies?.count}
+              </Reactions>
+            </ContentContainer>
+          </FeedItem>
         ))}
 
-        <PageButton
-          disabled={currentPage === totalPages}
-          onClick={() => handlePageChange(currentPage + 1)}
-        >
-          Next
-        </PageButton>
-      </PaginationContainer>
-    </FeedContainer>
+        {/* Pagination Controls */}
+        <PaginationContainer>
+          <PageButton
+            disabled={currentPage === 1}
+            onClick={() => handlePageChange(currentPage - 1)}
+          >
+            Previous
+          </PageButton>
+
+          {/* Dynamically render page numbers */}
+          {Array.from({ length: totalPages }, (_, index) => (
+            <PageButton
+              key={index + 1}
+              active={currentPage === index + 1}
+              onClick={() => handlePageChange(index + 1)}
+            >
+              {index + 1}
+            </PageButton>
+          ))}
+
+          <PageButton
+            disabled={currentPage === totalPages}
+            onClick={() => handlePageChange(currentPage + 1)}
+          >
+            Next
+          </PageButton>
+        </PaginationContainer>
+      </FeedContainer>
+    </TokenGate>
   );
 };
 

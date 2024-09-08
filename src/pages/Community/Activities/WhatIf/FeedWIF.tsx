@@ -9,6 +9,7 @@ import TipModal from "./Tip";
 import { useStateContext } from "../../../../context";
 import { OAPP } from "../../../../constants/contract";
 import { sepolia } from "wagmi/chains";
+import { TokenGate } from "../../../../components/TokenGate/tokengate";
 
 interface StoryProps {
   userName: string;
@@ -223,7 +224,7 @@ const Story: React.FC<StoryProps> = () => {
   };
 
   return (
-    <>
+    <TokenGate>
       <TipModal
         isOpen={openTipModal}
         onClose={handleCloseTipModal}
@@ -298,7 +299,7 @@ const Story: React.FC<StoryProps> = () => {
           )}
         </ContentWrapper>
       </MainContainer>
-    </>
+    </TokenGate>
   );
 };
 

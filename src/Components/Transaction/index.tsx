@@ -30,8 +30,7 @@ const ModalContainer = styled.div`
   background-color: #fff;
   padding: 1rem 2rem;
   border-radius: 10px;
-  max-width: fit-content;
-  width: 90%;
+  max-width: 500px;
   // color: #fff;
   position: relative;
   box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
@@ -117,7 +116,7 @@ const Message = styled.p`
   font-size: 18px;
   margin-bottom: 20px;
   text-align: center;
-  color: #b9bbbe;
+  color: #333;
 `;
 
 const CloseButton = styled.button`
