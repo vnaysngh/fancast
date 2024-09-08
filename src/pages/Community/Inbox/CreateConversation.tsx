@@ -59,7 +59,7 @@ const ChatWindow = styled.div`
 `;
 
 const ChatHeader = styled.div`
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   margin-bottom: 20px;
 `;
 
@@ -113,6 +113,7 @@ const InboxPage: React.FC = () => {
   const [conversation, setConversation] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [isOnNetwork, setIsOnNetwork] = useState(false);
+  const [hasVerified, setHasVerified] = useState(false);
   const { client } = useClient();
   const { canMessage } = useCanMessage();
   const { startConversation } = useStartConversation();
@@ -138,13 +139,17 @@ const InboxPage: React.FC = () => {
 
   useEffect(() => {
     const handleVerifyPeerAddress = async () => {
+      console.log(memberId);
       if (memberId && isValidEthereumAddress(memberId)) {
+        setHasVerified(false);
         setIsLoading(true);
         const isUserOnNetwork = await canMessage(memberId);
         setIsOnNetwork(isUserOnNetwork);
+        setHasVerified(true);
         setIsLoading(false);
       } else {
         setIsOnNetwork(false);
+        setHasVerified(true);
       }
     };
 
@@ -191,7 +196,7 @@ const InboxPage: React.FC = () => {
 
       {isLoading ? (
         <ChatWindow> Loading</ChatWindow>
-      ) : memberId && isOnNetwork ? (
+      ) : memberId && isOnNetwork && hasVerified ? (
         <ChatWindow>
           <ChatHeader>{memberId}</ChatHeader>
           {conversation && client && (

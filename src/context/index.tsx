@@ -13,6 +13,7 @@ import { dstIds, OAPP, ONFT } from "../constants/contract";
 import Paywall from "@unlock-protocol/paywall";
 import networks, { sepolia } from "@unlock-protocol/networks";
 import { signClient } from "../signprotocol/client";
+import { useParams } from "react-router-dom";
 
 const paywallConfig = {
   pessimistic: true,
@@ -39,6 +40,7 @@ export const StateContextProvider = ({ children }: { children: any }) => {
   const [collections, setCollections] = useState([]);
   const [chilizFanTokens, setChilizFanTokens] = useState<any>([]);
   const [provider, setProvider] = useState<any>();
+  const [currentCommunity, setCurrentCommunity] = useState({});
   const account = useAccount();
   const { address } = account;
 
@@ -395,6 +397,8 @@ export const StateContextProvider = ({ children }: { children: any }) => {
       .then((res) => res)
       .catch((err) => err);
   };
+
+  console.log(currentCommunity, "currentcomm");
 
   const buyMembership = async () => {
     if (!signer || !provider) return;

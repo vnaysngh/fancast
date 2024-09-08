@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { useAccount, useReadContract } from "wagmi";
@@ -92,7 +92,15 @@ const HomePage = () => {
     communityId: string;
   }>();
   const account = useAccount();
-  const { getOwnersForContract } = useStateContext();
+  const { getOwnersForContract, subscribed } = useStateContext();
+
+  const currentCommunity = useMemo(() => {
+    if (communityId && subscribed.length) {
+      return subscribed?.find((community: any) => {
+        return community.contract.toLowerCase() === communityId.toLowerCase();
+      });
+    }
+  }, [communityId, subscribed]);
 
   useEffect(() => {
     // Simulating fetching user data
@@ -120,7 +128,7 @@ const HomePage = () => {
     <TokenGate>
       <Container>
         <Header>
-          <Title>NFT Community Hub</Title>
+          <Title>{currentCommunity?.name}</Title>
         </Header>
 
         <Grid>

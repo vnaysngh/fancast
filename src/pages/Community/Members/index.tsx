@@ -1,11 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import styled from "styled-components";
 import { useStateContext } from "../../../context";
 import { FaRegMessage } from "react-icons/fa6";
 import { useNavigate, useParams } from "react-router-dom";
 import { TokenGate } from "../../../components/TokenGate/tokengate";
+import { ONFT } from "../../../constants/contract";
+import { useAccount, useReadContract } from "wagmi";
+import ERC721ABI from "../../../abi/erc721.json";
 
 const FeedContainer = styled.div`
+  margin-top: 10px;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
@@ -56,41 +60,62 @@ const Bio = styled.p`
 `;
 
 const FeedData = () => {
-  const { membersMetadata } = useStateContext();
+  const { subscribed } = useStateContext();
   const navigate = useNavigate();
   const { communityId } = useParams<{
     communityId: string;
   }>();
+  const account = useAccount();
 
   const handleNavigation = (memberId: string) => {
     if (!communityId) return;
-    navigate(`/community/${communityId}/inbox/${memberId}`);
+    navigate(`/community/${communityId}/inbox`);
   };
+
+  const communityMembers: any = useReadContract({
+    abi: ERC721ABI,
+    address: ONFT[account.chainId!],
+    functionName: "getCommunityMembers",
+    args: [communityId!]
+  });
+
+  const currentCommunity = useMemo(() => {
+    if (communityId && subscribed.length) {
+      return subscribed?.find((community: any) => {
+        return community.contract.toLowerCase() === communityId.toLowerCase();
+      });
+    }
+  }, [communityId, subscribed]);
 
   return (
     <TokenGate>
       <FeedContainer>
-        {membersMetadata && Object.keys(membersMetadata).length ? (
-          Object.keys(membersMetadata).map((member) => {
-            const memberData = membersMetadata[member][0];
+        {communityMembers && communityMembers.data?.length ? (
+          communityMembers.data?.map((member: string) => {
+            console.log(member);
             return (
-              <FeedItem key={memberData.hash}>
+              <FeedItem key={member}>
                 <ProfilePic
-                  src={memberData?.pfp_url}
-                  alt={memberData?.username}
+                  src={currentCommunity?.display_image_url}
+                  alt={""}
                 />
                 <ContentContainer>
                   <Header>
-                    <Username>{memberData?.username}</Username>
+                    <Username>
+                      {member.slice(0, 6)}...{member.slice(-4)}
+                    </Username>
                     <FaRegMessage onClick={() => handleNavigation(member)} />
                   </Header>
-                  <Bio>{memberData?.profile.bio.text}</Bio>
+                  <Bio>
+                    {currentCommunity?.name}: Token Id:{" "}
+                    {currentCommunity?.identifier}
+                  </Bio>
                 </ContentContainer>
               </FeedItem>
             );
           })
         ) : (
-          <>fgfg</>
+          <Header>Members not found</Header>
         )}
       </FeedContainer>
     </TokenGate>

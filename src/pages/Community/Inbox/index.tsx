@@ -7,6 +7,13 @@ import InboxPage from "./CreateConversation";
 import { useStateContext } from "../../../context";
 import { useAccount } from "wagmi";
 import { TokenGate } from "../../../components/TokenGate/tokengate";
+import styled from "styled-components";
+
+const ConnectButton = styled.div`
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  font-family: "DM Sans", sans-serif;
+`;
 
 const XMPTConnect = () => {
   const { client, error, isLoading, initialize } = useClient();
@@ -49,9 +56,7 @@ const XMPTConnect = () => {
 
   if (!client) {
     return (
-      <button type="button" onClick={handleConnect}>
-        Connect to XMTP
-      </button>
+      <ConnectButton onClick={handleConnect}>Connect to XMTP</ConnectButton>
     );
   }
 

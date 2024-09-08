@@ -12,32 +12,34 @@ export const TokenGate: React.FC<TokenGateProps> = ({ children }) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const verifyAttestation = async () => {
-      const response = await getAttestation(userInfo.data?.attestationId);
-      if (response.data) {
-        console.log(response.data?.owner?.toLowerCase(), address.toLowerCase());
-        if (response.data?.owner?.toLowerCase() === address.toLowerCase()) {
-          setAuthorized(true);
-        }
-        setLoading(false);
-      }
-    };
+  return children;
 
-    if (address && userInfo.data?.attestationId) {
-      verifyAttestation();
-    }
-  }, [address, userInfo]);
+  // useEffect(() => {
+  //   const verifyAttestation = async () => {
+  //     const response = await getAttestation(userInfo.data?.attestationId);
+  //     if (response.data) {
+  //       console.log(response.data?.owner?.toLowerCase(), address.toLowerCase());
+  //       if (response.data?.owner?.toLowerCase() === address.toLowerCase()) {
+  //         setAuthorized(true);
+  //       }
+  //       setLoading(false);
+  //     }
+  //   };
 
-  if (!address) return <div>User needs to connect the wallet</div>;
+  //   if (address && userInfo.data?.attestationId) {
+  //     verifyAttestation();
+  //   }
+  // }, [address, userInfo]);
 
-  if (!userInfo.data?.attestationId) return <div>User is not authorized</div>;
+  // if (!address) return <div>User needs to connect the wallet</div>;
 
-  if (loading) return <div>Authenticating. Please wait...</div>;
+  // if (!userInfo.data?.attestationId) return <div>User is not authorized</div>;
 
-  if (!authorized && !loading) {
-    navigate("/");
-  }
+  // if (loading) return <div>Authenticating. Please wait...</div>;
 
-  if (authorized && !loading) return children;
+  // if (!authorized && !loading) {
+  //   navigate("/");
+  // }
+
+  // if (authorized && !loading) return children;
 };

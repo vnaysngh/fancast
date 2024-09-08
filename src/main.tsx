@@ -57,11 +57,11 @@ const Home: React.FC = () => {
             }}
           >
             <XMTPProvider>
-              <StateContextProvider>
-                <BrowserRouter>
+              <BrowserRouter>
+                <StateContextProvider>
                   <App />
-                </BrowserRouter>
-              </StateContextProvider>
+                </StateContextProvider>
+              </BrowserRouter>
             </XMTPProvider>
           </NeynarContextProvider>
         </QueryClientProvider>
