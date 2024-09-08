@@ -5,7 +5,7 @@ import { FaCoins } from "react-icons/fa";
 import { useAccount, useReadContract } from "wagmi";
 import abi from "../../../../abi/abi.json";
 import { useNavigate, useParams } from "react-router-dom";
-import TipModal from "./Tip";
+import TipModal from "../../Chiliz/Tip";
 import { useStateContext } from "../../../../context";
 import { OAPP } from "../../../../constants/contract";
 import { sepolia } from "wagmi/chains";

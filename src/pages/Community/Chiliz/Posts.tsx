@@ -6,8 +6,9 @@ import { FiThumbsUp } from "react-icons/fi";
 import { useStateContext } from "../../../context";
 import { FaRegCommentAlt } from "react-icons/fa";
 import CommentPopup from "./Comments";
+import TipModal from "./Tip";
 
-const EventsFeedWrapper = styled.div`
+const PostsWrapper = styled.div`
   font-family: "DM Sans", sans-serif;
   display: flex;
   flex-direction: column;
@@ -77,12 +78,14 @@ const Button = styled.button`
 `;
 
 const EventsFeed: React.FC = () => {
-  const { onUpvote, onComment } = useStateContext();
-  const [txHash, setTxHash] = useState(null);
+  const { onUpvote, onComment, tipAuthor } = useStateContext();
+  const [openTipModal, setOpenTipModal] = useState(false);
+  const [activeTab, setActiveTab] = useState("1");
   const [post, setPost] = useState<any>();
   const [isCommentsOpen, setIsCommentsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
+  const [tipping, setTipping] = useState(false);
+  const [txHash, setTxHash] = useState(null);
   const posts: any = useReadContract({
     abi,
     address: "0xFf3d395AcaCC791c3a3eF1710ceEC69A3e153dB2",
@@ -101,6 +104,19 @@ const EventsFeed: React.FC = () => {
     }
   };
 
+  const onTip = async () => {
+    setTipping(true);
+    const response = await tipAuthor(activeTab);
+    if (response && response.transactionHash) {
+      setTxHash(response.transactionHash);
+    }
+    setTipping(false);
+  };
+
+  const handleCloseTipModal = () => {
+    setOpenTipModal(false);
+  };
+
   const commentPost = async (message: string) => {
     if (!post || !post.id) return;
     setIsLoading(true);
@@ -112,7 +128,17 @@ const EventsFeed: React.FC = () => {
   };
 
   return (
-    <EventsFeedWrapper>
+    <PostsWrapper>
+      <TipModal
+        isOpen={openTipModal}
+        onClose={handleCloseTipModal}
+        onTip={onTip}
+        tipping={tipping}
+        txHash={txHash}
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+      />
+
       {isCommentsOpen && post && post?.id && (
         <CommentPopup
           isLoading={isLoading}
@@ -136,7 +162,7 @@ const EventsFeed: React.FC = () => {
                   <FaRegCommentAlt /> {post.commentCount.toString()}
                 </Button>
               </PostMetaDataContainer>
-              <Button>
+              <Button onClick={() => setOpenTipModal(true)}>
                 <img
                   src="https://raw.githubusercontent.com/kewlexchange/assets/main/chiliz/tokens/0x721ef6871f1c4efe730dce047d40d1743b886946/logo.svg"
                   alt="chiliz icon"
@@ -147,7 +173,7 @@ const EventsFeed: React.FC = () => {
           <EventImage src={post.imageUrl} alt="Event Image" />
         </EventCard>
       ))}
-    </EventsFeedWrapper>
+    </PostsWrapper>
   );
 };
 

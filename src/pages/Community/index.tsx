@@ -166,14 +166,14 @@ const HomePage = () => {
           </Card>
 
           <Card>
-            <CardTitle>Marketplace</CardTitle>
+            <CardTitle>Feed</CardTitle>
             <CardContent>
               <p>Trade exclusive NFTs in our community marketplace</p>
               <Button>Play Now</Button>
             </CardContent>
           </Card>
 
-          <Card onClick={() => handleNavigation("what-if/feed")}>
+          {/*   <Card onClick={() => handleNavigation("what-if/feed")}>
             <CardTitle>What If</CardTitle>
             <CardContent>
               <p>
@@ -182,7 +182,7 @@ const HomePage = () => {
               </p>
               <Button>View</Button>
             </CardContent>
-          </Card>
+          </Card> */}
         </Grid>
       </Container>
     </TokenGate>
